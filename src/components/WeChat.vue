@@ -1,15 +1,15 @@
 <template>
   <div class="whchat">
     <ToolBar />
-    <Users />
-    <Chat />
+    <ListWrapper />
+    <ChatBox />
   </div>
 </template>
 
 <script setup>
-import ToolBar from './ToolBar.vue'
-import Users from './Users.vue'
-import Chat from './Chat.vue'
+import ToolBar from './layout/ToolBar.vue'
+import ListWrapper from './layout/ListWrapper/Index.vue'
+import ChatBox from './layout/ChatBox.vue'
 
 </script>
 

@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import { message } from 'ant-design-vue';
 import { useSystemStore } from '@/store/modules/system'
 import { reactive } from 'vue';
 const systemStore = useSystemStore()
@@ -39,6 +40,10 @@ const menuTop = reactive([
 ])
 
 const handleMenuClick = (type) => {
+  if (['files', 'timeline'].includes(type)) {
+    message.info('相关功能开发中...')
+    return
+  }
   systemStore.activeMenu = type
 }
 </script>
@@ -53,6 +58,7 @@ const handleMenuClick = (type) => {
   justify-content: space-between;
   padding: 35px 0 5px;
   user-select: none;
+  cursor: pointer;
 
   .tool-box {
     display: flex;
@@ -70,6 +76,8 @@ const handleMenuClick = (type) => {
     i {
       font-size: 22px;
       margin-bottom: 16px;
+      width: 100%;
+      text-align: center;
 
       &:hover {
         color: #ABABAB;
@@ -83,6 +91,11 @@ const handleMenuClick = (type) => {
 
     .wechat-files {
       font-size: 20px;
+    }
+    .wechat-files, .wechat-timeline {
+      &:active {
+        color: #D5D5D5;
+      }
     }
   }
 
