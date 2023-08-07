@@ -1,6 +1,6 @@
 # Vue3 WeChat
 
-一个使用 Vite + Vue3+ AntDesignVue + Pinia 搭建的还原最新版微信的小项目
+一个使用 Vite + Vue3 + AntDesignVue + Pinia 搭建的还原新版微信的小项目
 
 ## 安装
 
@@ -19,3 +19,7 @@ yarn serve
 ```
 yarn build
 ```
+
+## 参考文档
+
+- [Vue3 + Pinia 持久化存储](https://blog.csdn.net/weixin_36757282/article/details/127226319)

@@ -2,11 +2,9 @@
   <div class="tool-bar">
     <div class="tool-box tool-top">
       <img src="@/assets/vite.svg" class="avatar" alt="" srcset="">
-      <i class="wechatfont wechat-message" title="聊天"></i>
-      <i class="wechatfont wechat-users" title="通讯录"></i>
-      <i class="wechatfont wechat-collect" title="收藏"></i>
-      <i class="wechatfont wechat-files" title="聊天文件"></i>
-      <i class="wechatfont wechat-timeline" title="朋友圈"></i>
+      <i class="wechatfont" v-for="menu in menuTop" :key="menu.icon" :title="menu.title"
+        :class="[systemStore.activeMenu === menu.icon ? `active wechat-${menu.icon}` : `wechat-${menu.icon}`]"
+        @click="handleMenuClick(menu.icon)"></i>
     </div>
     <div class="tool-box tool-bottom">
       <i class="wechatfont wechat-applet" title="小程序面板"></i>
@@ -17,7 +15,32 @@
 </template>
 
 <script setup>
+import { useSystemStore } from '@/store/modules/system'
+import { reactive } from 'vue';
+const systemStore = useSystemStore()
 
+const menuTop = reactive([
+  {
+    icon: 'message',
+    title: '聊天'
+  }, {
+    icon: 'users',
+    title: '通讯录'
+  }, {
+    icon: 'collect',
+    title: '收藏'
+  }, {
+    icon: 'files',
+    title: '聊天文件'
+  }, {
+    icon: 'timeline',
+    title: '朋友圈'
+  }
+])
+
+const handleMenuClick = (type) => {
+  systemStore.activeMenu = type
+}
 </script>
 
 <style lang="less">
@@ -29,6 +52,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 35px 0 5px;
+  user-select: none;
 
   .tool-box {
     display: flex;
@@ -67,6 +91,7 @@
       font-size: 18px;
       margin-bottom: 14px;
     }
+
     .wechat-phone {
       font-size: 24px;
     }
