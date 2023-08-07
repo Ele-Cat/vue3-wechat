@@ -1,7 +1,7 @@
 <template>
   <div class="tool-bar">
     <div class="tool-box tool-top">
-      <img src="@/assets/vue.svg" class="avatar" alt="" srcset="">
+      <img src="@/assets/vite.svg" class="avatar" alt="" srcset="">
       <i class="wechatfont wechat-message" title="聊天"></i>
       <i class="wechatfont wechat-users" title="通讯录"></i>
       <i class="wechatfont wechat-collect" title="收藏"></i>

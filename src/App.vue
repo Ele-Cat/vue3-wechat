@@ -14,11 +14,29 @@ import WeChat from '@/components/WeChat.vue'
 
 <style lang="less">
 @import url(//at.alicdn.com/t/c/font_4200334_49mqe3whpqj.css);
+
 #app {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background: url(./assets/bg.jpg) no-repeat center / cover;
+  overflow: hidden;
 }
-</style>
+
+// 设定滚轮
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  box-shadow: inset 0 0 5px #D2D2D2;
+  background: #D2D2D2;
+}
+
+::-webkit-scrollbar-track {
+  background: 0 0;
+  border-radius: 1px;
+}</style>
