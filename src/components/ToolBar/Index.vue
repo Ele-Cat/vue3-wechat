@@ -106,10 +106,15 @@ const handleMenuClick = (type) => {
     i {
       font-size: 18px;
       margin-bottom: 14px;
+      
+      &:active {
+        color: #D5D5D5;
+      }
     }
 
     .wechat-phone {
       font-size: 24px;
+      margin-bottom: 12px;
     }
 
     .wechat-menu {
