@@ -7,9 +7,9 @@
 </template>
 
 <script setup>
-import ToolBar from './layout/ToolBar.vue'
-import ListWrapper from './layout/ListWrapper/Index.vue'
-import ChatBox from './layout/ChatBox.vue'
+import ToolBar from './ToolBar/Index.vue'
+import ListWrapper from './ListWrapper/Index.vue'
+import ChatBox from './ChatBox/Index.vue'
 
 </script>
 
