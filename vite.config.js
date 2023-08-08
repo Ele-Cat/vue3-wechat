@@ -16,5 +16,5 @@ export default defineConfig({
     open: true,
     port: 9527,
   },
-  base: "https://ele-cat.gitee.io/vue3-wechat"
+  // base: "https://ele-cat.gitee.io/vue3-wechat"
 });
