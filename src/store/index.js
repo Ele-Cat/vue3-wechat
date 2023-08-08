@@ -1,11 +1,9 @@
-import { createPinia } from "pinia";
-import piniaPluginPersist from "pinia-plugin-persist";
+import { useSystemStore } from "./modules/system";
+import { useChatStore } from "./modules/chat";
 
-const store = createPinia();
-store.use(piniaPluginPersist);
+const useStore = () => ({
+  useSystemStore: useSystemStore(),
+  useChatStore: useChatStore(),
+});
 
-export function setupStore(app) {
-  app.use(store);
-}
-
-export { store };
+export default useStore

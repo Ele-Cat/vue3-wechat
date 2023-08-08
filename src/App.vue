@@ -23,20 +23,4 @@ import WeChat from '@/components/WeChat.vue'
   background: url(./assets/bg.jpg) no-repeat center / cover;
   overflow: hidden;
 }
-
-// 设定滚轮
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  box-shadow: inset 0 0 5px #D2D2D2;
-  background: #D2D2D2;
-}
-
-::-webkit-scrollbar-track {
-  background: 0 0;
-  border-radius: 1px;
-}</style>
+</style>

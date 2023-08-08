@@ -3,7 +3,7 @@
     <div class="tool-box tool-top">
       <img src="@/assets/vite.svg" class="avatar" alt="" srcset="">
       <i class="wechatfont" v-for="menu in menuTop" :key="menu.icon" :title="menu.title"
-        :class="[systemStore.activeMenu === menu.icon ? `active wechat-${menu.icon}` : `wechat-${menu.icon}`]"
+        :class="[useSystemStore.activeMenu === menu.icon ? `active wechat-${menu.icon}` : `wechat-${menu.icon}`]"
         @click="handleMenuClick(menu.icon)"></i>
     </div>
     <div class="tool-box tool-bottom">
@@ -16,9 +16,10 @@
 
 <script setup>
 import { message } from 'ant-design-vue';
-import { useSystemStore } from '@/store/modules/system'
+import useStore from '@/store'
 import { reactive } from 'vue';
-const systemStore = useSystemStore()
+
+const {useSystemStore} = useStore()
 
 const menuTop = reactive([
   {
@@ -44,7 +45,7 @@ const handleMenuClick = (type) => {
     message.info('相关功能开发中...')
     return
   }
-  systemStore.activeMenu = type
+  useSystemStore.activeMenu = type
 }
 </script>
 
@@ -92,7 +93,9 @@ const handleMenuClick = (type) => {
     .wechat-files {
       font-size: 20px;
     }
-    .wechat-files, .wechat-timeline {
+
+    .wechat-files,
+    .wechat-timeline {
       &:active {
         color: #D5D5D5;
       }
