@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-bar" @contextmenu="$event.preventDefault()">
+  <div class="tool-bar">
     <div class="tool-box tool-top">
       <img src="@/assets/vite.svg" class="avatar" alt="" srcset="">
       <i class="wechatfont" v-for="menu in menuTop" :key="menu.icon" :title="menu.title"
@@ -58,7 +58,6 @@ const handleMenuClick = (type) => {
   flex-direction: column;
   justify-content: space-between;
   padding: 35px 0 5px;
-  user-select: none;
 
   .tool-box {
     display: flex;

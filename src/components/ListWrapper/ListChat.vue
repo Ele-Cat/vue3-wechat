@@ -20,7 +20,7 @@ import useStore from '@/store'
 import { friendTime } from '@/utils/utils'
 import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
 import { onMounted, ref } from 'vue'
-const { useChatStore, useContextMenuStore } = useStore()
+const { useChatStore, useSystemStore, useContextMenuStore } = useStore()
 
 onMounted(() => {
   useChatStore.activeChat = useChatStore.activeChat || useChatStore.chatList[0]['id']
@@ -38,14 +38,12 @@ const rightClicked = (e) => {
 
 const componentRef = ref()
 useDetectOutsideClick(componentRef, () => {
-  useContextMenuStore.hideContextMenu()
+  useSystemStore.activeMenu === 'message' && useContextMenuStore.hideContextMenu()
 })
 </script>
 
 <style lang="less">
 .chat-list {
-  user-select: none;
-
   .chat-item {
     display: flex;
     padding: 12px;

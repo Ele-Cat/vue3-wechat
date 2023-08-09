@@ -4,12 +4,22 @@
       colorPrimary: '#07c160',
     },
   }">
-    <WeChat />
+    <WeChat @click="handleWechatClick" @contextmenu="handleWechatContextMenu" />
   </a-config-provider>
 </template>
 
 <script setup>
+import useStore from '@/store'
+const { useContextMenuStore } = useStore()
 import WeChat from '@/components/WeChat.vue'
+
+const handleWechatClick = () => {
+  useContextMenuStore.hideContextMenu()
+}
+
+const handleWechatContextMenu = (e) => {
+  e.preventDefault()
+}
 </script>
 
 <style lang="less">
@@ -22,5 +32,6 @@ import WeChat from '@/components/WeChat.vue'
   height: 100vh;
   background: url(./assets/bg.jpg) no-repeat center / cover;
   overflow: hidden;
+  user-select: none;
 }
 </style>

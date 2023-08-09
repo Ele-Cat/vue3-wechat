@@ -1,5 +1,5 @@
 <template>
-  <div class="users" @contextmenu="$event.preventDefault()">
+  <div class="users">
     <div class="search-box">
       <a-input v-model:value="searchText" placeholder="搜索">
         <template #prefix>

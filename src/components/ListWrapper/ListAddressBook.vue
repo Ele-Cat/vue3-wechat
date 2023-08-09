@@ -1,16 +1,16 @@
 <template>
-  <div class="user-list">
+  <div class="user-list" ref="componentRef">
     <div class="user-manage">通讯录管理</div>
     <div class="user-box">
       <div class="user-title">群聊</div>
-      <div v-for="group in groupList" :key="group.id" class="user-item">
+      <div v-for="group in groupList" :key="group.id" class="user-item" @contextmenu="rightClicked($event)">
         <img :src="group.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ group.name }}</p>
       </div>
     </div>
     <div class="user-box">
       <div class="user-title">A</div>
-      <div v-for="friend in friendList" :key="friend.id" class="user-item">
+      <div v-for="friend in friendList" :key="friend.id" class="user-item" @contextmenu="rightClicked($event)">
         <img :src="friend.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ friend.name }}</p>
       </div>
@@ -19,11 +19,23 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import useStore from '@/store'
-const { useAddressBookStore } = useStore()
+import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
+const { useAddressBookStore, useSystemStore, useContextMenuStore } = useStore()
 
 const groupList = useAddressBookStore.addressBookList.filter(addressBook => addressBook.type === 'group')
 const friendList = useAddressBookStore.addressBookList.filter(addressBook => addressBook.type === 'friend')
+
+const rightClicked = (e) => {
+  e.preventDefault();
+  useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+}
+
+const componentRef = ref()
+useDetectOutsideClick(componentRef, () => {
+  useSystemStore.activeMenu === 'users' && useContextMenuStore.hideContextMenu()
+})
 </script>
 
 <style lang="less">

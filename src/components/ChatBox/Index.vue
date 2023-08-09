@@ -1,5 +1,5 @@
 <template>
-  <div class="chat" @contextmenu="$event.preventDefault()">
+  <div class="chat">
     <div class="chat-title">
       <p>测试群组(6)</p>
     </div>
