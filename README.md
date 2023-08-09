@@ -31,7 +31,7 @@ npm install
 ### 运行
 
 ```
-yarn serve
+yarn dev
 ```
 
 ### 打包

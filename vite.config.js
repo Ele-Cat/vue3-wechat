@@ -3,11 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig((mode) => {
-  const root = process.cwd();
-  const env = loadEnv(mode, root)
-  console.log('mode: ', mode);
-  console.log('env1: ', env);
+export default defineConfig(({ mode }) => {
+  const { VITE_BASE_PATH } = loadEnv(mode, process.cwd());
   return {
     plugins: [vue()],
     resolve: {
@@ -18,9 +15,9 @@ export default defineConfig((mode) => {
     },
     server: {
       host: "localhost",
-      open: env.VITE_OPEN,
-      port: env.VITE_PORT,
+      open: true,
+      port: 9527,
     },
-    base: env.VITE_PUBLIC_PATH
-  }
+    base: VITE_BASE_PATH,
+  };
 });
