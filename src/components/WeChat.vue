@@ -3,6 +3,7 @@
     <ToolBar />
     <ListWrapper />
     <ChatBox />
+    <ContextMenu />
   </div>
 </template>
 
@@ -10,7 +11,7 @@
 import ToolBar from './ToolBar/Index.vue'
 import ListWrapper from './ListWrapper/Index.vue'
 import ChatBox from './ChatBox/Index.vue'
-
+import ContextMenu from './ContextMenu/Index.vue'
 </script>
 
 <style>

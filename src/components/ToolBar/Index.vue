@@ -114,7 +114,7 @@ const handleMenuClick = (type) => {
 
     .wechat-phone {
       font-size: 24px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .wechat-menu {

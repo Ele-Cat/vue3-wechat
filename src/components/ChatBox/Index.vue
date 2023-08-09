@@ -1,7 +1,7 @@
 <template>
   <div class="chat">
     <div class="chat-title">
-      <p>开黑小分队(5)</p>
+      <p>测试群组(6)</p>
     </div>
     <div class="chat-box">
       聊天内容
