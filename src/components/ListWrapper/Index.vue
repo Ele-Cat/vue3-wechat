@@ -1,12 +1,13 @@
 <template>
   <div class="users">
     <div class="search-box">
-      <a-input v-model:value="searchText" placeholder="搜索">
+      <a-input size="small" v-model:value="searchText" placeholder="搜索">
         <template #prefix>
           <search-outlined style="color:#ccc" />
         </template>
       </a-input>
-      <i class="wechatfont wechat-adduser"></i>
+      <i class="wechatfont wechat-add" v-if="systemStore.activeMenu === 'message'"></i>
+      <i class="wechatfont wechat-adduser" v-if="systemStore.activeMenu === 'users'"></i>
     </div>
     <div class="list-box">
       <ListChat v-show="systemStore.activeMenu === 'message'" />
@@ -42,16 +43,16 @@ const searchText = ref('')
     border-bottom: 1px solid #E7E7E7;
     display: flex;
     align-items: center;
-    padding: 22px 10px 10px 10px;
+    padding: 24px 10px 10px 10px;
 
     i {
       display: inline-block;
-      width: 38px;
-      height: 32px;
-      line-height: 32px;
+      width: 28px;
+      height: 24px;
+      line-height: 24px;
       text-align: center;
-      font-size: 18px;
-      margin-left: 6px;
+      font-size: 16px;
+      margin-left: 10px;
       background-color: #EBEBEB;
       border-radius: 4px;
 

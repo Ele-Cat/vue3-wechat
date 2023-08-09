@@ -2,7 +2,7 @@
   <div class="collect-list" ref="componentRef">
     <div>
       <div class="collect-manage">
-        <p>新建笔记</p>
+        <p><i class="wechatfont wechat-add_o"></i>新建笔记</p>
       </div>
       <div class="collect-box">
         <div
@@ -103,12 +103,24 @@ useDetectOutsideClick(componentRef, () => {
     padding: 14px;
 
     p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background-color: #ffffff;
       height: 38px;
       line-height: 38px;
       text-align: center;
       cursor: pointer;
       font-size: 14px;
+
+      i {
+        font-size: 18px;
+        margin-right: 6px;
+      }
+
+      &:hover {
+        background-color: #F0F0F0;
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="user-list" ref="componentRef">
     <div class="user-manage">
-      <p>通讯录管理</p>
+      <p><i class="wechatfont wechat-usermanage"></i>通讯录管理</p>
     </div>
     <div class="user-box">
       <div class="user-title">群聊</div>
@@ -49,12 +49,20 @@ useDetectOutsideClick(componentRef, () => {
     padding: 14px;
     
     p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background-color: #FFFFFF;
       height: 38px;
       line-height: 38px;
       text-align: center;
       cursor: pointer;
       font-size: 14px;
+
+      i {
+        font-size: 18px;
+        margin-right: 6px;
+      }
     }
   }
 
