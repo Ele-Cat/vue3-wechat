@@ -1,16 +1,18 @@
 <template>
   <div class="user-list" ref="componentRef">
-    <div class="user-manage">通讯录管理</div>
+    <div class="user-manage">
+      <p>通讯录管理</p>
+    </div>
     <div class="user-box">
       <div class="user-title">群聊</div>
-      <div v-for="group in groupList" :key="group.id" class="user-item" @contextmenu="rightClicked($event)">
+      <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu="rightClicked($event)">
         <img :src="group.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ group.name }}</p>
       </div>
     </div>
     <div class="user-box">
       <div class="user-title">A</div>
-      <div v-for="friend in friendList" :key="friend.id" class="user-item" @contextmenu="rightClicked($event)">
+      <div v-for="friend in friendList" :key="friend.id" class="custom-item user-item" @contextmenu="rightClicked($event)">
         <img :src="friend.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ friend.name }}</p>
       </div>
@@ -40,14 +42,20 @@ useDetectOutsideClick(componentRef, () => {
 
 <style lang="less">
 .user-list {
+  background-color: #E7E6E5;
+  min-height: 100%;
+
   .user-manage {
-    margin: 14px;
-    background-color: #FFFFFF;
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 14px;
+    padding: 14px;
+    
+    p {
+      background-color: #FFFFFF;
+      height: 38px;
+      line-height: 38px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
   }
 
   .user-box {
@@ -63,14 +71,6 @@ useDetectOutsideClick(componentRef, () => {
       display: flex;
       align-items: center;
       padding: 14px;
-
-      &:hover {
-        background-color: #DEDCDA;
-      }
-
-      &.active {
-        background-color: #C7C6C5;
-      }
 
       .user-avatar {
         width: 34px;

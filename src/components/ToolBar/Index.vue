@@ -1,10 +1,19 @@
 <template>
   <div class="tool-bar">
     <div class="tool-box tool-top">
-      <img src="@/assets/vite.svg" class="avatar" alt="" srcset="">
-      <i class="wechatfont" v-for="menu in menuTop" :key="menu.icon" :title="menu.title"
-        :class="[useSystemStore.activeMenu === menu.icon ? `active wechat-${menu.icon}` : `wechat-${menu.icon}`]"
-        @click="handleMenuClick(menu.icon)"></i>
+      <img src="@/assets/vite.svg" class="avatar" alt="" srcset="" />
+      <i
+        class="wechatfont"
+        v-for="menu in menuTop"
+        :key="menu.icon"
+        :title="menu.title"
+        :class="[
+          useSystemStore.activeMenu === menu.icon
+            ? `active wechat-${menu.icon}`
+            : `wechat-${menu.icon}`,
+        ]"
+        @click="handleMenuClick(menu.icon)"
+      ></i>
     </div>
     <div class="tool-box tool-bottom">
       <i class="wechatfont wechat-applet" title="小程序面板"></i>
@@ -15,43 +24,54 @@
 </template>
 
 <script setup>
-import { message } from 'ant-design-vue';
-import useStore from '@/store'
-import { reactive } from 'vue';
+import { toast, notify } from "@/utils/feedback";
+import useStore from "@/store";
+import { reactive } from "vue";
 
-const {useSystemStore} = useStore()
+const { useSystemStore } = useStore();
 
 const menuTop = reactive([
   {
-    icon: 'message',
-    title: '聊天'
-  }, {
-    icon: 'users',
-    title: '通讯录'
-  }, {
-    icon: 'collect',
-    title: '收藏'
-  }, {
-    icon: 'files',
-    title: '聊天文件'
-  }, {
-    icon: 'timeline',
-    title: '朋友圈'
-  }
-])
+    icon: "message",
+    title: "聊天",
+  },
+  {
+    icon: "users",
+    title: "通讯录",
+  },
+  {
+    icon: "collect",
+    title: "收藏",
+  },
+  {
+    icon: "files",
+    title: "聊天文件",
+  },
+  {
+    icon: "timeline",
+    title: "朋友圈",
+  },
+]);
 
 const handleMenuClick = (type) => {
-  if (['files', 'timeline'].includes(type)) {
-    message.info('相关功能开发中...')
-    return
+  if (["files", "timeline"].includes(type)) {
+    // toast({
+    //   type: "info",
+    //   content: "相关功能开发中...",
+    // });
+    notify({
+      type: "info",
+      description: "相关功能开发中...",
+    });
+    return;
   }
-  useSystemStore.activeMenu = type
-}
+  useSystemStore.activeMenu = type;
+};
 </script>
 
 <style lang="less">
 .tool-bar {
-  background-color: #2E2E2E;
+  background-color: #2e2e2e;
   width: 54px;
   color: #979797;
   display: flex;
@@ -80,7 +100,7 @@ const handleMenuClick = (type) => {
       cursor: pointer;
 
       &:hover {
-        color: #ABABAB;
+        color: #ababab;
       }
 
       &:active,
@@ -96,7 +116,7 @@ const handleMenuClick = (type) => {
     .wechat-files,
     .wechat-timeline {
       &:active {
-        color: #D5D5D5;
+        color: #d5d5d5;
       }
     }
   }
@@ -105,9 +125,9 @@ const handleMenuClick = (type) => {
     i {
       font-size: 18px;
       margin-bottom: 14px;
-      
+
       &:active {
-        color: #D5D5D5;
+        color: #d5d5d5;
       }
     }
 

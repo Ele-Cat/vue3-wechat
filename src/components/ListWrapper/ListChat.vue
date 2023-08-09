@@ -1,6 +1,6 @@
 <template>
   <div class="chat-list" ref="componentRef">
-    <div v-for="chat in useChatStore.chatList" :key="chat.id" class="chat-item"
+    <div v-for="chat in useChatStore.chatList" :key="chat.id" class="custom-item chat-item"
       :class="{ active: useChatStore.activeChat === chat.id }" @click="handleChatClick(chat.id)"
       @contextmenu="rightClicked($event)">
       <img :src="chat.avatar" alt="" class="chat-avatar">
@@ -44,18 +44,15 @@ useDetectOutsideClick(componentRef, () => {
 
 <style lang="less">
 .chat-list {
+  background-color: #E7E6E5;
+  min-height: 100%;
+  
   .chat-item {
     display: flex;
     padding: 12px;
-    background-color: #E6E5E4;
-    max-width: 100%;
 
-    &:hover {
-      background-color: #D8D7D7;
-    }
-
-    &.active {
-      background-color: #C5C4C4;
+    &.top {
+      background-color: #E1DEDD;
     }
 
     .chat-avatar {

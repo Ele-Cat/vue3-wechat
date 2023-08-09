@@ -8,7 +8,7 @@
       </a-input>
       <i class="wechatfont wechat-adduser"></i>
     </div>
-    <div class="user-list">
+    <div class="list-box">
       <ListChat v-show="systemStore.activeMenu === 'message'" />
       <ListAddressBook v-show="systemStore.activeMenu === 'users'" />
       <ListCollect v-show="systemStore.activeMenu === 'collect'" />
@@ -34,6 +34,8 @@ const searchText = ref('')
   background-color: #F7F7F7;
   width: 250px;
   border-right: 1px solid #EBEBEB;
+  display: flex;
+  flex-direction: column;
 
   .search-box {
     height: 60px;
@@ -57,6 +59,11 @@ const searchText = ref('')
         background-color: #E0E0E0;
       }
     }
+  }
+
+  .list-box {
+    flex: 1;
+    overflow: hidden;
   }
 }
 </style>

@@ -42,6 +42,7 @@ watch(() => useContextMenuStore, (newVal) => {
   box-sizing: border-box;
   box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  z-index: 99;
 
   >ul {
     padding: 0;
