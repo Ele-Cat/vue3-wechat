@@ -67,7 +67,7 @@ useDetectOutsideClick(componentRef, () => {
   }
 
   .user-box {
-    border-bottom: 1px solid #ECECEC;
+    border-bottom: 1px solid #E0DDDB;
 
     .user-title {
       font-size: 12px;
