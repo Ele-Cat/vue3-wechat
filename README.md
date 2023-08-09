@@ -42,4 +42,5 @@ yarn build
 
 ## 参考文档
 
+- [一文搞懂pinia状态管理（保姆级教程）](https://zhuanlan.zhihu.com/p/533233367)
 - [Vue3 + Pinia 持久化存储](https://blog.csdn.net/weixin_36757282/article/details/127226319)
