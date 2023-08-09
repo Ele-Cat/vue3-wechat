@@ -1,5 +1,5 @@
 <template>
-  <div class="users">
+  <div class="users" @contextmenu="$event.preventDefault()">
     <div class="search-box">
       <a-input v-model:value="searchText" placeholder="搜索">
         <template #prefix>
@@ -10,7 +10,7 @@
     </div>
     <div class="user-list">
       <ListChat v-show="systemStore.activeMenu === 'message'" />
-      <ListUser v-show="systemStore.activeMenu === 'users'" />
+      <ListAddressBook v-show="systemStore.activeMenu === 'users'" />
       <ListCollect v-show="systemStore.activeMenu === 'collect'" />
     </div>
   </div>
@@ -20,7 +20,7 @@
 import { SearchOutlined } from '@ant-design/icons-vue';
 import { ref } from 'vue';
 import ListChat from './ListChat.vue';
-import ListUser from './ListUser.vue';
+import ListAddressBook from './ListAddressBook.vue';
 import ListCollect from './ListCollect.vue';
 
 import { useSystemStore } from '@/store/modules/system'

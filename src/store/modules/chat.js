@@ -17,7 +17,7 @@ export const useChatStore = defineStore("chat", {
         {
           id: "2",
           name: "示例介绍",
-          type: "friend",
+          type: "group",
           lastChatTime: "2023-08-07 12:12:12",
           lastChatContent: "测试一下文本内容",
           lastChatContentType: "text",

@@ -15,9 +15,11 @@ export default function useDetectOutsideClick(component, callback) {
   };
   onMounted(() => {
     window.addEventListener("click", listener);
+    window.addEventListener("contextmenu", listener);
   });
   onBeforeUnmount(() => {
     window.removeEventListener("click", listener);
+    window.removeEventListener("contextmenu", listener);
   });
 
   return { listener };

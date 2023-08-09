@@ -47,7 +47,7 @@ watch(() => useContextMenuStore, (newVal) => {
     padding: 0;
     margin: 0;
     list-style: none;
-    font-size: 14px;
+    font-size: 12px;
     color: #000000;
     border: 1px solid #C4C4C4;
 
