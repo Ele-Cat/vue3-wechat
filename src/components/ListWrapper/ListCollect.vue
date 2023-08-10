@@ -98,7 +98,7 @@ const rightClicked = (e) => {
 
 const componentRef = ref();
 useDetectOutsideClick(componentRef, () => {
-  useSystemStore.activeMenu === "users" &&
+  useSystemStore.activeMenu === "collect" &&
     useContextMenuStore.hideContextMenu();
 });
 </script>
