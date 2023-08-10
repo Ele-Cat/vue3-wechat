@@ -3,22 +3,22 @@
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  box-shadow: inset 0 0 5px #d2d2d2;
-  background: #d2d2d2;
+  box-shadow: inset 0 0 5px #cac8c6;
+  background: #cac8c6;
 }
-
 ::-webkit-scrollbar-track {
   background: 0 0;
   border-radius: 1px;
 }
 
+// 覆盖默认标签样式
 p {
   margin: 0;
 }
 
+// 禁止图片被拖拽
 img {
   pointer-events: none;
   -webkit-user-drag: none;
@@ -29,6 +29,7 @@ img {
   user-select: none;
 }
 
+// 通用列表item样式
 .custom-item {
   background-color: #e6e5e4;
 
@@ -41,6 +42,7 @@ img {
   }
 }
 
+// 实现鼠标悬浮才显示滚动条
 .scroll-no-bar {
   overflow-y: auto;
   -webkit-mask-image: linear-gradient(to top, transparent, black),

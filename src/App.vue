@@ -5,6 +5,7 @@
     },
   }">
     <WeChat @click="handleWechatClick" @contextmenu="handleWechatContextMenu" />
+    <a href='https://gitee.com/ele-cat/vue3-wechat' target="_blank" class="widget"><img src='https://gitee.com/ele-cat/vue3-wechat/widgets/widget_1.svg' alt='Fork me on Gitee' /></a>
   </a-config-provider>
 </template>
 
@@ -33,5 +34,11 @@ const handleWechatContextMenu = (e) => {
   background: url(./assets/bg.jpg) no-repeat center / cover;
   overflow: hidden;
   user-select: none;
+}
+
+.widget {
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 </style>

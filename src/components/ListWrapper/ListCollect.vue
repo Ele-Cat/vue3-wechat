@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="tag-box">
+    <div class="tag-box scroll-no-bar">
       <div
         v-for="(tag, index) in tagList"
         :key="index"
@@ -59,23 +59,35 @@ const menuList = reactive([
 const tagList = reactive([
   {
     id: "1",
-    title: "前端",
+    title: "标签A",
   },
   {
     id: "2",
-    title: "后端",
+    title: "标签B",
   },
   {
     id: "3",
-    title: "金融",
+    title: "标签C",
   },
   {
-    id: "2",
-    title: "后端",
+    id: "4",
+    title: "标签D",
   },
   {
-    id: "3",
-    title: "金融",
+    id: "5",
+    title: "标签E",
+  },
+  {
+    id: "6",
+    title: "标签F",
+  },
+  {
+    id: "7",
+    title: "标签G",
+  },
+  {
+    id: "8",
+    title: "标签H",
   },
 ]);
 
