@@ -1,6 +1,7 @@
 # Vue3 WeChat
 
-一个使用 Vite + Vue3 + AntDesignVue + Pinia + MockJS 搭建的还原新版微信的小项目
+- 一个使用 Vite + Vue3 + AntDesignVue + Pinia + MockJS 搭建的还原新版微信的小项目
+- [查看演示](https://ele-cat.gitee.io/vue3-wechat/)
 
 ## 功能截图
 
@@ -14,9 +15,9 @@
 - [x] 右键菜单
 - [x] 用户列表
 - [x] 收藏列表
-- [ ] Mock数据
-- [x] 聊天窗口(控件需完善)
+- [x] 聊天窗口
 - [ ] 聊天操作、通讯录信息、收藏笔记联动
+- [ ] Mock数据
 - [ ] 模拟用户消息
 - [ ] 拖拽聊天窗口
 - [ ] 锁屏功能
