@@ -8,7 +8,8 @@
         v-for="(chat, index) in chatContent" :key="index">
         <div class="chat-time"><span>22:03</span></div>
         <div class="chat-info">
-          <img src="../../assets/vite.svg" alt="" srcset="" />
+          <img v-if="chat.type !== 'send'" src="../../assets/vite.svg" alt="" srcset="" />
+          <img v-else src="../../assets/vue.svg" alt="" srcset="" />
           <p class="chat-content">{{ chat.content }}</p>
         </div>
       </div>
@@ -30,7 +31,7 @@
         <a-textarea v-model:value="inputText" :autoSize="{ maxRows: 3 }" placeholder="请输入" />
       </div>
       <div class="input-btn">
-        <button>发送(S)</button>
+        <button @click="sendMsg">发送(S)</button>
       </div>
     </div>
   </div>
@@ -39,70 +40,44 @@
 <script setup>
 import useAutoScrollBottom from '@/hooks/useAutoScrollBottom'
 import { onMounted, reactive, ref } from "vue";
+import dayjs from 'dayjs'
 
 const chatContent = reactive([
   {
     id: 1,
     type: "send",
-    content: "132456",
+    content: "你是谁",
     createTime: "2023-08-10 12:12:12",
   },
   {
     id: 2,
     type: "receive",
-    content: "654321",
+    content: "我是Vite？",
     createTime: "2023-08-10 12:15:12",
   },
   {
     id: 3,
     type: "send",
-    content:
-      "ds大神大神多大神打碎的爱上ds大神大神多大\n神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上",
+    content: "跟我长得有点像",
     createTime: "2023-08-10 12:16:12",
   },
   {
     id: 4,
     type: "receive",
-    content: "132456",
+    content: "Vite 是一种具有明确建议的工具，具备合理的默认设置。您可以在 功能指南 中了解 Vite 的各种可能性。通过 插件，Vite 支持与其他框架或工具的集成。如有需要，您可以通过 配置部分 自定义适应你的项目。",
     createTime: "2023-08-10 12:17:12",
   },
   {
     id: 2,
-    type: "receive",
-    content: "654321",
+    type: "send",
+    content: "说人话",
     createTime: "2023-08-10 12:15:12",
   },
   {
     id: 3,
-    type: "send",
-    content:
-      "ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上",
+    type: "receive",
+    content: "来我官网看https://cn.vitejs.dev/",
     createTime: "2023-08-10 12:16:12",
-  },
-  {
-    id: 4,
-    type: "receive",
-    content: "132456",
-    createTime: "2023-08-10 12:17:12",
-  },
-  {
-    id: 2,
-    type: "receive",
-    content: "654321",
-    createTime: "2023-08-10 12:15:12",
-  },
-  {
-    id: 3,
-    type: "send",
-    content:
-      "ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上ds大神大神多大神打碎的爱上",
-    createTime: "2023-08-10 12:16:12",
-  },
-  {
-    id: 4,
-    type: "receive",
-    content: "132456",
-    createTime: "2023-08-10 12:17:12",
   },
 ]);
 
@@ -121,6 +96,21 @@ const inputText = ref("");
 
 const componentRef = ref()
 useAutoScrollBottom(componentRef)
+
+const sendMsg = () => {
+  if (!inputText.value) {
+    return
+  }
+
+  chatContent.push({
+    id: 4,
+    type: "send",
+    content: inputText.value,
+    createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+  })
+
+  inputText.value = ''
+}
 </script>
 
 <style lang="less">
