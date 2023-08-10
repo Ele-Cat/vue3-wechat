@@ -1,6 +1,6 @@
 # Vue3 WeChat
 
-- 一个使用 Vite + Vue3 + AntDesignVue + Pinia + MockJS 搭建的还原新版微信的小项目
+- 使用 Vite + Vue3 + AntDesignVue + Pinia + MockJS 搭建的复刻新版微信项目
 - [查看演示](https://ele-cat.gitee.io/vue3-wechat/)
 
 ## 功能截图
@@ -17,7 +17,7 @@
 - [x] 收藏列表
 - [x] 聊天窗口
 - [ ] 聊天操作、通讯录信息、收藏笔记联动
-- [ ] Mock数据
+- [ ] Mock 数据
 - [ ] 模拟用户消息
 - [ ] 拖拽聊天窗口
 - [ ] 锁屏功能
@@ -44,5 +44,7 @@ yarn build
 
 ## 参考文档
 
-- [一文搞懂pinia状态管理（保姆级教程）](https://zhuanlan.zhihu.com/p/533233367)
+- [一文搞懂 pinia 状态管理（保姆级教程）](https://zhuanlan.zhihu.com/p/533233367)
 - [Vue3 + Pinia 持久化存储](https://blog.csdn.net/weixin_36757282/article/details/127226319)
+- [mockjs——mockjs 定义、mockjs 安装、mockjs 使用、mockjs 方法、mockjs 语法、代码示例](https://blog.csdn.net/TKY666/article/details/126215513)
+- [正确开启 Mockjs 的三种姿势：入门参考（一）](https://www.cnblogs.com/soyxiaobi/p/9846057.html)
