@@ -3,13 +3,9 @@
     <div class="chat-title">
       <p>测试群组(6)</p>
     </div>
-    <div class="chat-box scroll-no-bar">
-      <div
-        class="chat-item"
-        :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"
-        v-for="(chat, index) in chatContent"
-        :key="index"
-      >
+    <div class="chat-box scroll-no-bar" ref="componentRef">
+      <div class="chat-item" :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"
+        v-for="(chat, index) in chatContent" :key="index">
         <div class="chat-time"><span>22:03</span></div>
         <div class="chat-info">
           <img src="../../assets/vite.svg" alt="" srcset="" />
@@ -18,9 +14,20 @@
       </div>
     </div>
     <div class="input-box">
-      <div class="input-control">控件列表</div>
+      <div class="input-control">
+        <div>
+          <i class="wechatfont wechat-emoji" title="表情"></i>
+          <i class="wechatfont wechat-folder" title="发送文件"></i>
+          <i class="wechatfont wechat-cropping" title="截图(Alt+A)"></i>
+          <i class="wechatfont wechat-history_message" title="聊天记录"></i>
+        </div>
+        <div>
+          <i class="wechatfont wechat-audio_chat" title="语音聊天"></i>
+          <i class="wechatfont wechat-video_chat" title="视频聊天"></i>
+        </div>
+      </div>
       <div class="input-area">
-        <a-textarea v-model:value="inputText" placeholder="请输入" />
+        <a-textarea v-model:value="inputText" :autoSize="{ maxRows: 3 }" placeholder="请输入" />
       </div>
       <div class="input-btn">
         <button>发送(S)</button>
@@ -30,9 +37,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import useAutoScrollBottom from '@/hooks/useAutoScrollBottom'
+import { onMounted, reactive, ref } from "vue";
 
-const chatContent = [
+const chatContent = reactive([
   {
     id: 1,
     type: "send",
@@ -96,9 +104,23 @@ const chatContent = [
     content: "132456",
     createTime: "2023-08-10 12:17:12",
   },
-];
+]);
+
+onMounted(() => {
+  // setInterval(() => {
+  //   chatContent.push({
+  //     id: 4,
+  //     type: "receive",
+  //     content: "132456",
+  //     createTime: "2023-08-10 12:17:12",
+  //   })
+  // }, 1000)
+})
 
 const inputText = ref("");
+
+const componentRef = ref()
+useAutoScrollBottom(componentRef)
 </script>
 
 <style lang="less">
@@ -221,11 +243,22 @@ const inputText = ref("");
     border-top: 1px solid #ececec;
 
     .input-control {
+      display: flex;
+      justify-content: space-between;
       height: 36px;
       line-height: 36px;
-      padding: 0 28px;
-      font-size: 14px;
-      background-color: #ff0;
+      padding: 0 18px;
+
+      i {
+        font-size: 22px;
+        margin: 0 6px;
+        color: #333;
+        cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
+      }
     }
 
     .input-area {
@@ -237,11 +270,12 @@ const inputText = ref("");
         border: none;
         background-color: transparent;
         box-shadow: none;
+        line-height: 1.4;
       }
     }
 
     .input-btn {
-      height: 60px;
+      height: 58px;
       display: flex;
       justify-content: flex-end;
       align-items: center;

@@ -24,7 +24,7 @@ const handleWechatContextMenu = (e) => {
 </script>
 
 <style lang="less">
-@import url(//at.alicdn.com/t/c/font_4200334_kw63egtmk2.css);
+@import url(//at.alicdn.com/t/c/font_4200334_pud9dj4o4z.css);
 
 #app {
   display: flex;
