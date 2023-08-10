@@ -3,7 +3,7 @@
     <div class="chat-title">
       <p>测试群组(6)</p>
     </div>
-    <div class="chat-box">
+    <div class="chat-box scroll-no-bar">
       <div
         class="chat-item"
         :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"

@@ -6,8 +6,8 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  box-shadow: inset 0 0 5px #D2D2D2;
-  background: #D2D2D2;
+  box-shadow: inset 0 0 5px #d2d2d2;
+  background: #d2d2d2;
 }
 
 ::-webkit-scrollbar-track {
@@ -30,13 +30,31 @@ img {
 }
 
 .custom-item {
-  background-color: #E6E5E4;
+  background-color: #e6e5e4;
 
   &:hover {
-    background-color: #D8D7D7;
+    background-color: #d8d7d7;
   }
 
   &.active {
-    background-color: #C5C4C4;
+    background-color: #c5c4c4;
+  }
+}
+
+.scroll-no-bar {
+  overflow-y: auto;
+  -webkit-mask-image: linear-gradient(to top, transparent, black),
+    linear-gradient(to left, transparent 8px, black 8px);
+  mask-image: linear-gradient(to top, transparent, black),
+    linear-gradient(to left, transparent 8px, black 8px);
+  -webkit-mask-size: 100% 20000px;
+  mask-size: 100% 20000px;
+  -webkit-mask-position: left bottom;
+  mask-position: left bottom;
+  transition: mask-position 0.3s, -webkit-mask-position 0.3s;
+
+  &:hover {
+    -webkit-mask-position: left top;
+    mask-position: left top;
   }
 }
