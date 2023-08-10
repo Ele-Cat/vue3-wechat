@@ -46,5 +46,6 @@ yarn build
 
 - [一文搞懂 pinia 状态管理（保姆级教程）](https://zhuanlan.zhihu.com/p/533233367)
 - [Vue3 + Pinia 持久化存储](https://blog.csdn.net/weixin_36757282/article/details/127226319)
+- [mockjs官网示例](http://mockjs.com/examples.html)
 - [mockjs——mockjs 定义、mockjs 安装、mockjs 使用、mockjs 方法、mockjs 语法、代码示例](https://blog.csdn.net/TKY666/article/details/126215513)
 - [正确开启 Mockjs 的三种姿势：入门参考（一）](https://www.cnblogs.com/soyxiaobi/p/9846057.html)

@@ -6,6 +6,8 @@ import Antd from "ant-design-vue";
 import "ant-design-vue/dist/reset.css";
 import "./global.less";
 
+import "@/utils/mock.js";
+
 const app = createApp(App);
 
 app.use(pinia);
