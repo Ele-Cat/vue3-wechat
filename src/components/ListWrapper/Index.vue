@@ -32,7 +32,8 @@ const searchText = ref('')
 
 <style lang="less">
 .users {
-  background-color: #F7F7F7;
+  // background-color: #F7F7F7;
+  background-color: #E6E5E4;
   width: 250px;
   border-right: 1px solid #EBEBEB;
   display: flex;
@@ -41,6 +42,7 @@ const searchText = ref('')
   .search-box {
     height: 60px;
     border-bottom: 1px solid #E7E7E7;
+    background-color: #F7F7F7;
     display: flex;
     align-items: center;
     padding: 24px 10px 10px 10px;

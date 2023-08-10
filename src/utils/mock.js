@@ -6,7 +6,34 @@ import Mock from "mockjs";
 //   age: 18,
 // });
 
-const data = Mock.mock({
+Mock.mock("/mock/api/friend", {
+  code: 200,
+  success: true,
+  "data|20": [
+    {
+      //生成随机id
+      "id|+1": 1024,
+      //随机生成名字
+      name: "@cname",
+      //随机生成1-100之间的任意一个数
+      "age|1-100": 1,
+      //随机生成一行段落
+      description: "@cparagraph",
+      //随机生成一个带有正则的电话号码
+      phone: /1\d{10}/,
+      //随机生成一个邮箱
+      email: /[a-z]{6,8}@(126|163|qq)\.(com|cn|net)/,
+      //随机生成一个时间
+      birthday: "@date('yyyy-MM-dd')",
+      add: "@county(true)",
+      //随机生成一个图片
+      avatar: "@dataImage('200x200','')",
+    },
+  ],
+});
+
+// 示例
+const mockData = Mock.mock({
   "data|10": [
     {
       //生成随机id
@@ -50,4 +77,4 @@ const data = Mock.mock({
     },
   ],
 });
-console.log("data: ", data);
+// console.log('mockData', mockData)
