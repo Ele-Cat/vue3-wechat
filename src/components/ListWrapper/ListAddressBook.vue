@@ -22,15 +22,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { getFriendList } from "@/api/manage"
 import useStore from '@/store'
 import { listSortByPinyin } from '@/utils/utils'
 import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
 const { useAddressBookStore, useSystemStore, useContextMenuStore } = useStore()
 
-const groupList = useAddressBookStore.addressBookList.filter(addressBook => addressBook.type === 'group')
-// const friendList = useAddressBookStore.addressBookList.filter(addressBook => addressBook.type === 'friend')
+const groupList = reactive([
+  {
+    id: "1",
+    name: "测试群组1测试群组1测试群组1测试群组1测试群组1测试群组1",
+    type: "group",
+    avatar: "http://img.adoutu.com/article/1606320535770.gif",
+  }
+])
 const friendList = ref([])
 
 const rightClicked = (e) => {
@@ -43,11 +49,15 @@ useDetectOutsideClick(componentRef, () => {
   useSystemStore.activeMenu === 'users' && useContextMenuStore.hideContextMenu()
 })
 
-getFriendList().then(res => {
-  const { data } = res.data
-  if (data.length == 0) return;
-  friendList.value = listSortByPinyin(data)
-})
+if (useAddressBookStore.addressBookList.length === 0) {
+  getFriendList().then(res => {
+    const { data } = res.data
+    if (data.length == 0) return;
+    useAddressBookStore.addressBookList = friendList.value = listSortByPinyin(data)
+  })
+} else {
+  friendList.value = useAddressBookStore.addressBookList
+}
 </script>
 
 <style lang="less">

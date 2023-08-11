@@ -2,7 +2,7 @@
   <div class="whchat">
     <ToolBar />
     <ListWrapper />
-    <ChatBox />
+    <BoxWrapper />
     <ContextMenu />
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script setup>
 import ToolBar from './ToolBar/Index.vue'
 import ListWrapper from './ListWrapper/Index.vue'
-import ChatBox from './ChatBox/Index.vue'
+import BoxWrapper from './BoxWrapper/Index.vue'
 import ContextMenu from './ContextMenu/Index.vue'
 </script>
 

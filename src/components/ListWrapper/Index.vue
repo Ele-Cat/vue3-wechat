@@ -10,9 +10,9 @@
       <i class="wechatfont wechat-adduser" v-if="systemStore.activeMenu === 'users'"></i>
     </div>
     <div class="list-box">
-      <ListChat v-show="systemStore.activeMenu === 'message'" />
-      <ListAddressBook v-show="systemStore.activeMenu === 'users'" />
-      <ListCollect v-show="systemStore.activeMenu === 'collect'" />
+      <ListChat v-if="systemStore.activeMenu === 'message'" />
+      <ListAddressBook v-if="systemStore.activeMenu === 'users'" />
+      <ListCollect v-if="systemStore.activeMenu === 'collect'" />
     </div>
   </div>
 </template>
