@@ -9,14 +9,14 @@ import Mock from "mockjs";
 Mock.mock("/mock/api/friend", {
   code: 200,
   success: true,
-  "data|20": [
+  "data|50": [
     {
       //生成随机id
-      "id|+1": 1024,
+      id: "@guid",
       //随机生成名字
       name: "@cname",
       //随机生成1-100之间的任意一个数
-      "age|1-100": 1,
+      "age|1-120": 1,
       //随机生成一行段落
       description: "@cparagraph",
       //随机生成一个带有正则的电话号码
@@ -24,10 +24,10 @@ Mock.mock("/mock/api/friend", {
       //随机生成一个邮箱
       email: /[a-z]{6,8}@(126|163|qq)\.(com|cn|net)/,
       //随机生成一个时间
-      birthday: "@date('yyyy-MM-dd')",
-      add: "@county(true)",
+      birthday: "@date('YYYY-MM-dd')",
+      address: "@county(true)",
       //随机生成一个图片
-      avatar: "@dataImage('200x200','')",
+      avatar: "@dataImage('50x50', '@name')",
     },
   ],
 });
