@@ -53,9 +53,11 @@ if (useAddressBookStore.addressBookList.length === 0) {
   getFriendList().then(res => {
     const { data } = res.data
     if (data.length == 0) return;
+    
     useAddressBookStore.addressBookList = friendList.value = listSortByPinyin(data)
   })
 } else {
+  
   friendList.value = useAddressBookStore.addressBookList
 }
 </script>
