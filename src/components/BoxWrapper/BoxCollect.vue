@@ -56,6 +56,10 @@ const collectList = reactive(mockData.data);
     border-radius: 8px;
     padding: 16px 18px;
 
+    &:active {
+      background-color: #E6E6E6;
+    }
+
     .collect-info {
       display: flex;
       justify-content: space-between;

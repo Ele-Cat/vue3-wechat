@@ -13,13 +13,17 @@
           <i class="wechatfont" :class="'wechat-' + menu.type"></i>
           <p class="collect-name">{{ menu.title }}</p>
         </div>
-        <p class="tag-title"><i class="wechatfont wechat-tag"></i>标签</p>
+        <div class="tag-title" @click="toggleTags">
+          <p><i class="wechatfont wechat-tag"></i>标签</p>
+          <up-outlined v-if="tagsVisivle" />
+          <down-outlined v-else />
+        </div>
       </div>
     </div>
 
     <div class="tag-box scroll-no-bar">
       <div
-        v-for="(tag, index) in tagList"
+        v-for="(tag, index) in tags"
         :key="index"
         class="custom-item collect-item tag-item"
         @contextmenu="rightClicked($event)"
@@ -32,10 +36,11 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import useStore from "@/store";
+import { DownOutlined, UpOutlined } from "@ant-design/icons-vue";
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
-const { useAddressBookStore, useSystemStore, useContextMenuStore } = useStore();
+const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
 const menuList = reactive([
   {
@@ -56,40 +61,24 @@ const menuList = reactive([
   },
 ]);
 
-const tagList = reactive([
-  {
-    id: "1",
-    title: "标签A",
+const tagList = useCollectStore.tags;
+
+const tagsVisivle = ref(false);
+const tags = ref([]);
+
+watch(
+  () => tagsVisivle.value,
+  (newVal) => {
+    tags.value = newVal ? tagList : [];
   },
   {
-    id: "2",
-    title: "标签B",
-  },
-  {
-    id: "3",
-    title: "标签C",
-  },
-  {
-    id: "4",
-    title: "标签D",
-  },
-  {
-    id: "5",
-    title: "标签E",
-  },
-  {
-    id: "6",
-    title: "标签F",
-  },
-  {
-    id: "7",
-    title: "标签G",
-  },
-  {
-    id: "8",
-    title: "标签H",
-  },
-]);
+    immediate: true,
+  }
+);
+
+const toggleTags = () => {
+  tagsVisivle.value = !tagsVisivle.value
+}
 
 const rightClicked = (e) => {
   e.preventDefault();
@@ -131,7 +120,7 @@ useDetectOutsideClick(componentRef, () => {
       }
 
       &:hover {
-        background-color: #F0F0F0;
+        background-color: #f0f0f0;
       }
     }
   }
@@ -145,16 +134,34 @@ useDetectOutsideClick(componentRef, () => {
     }
 
     .tag-title {
-      padding: 14px 14px 0 14px;
-      margin-bottom: 10px;
+      padding: 14px;
       font-size: 14px;
       border-top: 1px solid #eaeaea;
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
-      .wechatfont {
-        font-size: 18px;
-        margin-right: 10px;
+      &:hover {
+        background-color: #EAEAEA;
+      }
+
+      &:active {
+        background-color: #DFDFDF;
+      }
+
+      p {
+        display: flex;
+        align-items: center;
+
+        .wechatfont {
+          font-size: 18px;
+          margin-right: 10px;
+        }
+      }
+
+      .anticon {
+        color: #999;
+        font-size: 12px;
       }
     }
 
@@ -168,7 +175,7 @@ useDetectOutsideClick(componentRef, () => {
         background-color: #eaeaea;
       }
 
-      &.active {
+      &.active, &:active {
         background-color: #dfdfdf;
       }
 
