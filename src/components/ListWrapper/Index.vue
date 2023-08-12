@@ -49,8 +49,8 @@ if (useAddressBookStore.addressBookList.length === 0) {
     useAddressBookStore.addressBookList = listSortByPinyin(data);
 
     // 初始化聊天列表
-    const addressBookInit = data.slice(0, 10);
-    // 使用前十个人作为初始对话对象
+    const addressBookInit = data.slice(0, 3);
+    // 使用前几个人作为初始对话对象
     let initChatList = [];
     addressBookInit.forEach((item) => {
       initChatList.push({
