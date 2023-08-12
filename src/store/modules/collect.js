@@ -70,6 +70,7 @@ export const useCollectStore = defineStore("collect", {
         },
       ],
       activeCollectType: "",
+      activeCollect: "",
     };
   },
   // actions: {

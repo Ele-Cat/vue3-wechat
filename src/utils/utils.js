@@ -79,3 +79,16 @@ export function listSortByPinyin(list, sign = 'name') {
 
   return filterData
 }
+
+// 获取已使用的LocalStorage大小（以字节为单位）
+export function getUsedLocalStorageSize() {
+  let usedSize = 0;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    usedSize += key.length + value.length;
+  }
+
+  return (usedSize / (1024 * 1024)).toFixed(2);
+}

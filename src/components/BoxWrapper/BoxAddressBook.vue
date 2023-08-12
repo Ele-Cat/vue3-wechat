@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="address-btm">
-        <button>发消息</button>
+        <button @click="sendMessage">发消息</button>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
 import { EllipsisOutlined } from "@ant-design/icons-vue";
 import { reactive, ref, watch } from "vue";
 import useStore from "@/store";
-const { useAddressBookStore } = useStore();
+const { useAddressBookStore, useSystemStore } = useStore();
 
 const noSelect = ref(!useAddressBookStore.activeAddressBook);
 const addressBookInfo = ref({});
@@ -54,11 +54,6 @@ const addressBookInfo = ref({});
 watch(
   () => useAddressBookStore.activeAddressBook,
   (newVal) => {
-    console.log(
-      "%c [ newVal ]-53",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      newVal
-    );
     noSelect.value = !newVal;
     if (newVal) {
       addressBookInfo.value = useAddressBookStore.flatAddressBookList.find(
@@ -70,6 +65,10 @@ watch(
     immediate: true,
   }
 );
+
+const sendMessage = () => {
+  useSystemStore.activeMenu = 'message'
+}
 </script>
 
 <style lang="less">

@@ -31,7 +31,7 @@
         <p class="collect-name">{{ tag.title }}</p>
       </div>
     </div>
-    <p class="collect-occupy">已使用10.9MB，剩余2.0GB</p>
+    <p class="collect-occupy">已使用 {{ totalSize }} MB，剩余 2.0 GB</p>
   </div>
 </template>
 
@@ -39,6 +39,7 @@
 import { reactive, ref, watch } from "vue";
 import useStore from "@/store";
 import { DownOutlined, UpOutlined } from "@ant-design/icons-vue";
+import { getUsedLocalStorageSize } from "@/utils/utils"
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
@@ -90,6 +91,8 @@ useDetectOutsideClick(componentRef, () => {
   useSystemStore.activeMenu === "collect" &&
     useContextMenuStore.hideContextMenu();
 });
+
+const totalSize = getUsedLocalStorageSize()
 </script>
 
 <style lang="less">
