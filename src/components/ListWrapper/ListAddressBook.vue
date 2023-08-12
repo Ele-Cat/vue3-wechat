@@ -23,10 +23,8 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import { getFriendList } from "@/api/manage"
+import { reactive, ref, watch } from 'vue'
 import useStore from '@/store'
-import { listSortByPinyin } from '@/utils/utils'
 import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
 const { useAddressBookStore, useSystemStore, useContextMenuStore } = useStore()
 
@@ -50,17 +48,12 @@ useDetectOutsideClick(componentRef, () => {
   useSystemStore.activeMenu === 'users' && useContextMenuStore.hideContextMenu()
 })
 
-if (useAddressBookStore.addressBookList.length === 0) {
-  getFriendList().then(res => {
-    const { data } = res.data
-    if (data.length == 0) return;
-    
-    useAddressBookStore.flatAddressBookList = data
-    useAddressBookStore.addressBookList = friendList.value = listSortByPinyin(data)
-  })
-} else {
-  friendList.value = useAddressBookStore.addressBookList
-}
+watch(() => useAddressBookStore.addressBookList, (newVal) => {
+  friendList.value = newVal
+}, {
+  immediate: true,
+  deep: true,
+})
 
 const friendClick = (info) => {
   useAddressBookStore.activeAddressBook = info.id

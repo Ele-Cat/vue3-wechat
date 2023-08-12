@@ -1,9 +1,14 @@
 <template>
   <div class="chat-list" ref="componentRef">
-    <div v-for="chat in useChatStore.chatList" :key="chat.id" class="custom-item chat-item"
-      :class="{ active: useChatStore.activeChat === chat.id }" @click="handleChatClick(chat.id)"
-      @contextmenu="rightClicked($event)">
-      <img :src="chat.avatar" alt="" class="chat-avatar">
+    <div
+      v-for="chat in chatList"
+      :key="chat.id"
+      class="custom-item chat-item"
+      :class="{ active: useChatStore.activeChat === chat.id }"
+      @click="handleChatClick(chat.id)"
+      @contextmenu="rightClicked($event)"
+    >
+      <img :src="chat.avatar" alt="" class="chat-avatar" />
       <div class="chat-info">
         <div class="chat-info-top">
           <p class="chat-name">{{ chat.name }}</p>
@@ -16,43 +21,64 @@
 </template>
 
 <script setup>
-import useStore from '@/store'
-import { friendTime } from '@/utils/utils'
-import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
-import { onMounted, ref } from 'vue'
-const { useChatStore, useSystemStore, useContextMenuStore } = useStore()
+import { onMounted, ref, watch } from "vue";
+import useStore from "@/store";
+import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
+import { friendTime } from "@/utils/utils";
+const {
+  useChatStore,
+  useSystemStore,
+  useContextMenuStore,
+  useAddressBookStore,
+} = useStore();
 
 onMounted(() => {
-  useChatStore.activeChat = useChatStore.activeChat || useChatStore.chatList[0]['id']
-})
+  useChatStore.activeChat =
+    useChatStore.activeChat || useChatStore.chatList[0]["id"];
+});
 
 const handleChatClick = (id) => {
-  useContextMenuStore.hideContextMenu()
-  useChatStore.activeChat = id
-}
+  useContextMenuStore.hideContextMenu();
+  useChatStore.activeChat = id;
+};
 
 const rightClicked = (e) => {
   e.preventDefault();
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
-}
+};
 
-const componentRef = ref()
+const componentRef = ref();
 useDetectOutsideClick(componentRef, () => {
-  useSystemStore.activeMenu === 'message' && useContextMenuStore.hideContextMenu()
-})
+  useSystemStore.activeMenu === "message" &&
+    useContextMenuStore.hideContextMenu();
+});
+
+const chatList = ref([]);
+
+watch(
+  () => useChatStore.chatList,
+  (newVal) => {
+    chatList.value = newVal;
+  },
+  {
+    immediate: true,
+    deep: true,
+  }
+);
 </script>
 
 <style lang="less">
 .chat-list {
-  background-color: #E7E6E5;
-  min-height: 100%;
-  
+  background-color: #e7e6e5;
+  height: 100%;
+  overflow: auto;
+
   .chat-item {
     display: flex;
     padding: 12px;
 
     &.top {
-      background-color: #E1DEDD;
+      background-color: #e1dedd;
     }
 
     .chat-avatar {

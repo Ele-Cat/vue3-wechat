@@ -10,7 +10,7 @@
         </div>
         <div class="flex-1 user-info">
           <p class="name">
-            {{ addressBookInfo.name }} <i class="wechatfont wechat-male"></i>
+            {{ addressBookInfo.name }} <i class="wechatfont" :class="['wechat-' + addressBookInfo.gender]"></i>
           </p>
           <p>微信号：{{ addressBookInfo.phone }}</p>
           <p>地区：{{ addressBookInfo.address }}</p>
@@ -118,6 +118,7 @@ const sendMessage = () => {
       p {
         color: #999;
         font-size: 12px;
+        line-height: 1.2;
 
         &.name {
           display: flex;
