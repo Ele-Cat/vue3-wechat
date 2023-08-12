@@ -13,7 +13,8 @@
     <div class="user-box" v-for="friends in friendList" :key="friends.letter">
       <div class="user-title">{{friends.letter}}</div>
       <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
-        @contextmenu="rightClicked($event)">
+        :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
+        @contextmenu="rightClicked($event)" @click="friendClick(friend)">
         <img :src="friend.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ friend.name }}</p>
       </div>
@@ -54,11 +55,15 @@ if (useAddressBookStore.addressBookList.length === 0) {
     const { data } = res.data
     if (data.length == 0) return;
     
+    useAddressBookStore.flatAddressBookList = data
     useAddressBookStore.addressBookList = friendList.value = listSortByPinyin(data)
   })
 } else {
-  
   friendList.value = useAddressBookStore.addressBookList
+}
+
+const friendClick = (info) => {
+  useAddressBookStore.activeAddressBook = info.id
 }
 </script>
 

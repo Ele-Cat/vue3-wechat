@@ -4,6 +4,7 @@ export const useAddressBookStore = defineStore("addressBook", {
   state: () => {
     return {
       addressBookList: [],
+      flatAddressBookList: [],
       activeAddressBook: "",
     };
   },

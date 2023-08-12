@@ -6,12 +6,14 @@
     <div v-else class="address-info">
       <div class="border-bottom flex">
         <div class="flex-left">
-          <img class="avatar" src="../../assets/vite.svg" alt="" />
+          <img class="avatar" :src="addressBookInfo.avatar" alt="" />
         </div>
         <div class="flex-1 user-info">
-          <p class="name">名字ABC <i class="wechatfont wechat-male"></i></p>
-          <p>微信号：abc123456</p>
-          <p>地区：江苏 南通</p>
+          <p class="name">
+            {{ addressBookInfo.name }} <i class="wechatfont wechat-male"></i>
+          </p>
+          <p>微信号：{{ addressBookInfo.phone }}</p>
+          <p>地区：{{ addressBookInfo.address }}</p>
         </div>
         <ellipsis-outlined class="user-more" />
       </div>
@@ -42,9 +44,32 @@
 
 <script setup>
 import { EllipsisOutlined } from "@ant-design/icons-vue";
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
+import useStore from "@/store";
+const { useAddressBookStore } = useStore();
 
-const noSelect = ref(false);
+const noSelect = ref(!useAddressBookStore.activeAddressBook);
+const addressBookInfo = ref({});
+
+watch(
+  () => useAddressBookStore.activeAddressBook,
+  (newVal) => {
+    console.log(
+      "%c [ newVal ]-53",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      newVal
+    );
+    noSelect.value = !newVal;
+    if (newVal) {
+      addressBookInfo.value = useAddressBookStore.flatAddressBookList.find(
+        (item) => item.id === newVal
+      );
+    }
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <style lang="less">
