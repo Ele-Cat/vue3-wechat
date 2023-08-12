@@ -35,7 +35,6 @@
     <div class="input-area">
       <a-textarea
         v-model:value="inputText"
-        :autoSize="{ maxRows: 3 }"
         placeholder="请输入"
       />
     </div>
@@ -162,6 +161,7 @@ const sendMsg = () => {
         border-radius: 6px;
         margin: 0 16px;
         line-height: 1.4;
+        word-break: break-all;
 
         &::before {
           content: "";
