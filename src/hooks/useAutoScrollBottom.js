@@ -1,8 +1,6 @@
 import { onUpdated, onMounted } from "vue";
 
 export default function useAutoScrollBottom(component) {
-  if (!component) return;
-
   onUpdated(() => {
     toBottom();
   });
@@ -12,6 +10,7 @@ export default function useAutoScrollBottom(component) {
   });
 
   const toBottom = () => {
+    if (!component || !component.value) return;
     component.value.scrollTop = component.value.scrollHeight;
   };
 }

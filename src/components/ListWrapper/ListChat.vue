@@ -4,8 +4,8 @@
       v-for="chat in chatList"
       :key="chat.id"
       class="custom-item chat-item"
-      :class="{ active: useChatStore.activeChat === chat.id }"
-      @click="handleChatClick(chat.id)"
+      :class="{ active: useChatStore.activeChat === chat.friendId }"
+      @click="handleChatClick(chat)"
       @contextmenu="rightClicked($event)"
     >
       <img :src="chat.avatar" alt="" class="chat-avatar" />
@@ -32,14 +32,10 @@ const {
   useAddressBookStore,
 } = useStore();
 
-onMounted(() => {
-  useChatStore.activeChat =
-    useChatStore.activeChat || useChatStore.chatList[0]["id"];
-});
-
-const handleChatClick = (id) => {
+const handleChatClick = (chat) => {
   useContextMenuStore.hideContextMenu();
-  useChatStore.activeChat = id;
+  useChatStore.activeChat = chat.friendId;
+  useSystemStore.boxTitleText = chat.name;
 };
 
 const rightClicked = (e) => {

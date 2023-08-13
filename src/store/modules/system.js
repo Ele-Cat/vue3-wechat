@@ -4,6 +4,7 @@ export const useSystemStore = defineStore("system", {
   state: () => {
     return {
       activeMenu: "message",
+      boxTitleText: '',
       contextMenu: {
         visible: false,
         top: 0,

@@ -48,24 +48,57 @@ if (useAddressBookStore.addressBookList.length === 0) {
     useAddressBookStore.flatAddressBookList = data;
     useAddressBookStore.addressBookList = listSortByPinyin(data);
 
-    // 初始化聊天列表
+    // 初始聊天内容
     const addressBookInit = data.slice(0, 3);
-    // 使用前几个人作为初始对话对象
-    let initChatList = [];
+    let initChatInfos = {};
     addressBookInit.forEach((item) => {
+      initChatInfos[item.id] = Mock.mock({
+        "data|4-10": [
+          {
+            id: Mock.mock("@guid"),
+            "type|1": ["send", "receive"],
+            content: "@cparagraph",
+            name: item.name,
+            avatar: item.avatar,
+            createTime: "2023-08-10 12:12:12",
+          },
+        ],
+      });
+    });
+    useChatStore.chatInfos = initChatInfos;
+
+    // 初始聊天列表
+    let initChatList = [];
+    console.log('%c [ initChatInfos ]-73', 'font-size:13px; background:pink; color:#bf2c9f;', initChatInfos)
+    for (const key in initChatInfos) {
+      const chatData = initChatInfos[key]['data']
+      const item = chatData[chatData.length - 1]
       initChatList.push({
         id: Mock.mock("@guid"),
-        friendId: item.id,
+        friendId: key,
         name: item.name,
         type: "friend",
-        lastChatTime: Mock.mock("@datetime"),
-        lastChatContent: Mock.mock("@cparagraph"),
+        lastChatTime: item.createTime,
+        lastChatContent: item.content,
         lastChatContentType: "text",
         avatar: item.avatar,
       });
-    });
+    }
+    // addressBookInit.forEach((item) => {
+    //   initChatList.push({
+    //     id: Mock.mock("@guid"),
+    //     friendId: item.id,
+    //     name: item.name,
+    //     type: "friend",
+    //     lastChatTime: Mock.mock("@datetime"),
+    //     lastChatContent: Mock.mock("@cparagraph"),
+    //     lastChatContentType: "text",
+    //     avatar: item.avatar,
+    //   });
+    // });
 
     // 时间倒序
+    console.log('%c [ initChatList ]-100', 'font-size:13px; background:pink; color:#bf2c9f;', initChatList)
     initChatList = initChatList.sort((a, b) => {
       return (
         dayjs(b.lastChatTime).format("x") - dayjs(a.lastChatTime).format("x")

@@ -9,6 +9,8 @@
           v-for="(menu, index) in menuList"
           :key="index"
           class="custom-item collect-item"
+          :class="{active: useCollectStore.activeCollectType === menu.type}"
+          @click="handleCollectTypeClick(menu)"
         >
           <i class="wechatfont" :class="'wechat-' + menu.type"></i>
           <p class="collect-name">{{ menu.title }}</p>
@@ -36,10 +38,10 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import useStore from "@/store";
 import { DownOutlined, UpOutlined } from "@ant-design/icons-vue";
-import { getUsedLocalStorageSize } from "@/utils/utils"
+import { getUsedLocalStorageSize } from "@/utils/utils";
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
@@ -62,6 +64,11 @@ const menuList = reactive([
   },
 ]);
 
+onMounted(() => {
+  useCollectStore.activeCollectType = useCollectStore.activeCollectType || "all";
+  useSystemStore.boxTitleText = menuList.find(menu => menu.type === useCollectStore.activeCollectType)['title']
+});
+
 const tagList = useCollectStore.tags;
 
 const tagsVisivle = ref(false);
@@ -78,8 +85,8 @@ watch(
 );
 
 const toggleTags = () => {
-  tagsVisivle.value = !tagsVisivle.value
-}
+  tagsVisivle.value = !tagsVisivle.value;
+};
 
 const rightClicked = (e) => {
   e.preventDefault();
@@ -92,7 +99,12 @@ useDetectOutsideClick(componentRef, () => {
     useContextMenuStore.hideContextMenu();
 });
 
-const totalSize = getUsedLocalStorageSize()
+const handleCollectTypeClick = (menu) => {
+  useCollectStore.activeCollectType = menu.type
+  useSystemStore.boxTitleText = menu.title
+}
+
+const totalSize = getUsedLocalStorageSize();
 </script>
 
 <style lang="less">
@@ -145,11 +157,11 @@ const totalSize = getUsedLocalStorageSize()
       justify-content: space-between;
 
       &:hover {
-        background-color: #EAEAEA;
+        background-color: #eaeaea;
       }
 
       &:active {
-        background-color: #DFDFDF;
+        background-color: #dfdfdf;
       }
 
       p {
@@ -178,7 +190,8 @@ const totalSize = getUsedLocalStorageSize()
         background-color: #eaeaea;
       }
 
-      &.active, &:active {
+      &.active,
+      &:active {
         background-color: #dfdfdf;
       }
 

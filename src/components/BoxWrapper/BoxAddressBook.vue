@@ -1,8 +1,6 @@
 <template>
   <div class="box-address-book">
-    <template v-if="noSelect">
-      <i class="wechatfont wechat-weixin"></i>
-    </template>
+    <BoxNoSelected v-if="noSelect" />
     <div v-else class="address-info">
       <div class="border-bottom flex">
         <div class="flex-left">
@@ -44,9 +42,10 @@
 
 <script setup>
 import { EllipsisOutlined } from "@ant-design/icons-vue";
-import { reactive, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import useStore from "@/store";
 const { useAddressBookStore, useSystemStore } = useStore();
+import BoxNoSelected from "./BoxNoSelected.vue";
 
 const noSelect = ref(!useAddressBookStore.activeAddressBook);
 const addressBookInfo = ref({});
