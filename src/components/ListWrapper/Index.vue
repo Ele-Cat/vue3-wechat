@@ -16,9 +16,9 @@
       ></i>
     </div>
     <div class="list-box">
-      <ListChat v-if="useSystemStore.activeMenu === 'message'" />
-      <ListAddressBook v-if="useSystemStore.activeMenu === 'users'" />
-      <ListCollect v-if="useSystemStore.activeMenu === 'collect'" />
+      <ListChat v-show="useSystemStore.activeMenu === 'message'" />
+      <ListAddressBook v-show="useSystemStore.activeMenu === 'users'" />
+      <ListCollect v-show="useSystemStore.activeMenu === 'collect'" />
     </div>
   </div>
 </template>

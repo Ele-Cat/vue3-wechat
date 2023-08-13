@@ -109,7 +109,7 @@ watch(
   (newVal) => {
     noSelect.value = !newVal;
     if (newVal) {
-      chatContent.value = useChatStore.chatInfos[newVal]['data']
+      chatContent.value = useChatStore.chatInfos[newVal]?.data
     }
   },
   {
@@ -127,7 +127,7 @@ const sendMsg = () => {
     return;
   }
 
-  chatContent.push({
+  useChatStore.chatInfos[useChatStore.activeChat]?.data.push({
     id: 4,
     type: "send",
     content: inputText.value,

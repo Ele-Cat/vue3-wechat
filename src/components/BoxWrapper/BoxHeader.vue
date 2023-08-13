@@ -13,7 +13,7 @@
         <!-- wechat-restore_down 向下还原 -->
         <i class="wechatfont wechat-close" title="关闭"></i>
       </div>
-      <ellipsis-outlined class="chat-more" title="聊天信息" />
+      <ellipsis-outlined class="chat-more" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'message'" />
     </div>
   </div>
 </template>

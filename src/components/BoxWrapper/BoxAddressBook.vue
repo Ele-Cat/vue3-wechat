@@ -41,10 +41,11 @@
 </template>
 
 <script setup>
-import { EllipsisOutlined } from "@ant-design/icons-vue";
 import { ref, watch } from "vue";
+import Mock from "mockjs";
+import { EllipsisOutlined } from "@ant-design/icons-vue";
 import useStore from "@/store";
-const { useAddressBookStore, useSystemStore } = useStore();
+const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
 import BoxNoSelected from "./BoxNoSelected.vue";
 
 const noSelect = ref(!useAddressBookStore.activeAddressBook);
@@ -67,6 +68,22 @@ watch(
 
 const sendMessage = () => {
   useSystemStore.activeMenu = 'message'
+  const userInfo = useAddressBookStore.flatAddressBookList.find(item => item.id === useAddressBookStore.activeAddressBook)
+  if (!useChatStore.chatList.find(item => item.friendId === useAddressBookStore.activeAddressBook)) {
+    // 打开新的聊天窗口
+    useChatStore.chatList.unshift({
+      id: Mock.mock("@guid"),
+      friendId: useAddressBookStore.activeAddressBook,
+      name: userInfo.name,
+      type: "friend",
+      avatar: userInfo.avatar,
+    })
+    useChatStore.chatInfos[useAddressBookStore.activeAddressBook] = {
+      data: []
+    }
+  }
+  useSystemStore.boxTitleText = userInfo.name;
+  useChatStore.activeChat = useAddressBookStore.activeAddressBook
 }
 </script>
 
@@ -177,7 +194,6 @@ const sendMessage = () => {
         color: #fff;
         width: 110px;
         height: 32px;
-        line-height: 32px;
         border-radius: 4px;
         font-size: 14px;
         cursor: pointer;
