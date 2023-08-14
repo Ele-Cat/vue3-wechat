@@ -3,6 +3,7 @@ import { axios } from "@/utils/request";
 const api = {
   friend: "/mock/api/friend",
   group: "/mock/api/group",
+  collect: "/mock/api/collect",
 };
 
 export default api;
@@ -47,6 +48,15 @@ export function getFriendList(parameter) {
 export function getGroupList(parameter) {
   return axios({
     url: api.group,
+    method: "get",
+    params: parameter,
+  });
+}
+
+// 获取收藏列表
+export function getCollectList(parameter) {
+  return axios({
+    url: api.collect,
     method: "get",
     params: parameter,
   });

@@ -1,6 +1,6 @@
 <template>
   <div class="collect-box scroll-no-bar">
-    <div class="collect-item" v-for="collect in collectList" :key="collect.id">
+    <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id">
       <div class="collect-info">
         <div>
           <p class="title">{{ collect.title }}</p>
@@ -20,25 +20,20 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import Mock from "mockjs";
+import { getCollectList } from "@/api/manage";
 
+import useStore from "@/store";
+const { useCollectStore } = useStore();
+if (useCollectStore.collectList.length === 0) {
+  // 如果已经初始化过，就不重新渲染了
+  getCollectList().then((res) => {
+    const { data } = res.data;
+    if (data.length == 0) return;
 
-const mockData = Mock.mock({
-  "data|2-10": [
-    {
-      "id|+1": 1024,
-      title: "@ctitle(8,14)",
-      content: "@cparagraph",
-      author: "@cname",
-      "tags|2-5": ["@integer(1, 100)"],
-      time: "@date('yyyy-MM-dd')",
-      cover: "@dataImage('44x44', '最近')",
-    },
-  ],
-});
-
-const collectList = reactive(mockData.data);
+    // 初始化通讯录
+    useCollectStore.collectList = data; // 平铺数据
+  })
+}
 </script>
 
 <style lang="less" scoped>

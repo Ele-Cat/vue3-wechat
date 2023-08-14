@@ -33,6 +33,22 @@ Mock.mock("/mock/api/friend", {
   ],
 });
 
+Mock.mock("/mock/api/collect", {
+  code: 200,
+  success: true,
+  "data|2-10": [
+    {
+      id: "@guid",
+      title: "@ctitle(8,14)",
+      content: "@cparagraph",
+      author: "@cname",
+      "tags|2-5": ["@integer(1, 100)"],
+      time: "@date('yyyy-MM-dd')",
+      cover: "@dataImage('44x44', '最近')",
+    },
+  ],
+});
+
 // 示例
 const mockData = Mock.mock({
   "data|10": [

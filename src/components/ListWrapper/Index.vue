@@ -32,9 +32,9 @@ import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
 import ListCollect from "./ListCollect.vue";
 import useStore from "@/store";
+const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
 import { getFriendList } from "@/api/manage";
 import { listSortByPinyin } from "@/utils/utils";
-const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
 
 const searchText = ref("");
 

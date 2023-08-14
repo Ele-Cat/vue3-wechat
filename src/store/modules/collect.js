@@ -21,38 +21,7 @@ export const useCollectStore = defineStore("collect", {
           type: "note",
         },
       ],
-      collectList: [ // 收藏夹列表
-        {
-          id: "1",
-          title: "示例介绍示例介绍示例介绍示例介绍",
-          content: "测试一下文本内容测试一下文本内容测试一下文本内容测试一下文本内容",
-          author: "ele-cat",
-          type: "note",
-          tags: ['前端'],
-          time: "2023-08-08 11:12:12",
-          cover: "http://img.adoutu.com/article/1606320535770.gif",
-        },
-        {
-          id: "2",
-          title: "示例介绍",
-          content: "测试一下文本内容",
-          author: "ele-cat",
-          type: "link",
-          tags: ['前端'],
-          time: "2023-08-07 12:12:12",
-          cover: "http://img.adoutu.com/article/1606320535770.gif",
-        },
-        {
-          id: "3",
-          title: "示例介绍示例介绍示例介绍示例介绍示例介绍",
-          content: "测试一下文本内容测试一下文本内容测试一下文本内容",
-          author: "ele-cat",
-          type: "link",
-          tags: ['前端'],
-          time: "2023-06-07 12:12:12",
-          cover: "http://img.adoutu.com/article/1606320535770.gif",
-        },
-      ],
+      collectList: [], // 收藏夹列表
       tags: [ // 标签类型列表
         {
           id: "1",
