@@ -126,7 +126,7 @@ const componentRef = ref();
 useAutoScrollBottom(componentRef);
 
 // 发送聊天信息
-// TODO 将聊天信息保存至缓存
+// TODO 无法输入？需定位问题
 const inputText = ref("");
 const sendMsg = () => {
   if (!inputText.value) {
@@ -185,6 +185,7 @@ const sendMsg = () => {
         margin: 0 16px;
         line-height: 1.4;
         word-break: break-all;
+        user-select: text;
 
         &::before {
           content: "";
@@ -259,7 +260,7 @@ const sendMsg = () => {
     i {
       font-size: 22px;
       margin: 0 6px;
-      color: #333;
+      color: #666;
       cursor: pointer;
 
       &:hover {
@@ -274,8 +275,8 @@ const sendMsg = () => {
 
     .ant-input {
       height: 100%;
-      border: none;
       background-color: transparent;
+      border: none;
       box-shadow: none;
       line-height: 1.4;
       resize: none;
