@@ -1,12 +1,12 @@
 <template>
-  <div class="chat-list" ref="componentRef">
+  <div class="chat-list">
     <div
-      v-for="chat in chatList"
+      v-for="chat in useChatStore.chatList"
       :key="chat.id"
       class="custom-item chat-item"
       :class="{ active: useChatStore.activeChat === chat.friendId }"
       @click="handleChatClick(chat)"
-      @contextmenu="rightClicked($event)"
+      @contextmenu.stop="rightClicked($event)"
     >
       <img :src="chat.avatar" alt="" class="chat-avatar" />
       <div class="chat-info">
@@ -21,46 +21,27 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import useStore from "@/store";
-import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 import { friendTime } from "@/utils/utils";
+import useStore from "@/store";
 const {
   useChatStore,
   useSystemStore,
   useContextMenuStore,
-  useAddressBookStore,
 } = useStore();
 
+// 点击聊天列表
 const handleChatClick = (chat) => {
-  useContextMenuStore.hideContextMenu();
+  // 展示聊天内容
   useChatStore.activeChat = chat.friendId;
+  // 展示聊天标题
   useSystemStore.boxTitleText = chat.name;
 };
 
+// 点击右键展示自定义菜单
 const rightClicked = (e) => {
   e.preventDefault();
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 };
-
-const componentRef = ref();
-useDetectOutsideClick(componentRef, () => {
-  useSystemStore.activeMenu === "message" &&
-    useContextMenuStore.hideContextMenu();
-});
-
-const chatList = ref([]);
-
-watch(
-  () => useChatStore.chatList,
-  (newVal) => {
-    chatList.value = newVal;
-  },
-  {
-    immediate: true,
-    deep: true,
-  }
-);
 </script>
 
 <style lang="less">

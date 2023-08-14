@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script></script>
+<script setup></script>
 
 <style lang="less" scoped>
 .box-no-selected {

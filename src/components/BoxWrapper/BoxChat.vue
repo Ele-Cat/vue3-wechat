@@ -45,9 +45,9 @@
 </template>
 
 <script setup>
-import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
-import { onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import dayjs from "dayjs";
+import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
 import useStore from "@/store";
 const { useChatStore } = useStore();
 import BoxNoSelected from "./BoxNoSelected.vue";
@@ -91,11 +91,10 @@ import BoxNoSelected from "./BoxNoSelected.vue";
 //     createTime: "2023-08-10 12:16:12",
 //   },
 // ]);
-const chatContent = ref([])
 
 onMounted(() => {
   // setInterval(() => {
-  //   chatContent.push({
+  //   chatContent.value.push({
   //     id: 4,
   //     type: "receive",
   //     content: "132456",
@@ -103,7 +102,10 @@ onMounted(() => {
   //   })
   // }, 1000)
 });
+
+// 监听当聊天对象切换时，展示对应的聊天内容
 const noSelect = ref(true);
+const chatContent = ref([])
 watch(
   () => useChatStore.activeChat,
   (newVal) => {
@@ -117,23 +119,25 @@ watch(
     deep: true,
   }
 );
-const inputText = ref("");
 
+
+// 自动滚动到底部
 const componentRef = ref();
 useAutoScrollBottom(componentRef);
 
+// 发送聊天信息
+// TODO 将聊天信息保存至缓存
+const inputText = ref("");
 const sendMsg = () => {
   if (!inputText.value) {
     return;
   }
-
   useChatStore.chatInfos[useChatStore.activeChat]?.data.push({
     id: 4,
     type: "send",
     content: inputText.value,
     createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   });
-
   inputText.value = "";
 };
 </script>

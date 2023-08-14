@@ -1,20 +1,20 @@
 <template>
-  <div class="user-list scroll-no-bar" ref="componentRef">
+  <div class="user-list scroll-no-bar">
     <div class="user-manage">
       <p><i class="wechatfont wechat-usermanage"></i>通讯录管理</p>
     </div>
     <div class="user-box">
       <div class="user-title">群聊</div>
-      <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu="rightClicked($event)">
+      <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu.stop="rightClicked($event)">
         <img :src="group.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ group.name }}</p>
       </div>
     </div>
-    <div class="user-box" v-for="friends in friendList" :key="friends.letter">
+    <div class="user-box" v-for="friends in useAddressBookStore.addressBookList" :key="friends.letter">
       <div class="user-title">{{friends.letter}}</div>
       <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
         :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
-        @contextmenu="rightClicked($event)" @click="friendClick(friend)">
+        @contextmenu.stop="rightClicked($event)" @click="friendClick(friend)">
         <img :src="friend.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ friend.name }}</p>
       </div>
@@ -23,10 +23,9 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from 'vue'
+import { reactive } from 'vue'
 import useStore from '@/store'
-import useDetectOutsideClick from '@/hooks/useDetectOutsideClick'
-const { useAddressBookStore, useSystemStore, useContextMenuStore } = useStore()
+const { useAddressBookStore, useContextMenuStore } = useStore()
 
 const groupList = reactive([
   {
@@ -36,27 +35,16 @@ const groupList = reactive([
     avatar: "http://img.adoutu.com/article/1606320535770.gif",
   }
 ])
-const friendList = ref([])
 
+// 点击好友，展示好友信息
+const friendClick = (info) => {
+  useAddressBookStore.activeAddressBook = info.id
+}
+
+// 点击右键，展示自定义菜单
 const rightClicked = (e) => {
   e.preventDefault();
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
-}
-
-const componentRef = ref()
-useDetectOutsideClick(componentRef, () => {
-  useSystemStore.activeMenu === 'users' && useContextMenuStore.hideContextMenu()
-})
-
-watch(() => useAddressBookStore.addressBookList, (newVal) => {
-  friendList.value = newVal
-}, {
-  immediate: true,
-  deep: true,
-})
-
-const friendClick = (info) => {
-  useAddressBookStore.activeAddressBook = info.id
 }
 </script>
 

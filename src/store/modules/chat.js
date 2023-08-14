@@ -3,9 +3,9 @@ import { defineStore } from "pinia";
 export const useChatStore = defineStore("chat", {
   state: () => {
     return {
-      chatList: [],
-      chatInfos: {},
-      activeChat: "",
+      chatList: [], // 聊天列表
+      chatInfos: {}, // 聊天记录
+      activeChat: "", // 当前聚焦的聊天对象id
     };
   },
   // actions: {

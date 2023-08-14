@@ -40,15 +40,16 @@ const searchText = ref("");
 
 // 在这里调取通讯录数据
 if (useAddressBookStore.addressBookList.length === 0) {
+  // 如果已经初始化过，就不重新渲染了
   getFriendList().then((res) => {
     const { data } = res.data;
     if (data.length == 0) return;
 
     // 初始化通讯录
-    useAddressBookStore.flatAddressBookList = data;
-    useAddressBookStore.addressBookList = listSortByPinyin(data);
+    useAddressBookStore.flatAddressBookList = data; // 平铺数据
+    useAddressBookStore.addressBookList = listSortByPinyin(data); // 通过拼音排序的二维数据
 
-    // 初始聊天内容
+    // 初始聊天内容，截取平铺数据的前三条
     const addressBookInit = data.slice(0, 3);
     let initChatInfos = {};
     addressBookInit.forEach((item) => {
@@ -69,9 +70,10 @@ if (useAddressBookStore.addressBookList.length === 0) {
 
     // 初始聊天列表
     let initChatList = [];
-    console.log('%c [ initChatInfos ]-73', 'font-size:13px; background:pink; color:#bf2c9f;', initChatInfos)
+    // 取聊天内容去渲染聊天列表
     for (const key in initChatInfos) {
       const chatData = initChatInfos[key]['data']
+      // 拿到聊天内容的最后一条
       const item = chatData[chatData.length - 1]
       initChatList.push({
         id: Mock.mock("@guid"),
@@ -84,27 +86,12 @@ if (useAddressBookStore.addressBookList.length === 0) {
         avatar: item.avatar,
       });
     }
-    // addressBookInit.forEach((item) => {
-    //   initChatList.push({
-    //     id: Mock.mock("@guid"),
-    //     friendId: item.id,
-    //     name: item.name,
-    //     type: "friend",
-    //     lastChatTime: Mock.mock("@datetime"),
-    //     lastChatContent: Mock.mock("@cparagraph"),
-    //     lastChatContentType: "text",
-    //     avatar: item.avatar,
-    //   });
-    // });
-
     // 时间倒序
-    console.log('%c [ initChatList ]-100', 'font-size:13px; background:pink; color:#bf2c9f;', initChatList)
     initChatList = initChatList.sort((a, b) => {
       return (
         dayjs(b.lastChatTime).format("x") - dayjs(a.lastChatTime).format("x")
       );
     });
-
     useChatStore.chatList = initChatList;
   });
 }
@@ -126,6 +113,21 @@ if (useAddressBookStore.addressBookList.length === 0) {
     display: flex;
     align-items: center;
     padding: 24px 10px 10px 10px;
+
+    .ant-input-affix-wrapper {
+      background-color: #E2E2E2;
+      border: none;
+      box-shadow: none;
+
+      &.ant-input-affix-wrapper-focused {
+        background-color: #FFFFFF;
+      }
+
+      .ant-input {
+        background-color: transparent;
+        height: 24px;
+      }
+    }
 
     i {
       display: inline-block;

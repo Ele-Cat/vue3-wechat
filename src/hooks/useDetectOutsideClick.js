@@ -1,5 +1,11 @@
 import { onBeforeUnmount, onMounted } from "vue";
 
+/**
+ * 监听点击了盒子外部
+ * @param {ref} component ref绑定的dom
+ * @param {function} callback 回调
+ * @returns 
+ */
 export default function useDetectOutsideClick(component, callback) {
   if (!component) return;
   const listener = (event) => {

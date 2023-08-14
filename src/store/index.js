@@ -4,6 +4,7 @@ import { useAddressBookStore } from "./modules/addressBook";
 import { useCollectStore } from "./modules/collect";
 import { useContextMenuStore } from "./modules/contextMenu";
 
+// 将store统一到一起再分发
 const useStore = () => ({
   useSystemStore: useSystemStore(),
   useChatStore: useChatStore(),

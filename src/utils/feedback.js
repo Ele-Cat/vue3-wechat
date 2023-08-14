@@ -1,5 +1,6 @@
 import { message, notification } from "ant-design-vue";
 
+// 在浏览器中上部的提示
 export const toast = ({
   type = "success",
   content = "提示语",
@@ -12,16 +13,17 @@ export const toast = ({
   });
 };
 
+// 在浏览器右上角的提示
 export const notify = ({
   type = "success",
-  message = "提示",
-  description = "内容",
+  title = "提示",
+  content = "内容",
   duration = 3,
 }) => {
   notification.open({
     type,
-    message,
-    description,
+    message: title,
+    description: content,
     duration,
   });
 };

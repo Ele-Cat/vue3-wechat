@@ -80,7 +80,10 @@ export function listSortByPinyin(list, sign = 'name') {
   return filterData
 }
 
-// 获取已使用的LocalStorage大小（以字节为单位）
+/**
+ * 获取已使用的LocalStorage大小
+ * @returns 0.12MB（以MB为单位）
+ */
 export function getUsedLocalStorageSize() {
   let usedSize = 0;
 

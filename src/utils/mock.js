@@ -78,4 +78,5 @@ const mockData = Mock.mock({
     },
   ],
 });
+// 解开下面的log就可以在浏览器中查看mockData的值
 // console.log('mockData', mockData)

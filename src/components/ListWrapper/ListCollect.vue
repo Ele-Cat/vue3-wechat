@@ -64,6 +64,7 @@ const menuList = reactive([
   },
 ]);
 
+// TODO 完善收藏模块
 onMounted(() => {
   useCollectStore.activeCollectType = useCollectStore.activeCollectType || "all";
   useSystemStore.boxTitleText = menuList.find(menu => menu.type === useCollectStore.activeCollectType)['title']

@@ -1,35 +1,28 @@
 <template>
-  <div class="custom-menu" v-show="contextMenu.menuVisible" :style="{ top: contextMenu.menuTop + 'px', left: contextMenu.menuLeft + 'px' }">
+  <div class="custom-menu" v-show="useContextMenuStore.menuVisible" :style="{ top: useContextMenuStore.menuTop + 'px', left: useContextMenuStore.menuLeft + 'px' }">
     <ul>
-      <li @click.stop="close('all')">置顶</li>
-      <li @click.stop="close('others')">标为未读</li>
-      <li @click.stop="close('others')">消息免打扰</li>
-      <li @click.stop="close('others')">在独立窗口中打开</li>
-      <li @click.stop="close('others')" class="border-top">不显示聊天</li>
-      <li @click.stop="close('others')">删除聊天</li>
+      <li @click.stop="handleMenuClick('toTop')">置顶</li>
+      <li @click.stop="handleMenuClick('unRead')">标为未读</li>
+      <li @click.stop="handleMenuClick('noDisturb')">消息免打扰</li>
+      <li @click.stop="handleMenuClick('openInAStandaloneWindow')">在独立窗口中打开</li>
+      <li @click.stop="handleMenuClick('doNotDisplay')" class="border-top">不显示聊天</li>
+      <li @click.stop="handleMenuClick('deleteChat')">删除聊天</li>
     </ul>
   </div>
 </template>
 
 <script setup>
 import useStore from '@/store'
-import { reactive, watch } from 'vue';
 const { useContextMenuStore } = useStore()
+import { toast } from "@/utils/feedback";
 
-let contextMenu = reactive({
-  menuVisible: false,
-  menuTop: 0,
-  menuLeft: 0,
-})
-
-watch(() => useContextMenuStore, (newVal) => {
-  contextMenu.menuVisible = newVal.menuVisible
-  contextMenu.menuTop = newVal.menuTop
-  contextMenu.menuLeft = newVal.menuLeft
-}, {
-  deep: true,
-  immediate: true,
-})
+const handleMenuClick = (type) => {
+  toast({
+    type: "info",
+    content: "相关功能开发中...",
+  });
+  useContextMenuStore.menuVisible = false;
+}
 </script>
 
 <style lang="less" scoped>

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useCollectStore = defineStore("collect", {
   state: () => {
     return {
-      collectList: [
+      collectList: [ // 收藏夹列表
         {
           id: "1",
           title: "示例介绍示例介绍示例介绍示例介绍",
@@ -35,7 +35,7 @@ export const useCollectStore = defineStore("collect", {
           cover: "http://img.adoutu.com/article/1606320535770.gif",
         },
       ],
-      tags: [
+      tags: [ // 标签类型列表
         {
           id: "1",
           title: "标签A",
@@ -69,8 +69,8 @@ export const useCollectStore = defineStore("collect", {
           title: "标签H",
         },
       ],
-      activeCollectType: "",
-      activeCollect: "",
+      activeCollectType: "", // 当前聚焦的收藏类型
+      activeCollect: "", // 当前聚焦的收藏对象id
     };
   },
   // actions: {

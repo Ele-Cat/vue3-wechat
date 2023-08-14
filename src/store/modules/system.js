@@ -3,13 +3,8 @@ import { defineStore } from "pinia";
 export const useSystemStore = defineStore("system", {
   state: () => {
     return {
-      activeMenu: "message",
-      boxTitleText: '',
-      contextMenu: {
-        visible: false,
-        top: 0,
-        left: 0,
-      },
+      activeMenu: "message", // 当前聚焦的工具栏目
+      boxTitleText: '', // 聊天、收藏夹的标题，因为俩地儿都用到了，就放这儿吧
     };
   },
   persist: {

@@ -16,9 +16,12 @@
       ></i>
     </div>
     <div class="tool-box tool-bottom">
-      <i class="wechatfont wechat-applet" title="小程序面板"></i>
-      <i class="wechatfont wechat-phone" title="手机"></i>
-      <i class="wechatfont wechat-menu" title="设置及其他"></i>
+      <i 
+        :class="[`wechatfont wechat-${menu.icon}`]" 
+        v-for="menu in menuBottom"
+        :key="menu.icon"
+        :title="menu.title"
+        @click="handleMenuClick(menu.icon)"></i>
     </div>
   </div>
 </template>
@@ -30,6 +33,7 @@ import { reactive } from "vue";
 
 const { useSystemStore } = useStore();
 
+// 工具栏顶部菜单
 const menuTop = reactive([
   {
     icon: "message",
@@ -53,18 +57,40 @@ const menuTop = reactive([
   },
 ]);
 
+// 工具栏底部菜单
+const menuBottom = reactive([
+  {
+    icon: "applet",
+    title: "小程序面板",
+  },
+  {
+    icon: "phone",
+    title: "手机",
+  },
+  {
+    icon: "menu",
+    title: "设置及其他",
+  },
+]);
+
+// 点击工具栏icon
 const handleMenuClick = (type) => {
   if (["files", "timeline"].includes(type)) {
-    // toast({
-    //   type: "info",
-    //   content: "相关功能开发中...",
-    // });
+    // 点击聊天文件、朋友圈弹框
+    toast({
+      type: "info",
+      content: "相关功能开发中...",
+    });
+    return;
+  } else if (["applet", "phone", "menu"].includes(type)) {
+    // 点击小程序面板、手机、设置及其他弹出小菜单
     notify({
       type: "info",
-      description: "相关功能开发中...",
+      content: "相关功能开发中...",
     });
     return;
   }
+  // 其他情况，打开对应面板
   useSystemStore.activeMenu = type;
 };
 </script>

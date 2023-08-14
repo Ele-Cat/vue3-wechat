@@ -24,6 +24,7 @@ import { EllipsisOutlined } from "@ant-design/icons-vue";
 import useStore from "@/store";
 const { useSystemStore, useChatStore, useCollectStore } = useStore();
 
+// 判断是否显示窗体标题
 const titleVisible = ref(false)
 watch(() => useSystemStore.activeMenu, (newVal) => {
   if ((newVal === 'message' && useChatStore.activeChat) || (newVal === 'collect' && useCollectStore.activeCollectType)) {
