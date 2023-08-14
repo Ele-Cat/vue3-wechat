@@ -48,7 +48,7 @@ const rightClicked = (e) => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .user-list {
   background-color: #E7E6E5;
   height: 100%;

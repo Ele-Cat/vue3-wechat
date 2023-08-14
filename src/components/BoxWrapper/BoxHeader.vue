@@ -44,7 +44,7 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .chat-title-box {
   height: 60px;
   border-bottom: 1px solid #e7e7e7;

@@ -97,7 +97,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .users {
   // background-color: #F7F7F7;
   background-color: #e6e5e4;
@@ -114,7 +114,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
     align-items: center;
     padding: 24px 10px 10px 10px;
 
-    .ant-input-affix-wrapper {
+    :deep(.ant-input-affix-wrapper) {
       background-color: #E2E2E2;
       border: none;
       box-shadow: none;

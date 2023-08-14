@@ -13,10 +13,8 @@
           <img
             v-if="chat.type !== 'send'"
             :src="chat.avatar"
-            alt=""
-            srcset=""
           />
-          <img v-else src="../../assets/vite.svg" alt="" srcset="" />
+          <img v-else src="../../assets/vite.svg" />
           <p class="chat-content">{{ chat.content }}</p>
         </div>
       </div>
@@ -175,6 +173,7 @@ const sendMsg = () => {
         width: 42px;
         height: 42px;
         overflow: hidden;
+        cursor: pointer;
       }
 
       .chat-content {
@@ -273,7 +272,7 @@ const sendMsg = () => {
     flex: 1;
     padding: 0 18px;
 
-    .ant-input {
+    :deep(.ant-input) {
       height: 100%;
       background-color: transparent;
       border: none;

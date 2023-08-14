@@ -95,7 +95,7 @@ const handleMenuClick = (type) => {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .tool-bar {
   background-color: #2e2e2e;
   width: 54px;

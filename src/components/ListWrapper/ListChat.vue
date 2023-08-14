@@ -44,7 +44,7 @@ const rightClicked = (e) => {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .chat-list {
   background-color: #e7e6e5;
   height: 100%;

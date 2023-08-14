@@ -93,7 +93,7 @@ const sendMessage = () => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .box-address-book {
   flex: 1;
   display: flex;

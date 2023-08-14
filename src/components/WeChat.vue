@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<style>
+<style scoped>
 .wechat {
   display: flex;
   width: 854px;

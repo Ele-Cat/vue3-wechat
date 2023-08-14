@@ -89,7 +89,7 @@ const handleCollectTypeClick = (menu) => {
 const totalSize = getUsedLocalStorageSize();
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .collect-list {
   background-color: #f7f7f7;
   height: 100%;
