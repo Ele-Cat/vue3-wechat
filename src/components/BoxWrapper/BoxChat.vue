@@ -274,6 +274,7 @@ const sendMsg = () => {
       background-color: transparent;
       box-shadow: none;
       line-height: 1.4;
+      resize: none;
     }
   }
 

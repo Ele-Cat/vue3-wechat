@@ -34,15 +34,7 @@ export function getAction(url, parameter) {
   });
 }
 
-//deleteAction
-export function deleteAction(url, parameter) {
-  return axios({
-    url: url,
-    method: "delete",
-    params: parameter,
-  });
-}
-
+// 获取好友列表
 export function getFriendList(parameter) {
   return axios({
     url: api.friend,
@@ -51,6 +43,7 @@ export function getFriendList(parameter) {
   });
 }
 
+// 获取群组列表
 export function getGroupList(parameter) {
   return axios({
     url: api.group,
