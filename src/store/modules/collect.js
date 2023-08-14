@@ -3,6 +3,24 @@ import { defineStore } from "pinia";
 export const useCollectStore = defineStore("collect", {
   state: () => {
     return {
+      collectTypeList: [
+        {
+          title: "全部收藏",
+          type: "all",
+        },
+        {
+          title: "最近使用",
+          type: "recent",
+        },
+        {
+          title: "链接",
+          type: "link",
+        },
+        {
+          title: "笔记",
+          type: "note",
+        },
+      ],
       collectList: [ // 收藏夹列表
         {
           id: "1",

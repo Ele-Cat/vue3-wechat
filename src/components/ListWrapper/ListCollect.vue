@@ -6,7 +6,7 @@
       </div>
       <div class="collect-box">
         <div
-          v-for="(menu, index) in menuList"
+          v-for="(menu, index) in useCollectStore.collectTypeList"
           :key="index"
           class="custom-item collect-item"
           :class="{active: useCollectStore.activeCollectType === menu.type}"
@@ -45,29 +45,10 @@ import { getUsedLocalStorageSize } from "@/utils/utils";
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
-const menuList = reactive([
-  {
-    title: "全部收藏",
-    type: "all",
-  },
-  {
-    title: "最近使用",
-    type: "recent",
-  },
-  {
-    title: "链接",
-    type: "link",
-  },
-  {
-    title: "笔记",
-    type: "note",
-  },
-]);
-
 // TODO 完善收藏模块
 onMounted(() => {
   useCollectStore.activeCollectType = useCollectStore.activeCollectType || "all";
-  useSystemStore.boxTitleText = menuList.find(menu => menu.type === useCollectStore.activeCollectType)['title']
+  useSystemStore.boxTitleText = useCollectStore.collectTypeList.find(menu => menu.type === useCollectStore.activeCollectType)['title']
 });
 
 const tagList = useCollectStore.tags;

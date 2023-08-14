@@ -1,7 +1,7 @@
 <template>
   <div class="chat-title-box" :style="{borderBottom: titleVisible ? '1px solid #e7e7e7' : 'none'}">
     <div class="chat-title" v-if="titleVisible">
-      <p>{{ useSystemStore.boxTitleText }}</p>
+      <p>{{ boxTitleText }}</p>
     </div>
     <div v-else></div>
     <div class="chat-ctrl">
@@ -26,9 +26,15 @@ const { useSystemStore, useChatStore, useCollectStore } = useStore();
 
 // 判断是否显示窗体标题
 const titleVisible = ref(false)
-watch(() => useSystemStore.activeMenu, (newVal) => {
-  if ((newVal === 'message' && useChatStore.activeChat) || (newVal === 'collect' && useCollectStore.activeCollectType)) {
+const boxTitleText = ref('')
+watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore.activeCollectType], () => {
+  if ((useSystemStore.activeMenu === 'message' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
     titleVisible.value = true
+    if (useSystemStore.activeMenu === 'message' && useChatStore.activeChat) {
+      boxTitleText.value = useChatStore.chatList.find(item => item.friendId === useChatStore.activeChat)['name']
+    } else if (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType) {
+      boxTitleText.value = useCollectStore.collectTypeList.find(item => item.type === useCollectStore.activeCollectType)['title']
+    }
   } else {
     titleVisible.value = false
   }
