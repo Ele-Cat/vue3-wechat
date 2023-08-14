@@ -14,14 +14,14 @@
 - [x] 聊天列表
 - [x] 用户列表
 - [x] 收藏列表
-- [x] 聊天窗口
 - [x] 聊天操作联动
 - [x] 通讯录操作联动
-- [x] 收藏笔记操作联动
+- [ ] 收藏笔记操作联动
 - [ ] 右键菜单联动
 - [x] Mock 通讯录信息
 - [x] Mock 用户消息
-- [ ] 拖拽聊天窗口
+- [ ] Mock 收藏消息
+- [ ] 拖拽、缩放聊天窗口
 - [ ] 锁屏功能
 - [ ] 预设[小爱同学API](http://jiuli.xiaoapi.cn/i/chat/xiaoai_tts.php?msg=你好)
 
@@ -54,7 +54,7 @@ yarn build
 - [js-pinyin](github.com/waterchestnut/pinyin)
 - [perfect-scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
 
-## 参考文档
+## 参考文档、博客
 
 - [一文搞懂 pinia 状态管理（保姆级教程）](https://zhuanlan.zhihu.com/p/533233367)
 - [Vue3 + Pinia 持久化存储](https://blog.csdn.net/weixin_36757282/article/details/127226319)
