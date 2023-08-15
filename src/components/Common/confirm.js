@@ -3,7 +3,7 @@ import WeConfirm from './WeConfirm.vue'
 
 // 准备div
 const div = document.createElement('div')
-div.setAttribute('class', 'xtx-confirm-container')
+div.setAttribute('class', 'we-confirm-container')
 document.body.appendChild(div)
 
 // 该函数渲染WeConfirm组件，标题和文本

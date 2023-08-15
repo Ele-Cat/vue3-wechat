@@ -1,5 +1,5 @@
 <template>
-  <div class="xtx-confirm" :class="{ fade: visible }">
+  <div class="we-confirm" :class="{ fade: visible }" @contextmenu="e => e.preventDefault()">
     <div class="wrapper" :class="{ fade: visible }" :style="style">
       <div class="header" ref="el">
         <h3 v-if="title">{{ title }}</h3>
@@ -71,7 +71,7 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.xtx-confirm {
+.we-confirm {
   position: fixed;
   left: 0;
   top: 0;
