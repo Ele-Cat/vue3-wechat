@@ -131,7 +131,6 @@ const handletextareaBlur = () => {
 }
 
 // 发送聊天信息
-// TODO 无法输入？需定位问题
 const inputText = ref("");
 const sendMsg = () => {
   if (!inputText.value) {
