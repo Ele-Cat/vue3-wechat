@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vueuse/core": "^10.3.0",
     "js-pinyin": "^0.2.4",
     "less": "^4.2.0",
     "less-loader": "^11.1.3",

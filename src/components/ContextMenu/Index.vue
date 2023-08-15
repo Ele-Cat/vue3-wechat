@@ -6,6 +6,7 @@
         @click.stop="handleMenuClick(contextMenu.value)">{{ contextMenu.label }}</li>
     </ul>
   </div>
+  <!-- <DragModal /> -->
 </template>
 
 <script setup>
@@ -19,6 +20,8 @@ const handleMenuClick = (type) => {
   const carryEntryInfo = useContextMenuStore.carryEntryInfo;
   if (type === "deleteChat") {
     // 删除聊天
+    // 删除聊天后，将同时删除聊天记录，包括聊天中的文件、图片、视频等内容。
+    // TODO 这块儿需参考https://gitee.com/ele-cat/shop/tree/master/src/components/library
     if (useChatStore.activeChat === carryEntryInfo.friendId) {
       // 如果当前删除的聊天是打开的聊天，关闭高亮
       useChatStore.activeChat = "";
