@@ -3,7 +3,7 @@ import { useSystemStore } from "@/store/modules/system";
 
 const ctrlKey = 17,
   commandKey = 91, // mac command
-  enterKey = 13, // enter
+  enterKey = 13, // 发送enter
   lKey = 76; // 锁定l
 
 // 把这几个的Ctrl+组合键屏蔽掉，影响体验，具体看本文件底部的keyCodes键盘字典
