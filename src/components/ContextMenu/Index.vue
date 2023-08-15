@@ -1,12 +1,9 @@
 <template>
-  <div class="custom-menu" v-show="useContextMenuStore.menuVisible" :style="{ top: useContextMenuStore.menuTop + 'px', left: useContextMenuStore.menuLeft + 'px' }">
+  <div class="custom-menu" v-show="useContextMenuStore.menuVisible"
+    :style="{ top: useContextMenuStore.menuTop + 'px', left: useContextMenuStore.menuLeft + 'px' }">
     <ul>
-      <li @click.stop="handleMenuClick('toTop')">置顶</li>
-      <li @click.stop="handleMenuClick('unRead')">标为未读</li>
-      <li @click.stop="handleMenuClick('noDisturb')">消息免打扰</li>
-      <li @click.stop="handleMenuClick('openInAStandaloneWindow')">在独立窗口中打开</li>
-      <li @click.stop="handleMenuClick('doNotDisplay')" class="border-top">不显示聊天</li>
-      <li @click.stop="handleMenuClick('deleteChat')">删除聊天</li>
+      <li v-for="contextMenu in contextMenuList" :key="contextMenu.value" :class="{ 'border-top': contextMenu.borderTop }"
+        @click.stop="handleMenuClick(contextMenu.value)">{{ contextMenu.label }}</li>
     </ul>
   </div>
 </template>
@@ -15,6 +12,8 @@
 import useStore from '@/store'
 const { useContextMenuStore } = useStore()
 import { toast } from "@/utils/feedback";
+import contextMenus from '@/utils/contextMenu';
+import { ref, watch } from 'vue';
 
 const handleMenuClick = (type) => {
   toast({
@@ -23,6 +22,14 @@ const handleMenuClick = (type) => {
   });
   useContextMenuStore.menuVisible = false;
 }
+
+const contextMenuList = ref([])
+watch(() => useContextMenuStore.showInModule, (newVal) => {
+  contextMenuList.value = contextMenus[newVal] || []
+}, {
+  immediate: true,
+  deep: true,
+})
 </script>
 
 <style lang="less" scoped>

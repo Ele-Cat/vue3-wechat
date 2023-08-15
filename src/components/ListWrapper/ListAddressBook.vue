@@ -44,6 +44,7 @@ const friendClick = (info) => {
 // 点击右键，展示自定义菜单
 const rightClicked = (e) => {
   e.preventDefault();
+  useContextMenuStore.showInModule = "friend";
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 }
 </script>

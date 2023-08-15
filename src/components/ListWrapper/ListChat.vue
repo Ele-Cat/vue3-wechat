@@ -40,6 +40,7 @@ const handleChatClick = (chat) => {
 // 点击右键展示自定义菜单
 const rightClicked = (e) => {
   e.preventDefault();
+  useContextMenuStore.showInModule = "chat";
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 };
 </script>

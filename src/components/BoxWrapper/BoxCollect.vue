@@ -1,6 +1,7 @@
 <template>
   <div class="collect-box scroll-no-bar">
-    <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id">
+    <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id"
+      @click="collectClick(collect)" @contextmenu.stop="rightClicked">
       <div class="collect-info">
         <div>
           <p class="title">{{ collect.title }}</p>
@@ -16,23 +17,37 @@
         <p>{{ collect.time }}</p>
       </div>
     </div>
+    <BoxNoMore />
   </div>
 </template>
 
 <script setup>
 import { getCollectList } from "@/api/manage";
-
 import useStore from "@/store";
-const { useCollectStore } = useStore();
+const { useCollectStore, useContextMenuStore } = useStore();
+import BoxNoMore from "./BoxNoMore.vue"
+
 if (useCollectStore.collectList.length === 0) {
   // 如果已经初始化过，就不重新渲染了
   getCollectList().then((res) => {
     const { data } = res.data;
     if (data.length == 0) return;
 
-    // 初始化通讯录
-    useCollectStore.collectList = data; // 平铺数据
+    // 初始化收藏列表
+    useCollectStore.collectList = data;
   })
+}
+
+// 点击单个收藏
+const collectClick = (collect) => {
+
+}
+
+// 点击右键，展示自定义菜单
+const rightClicked = (e) => {
+  e.preventDefault();
+  useContextMenuStore.showInModule = "collect";
+  useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 }
 </script>
 
@@ -41,7 +56,7 @@ if (useCollectStore.collectList.length === 0) {
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 18px 56px 60px;
+  padding: 18px 56px;
   display: flex;
   flex-direction: column;
 
@@ -59,9 +74,10 @@ if (useCollectStore.collectList.length === 0) {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 14px;
 
       .content {
-        font-size: 14px;
+        font-size: 12px;
         color: #999;
         line-height: 1.4;
         margin-top: 8px;
@@ -83,7 +99,7 @@ if (useCollectStore.collectList.length === 0) {
       justify-content: space-between;
       align-items: center;
       margin-top: 12px;
-      font-size: 14px;
+      font-size: 12px;
       color: #999;
 
       .extra-info {
