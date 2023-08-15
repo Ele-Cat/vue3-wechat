@@ -22,7 +22,7 @@
 - [x] Mock 用户消息
 - [ ] Mock 收藏消息
 - [ ] 拖拽、缩放聊天窗口
-- [ ] 锁屏功能
+- [ ] 锁定功能
 - [ ] 预设[小爱同学API](http://jiuli.xiaoapi.cn/i/chat/xiaoai_tts.php?msg=你好)
 
 ## 使用
