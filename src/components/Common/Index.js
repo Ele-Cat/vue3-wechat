@@ -4,6 +4,8 @@
 const importFn = import.meta.globEager('./*.vue');
 // console.dir(Object.keys(importFn)) // 文件名称数组
 
+// import Confirm from './Confirm'
+
 export default {
   install(app) {
     // 在app上进行扩展，app提供 component directive 函数
@@ -18,6 +20,8 @@ export default {
 
     // 定义指令
     defineDirective(app);
+
+    // app.config.globalProperties.$confirm = Confirm; // 原型函数
   },
 };
 

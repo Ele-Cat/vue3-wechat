@@ -15,19 +15,27 @@ const { useContextMenuStore, useChatStore } = useStore()
 import { toast } from "@/utils/feedback";
 import contextMenus from '@/utils/contextMenu';
 import { ref, watch } from 'vue';
+import Confirm from '../Common/confirm';
+
 
 const handleMenuClick = (type) => {
   const carryEntryInfo = useContextMenuStore.carryEntryInfo;
   if (type === "deleteChat") {
     // 删除聊天
-    // 删除聊天后，将同时删除聊天记录，包括聊天中的文件、图片、视频等内容。
-    // TODO 这块儿需参考https://gitee.com/ele-cat/shop/tree/master/src/components/library
-    if (useChatStore.activeChat === carryEntryInfo.friendId) {
-      // 如果当前删除的聊天是打开的聊天，关闭高亮
-      useChatStore.activeChat = "";
-    }
-    delete useChatStore.chatInfos[carryEntryInfo.friendId]
-    useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+    Confirm({
+      text: '删除聊天后，将同时删除聊天记录，包括聊天中的文件、图片、视频等内容。',
+      closable: false,
+      confirmText: '删除',
+      confirmColor: '#FF3333'
+    }).then(() => {
+      // 执行删除
+      if (useChatStore.activeChat === carryEntryInfo.friendId) {
+        // 如果当前删除的聊天是打开的聊天，关闭高亮
+        useChatStore.activeChat = "";
+      }
+      delete useChatStore.chatInfos[carryEntryInfo.friendId]
+      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+    }).catch(() => {})
   } else {
     toast({
       type: "info",
