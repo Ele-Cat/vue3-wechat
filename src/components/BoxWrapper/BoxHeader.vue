@@ -31,7 +31,7 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
   if ((useSystemStore.activeMenu === 'message' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
     titleVisible.value = true
     if (useSystemStore.activeMenu === 'message' && useChatStore.activeChat) {
-      boxTitleText.value = useChatStore.chatList.find(item => item.friendId === useChatStore.activeChat)['name']
+      boxTitleText.value = useChatStore.chatList.find(item => item.friendId === useChatStore.activeChat)?.name
     } else if (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType) {
       boxTitleText.value = useCollectStore.collectTypeList.find(item => item.type === useCollectStore.activeCollectType)['title']
     }

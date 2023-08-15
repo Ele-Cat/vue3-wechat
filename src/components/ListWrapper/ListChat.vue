@@ -6,7 +6,7 @@
       class="custom-item chat-item"
       :class="{ active: useChatStore.activeChat === chat.friendId }"
       @click="handleChatClick(chat)"
-      @contextmenu.stop="rightClicked($event)"
+      @contextmenu.stop="e => rightClicked(e, chat)"
     >
       <img :src="chat.avatar" alt="" class="chat-avatar" />
       <div class="chat-info">
@@ -38,9 +38,10 @@ const handleChatClick = (chat) => {
 };
 
 // 点击右键展示自定义菜单
-const rightClicked = (e) => {
+const rightClicked = (e, chat) => {
   e.preventDefault();
   useContextMenuStore.showInModule = "chat";
+  useContextMenuStore.carryEntryInfo = chat;
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 };
 </script>

@@ -10,16 +10,27 @@
 
 <script setup>
 import useStore from '@/store'
-const { useContextMenuStore } = useStore()
+const { useContextMenuStore, useChatStore } = useStore()
 import { toast } from "@/utils/feedback";
 import contextMenus from '@/utils/contextMenu';
 import { ref, watch } from 'vue';
 
 const handleMenuClick = (type) => {
-  toast({
-    type: "info",
-    content: "相关功能开发中...",
-  });
+  const carryEntryInfo = useContextMenuStore.carryEntryInfo;
+  if (type === "deleteChat") {
+    // 删除聊天
+    if (useChatStore.activeChat === carryEntryInfo.friendId) {
+      // 如果当前删除的聊天是打开的聊天，关闭高亮
+      useChatStore.activeChat = "";
+    }
+    delete useChatStore.chatInfos[carryEntryInfo.friendId]
+    useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+  } else {
+    toast({
+      type: "info",
+      content: "相关功能开发中...",
+    });
+  }
   useContextMenuStore.menuVisible = false;
 }
 
