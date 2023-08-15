@@ -6,6 +6,7 @@ export const useChatStore = defineStore("chat", {
       chatList: [], // 聊天列表
       chatInfos: {}, // 聊天记录
       activeChat: "", // 当前聚焦的聊天对象id
+      isFocusSendArea: false,
     };
   },
   // actions: {

@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="input-area">
-        <a-textarea v-model:value="inputText" placeholder="请输入" />
+        <a-textarea v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" />
       </div>
       <div class="input-btn">
         <button @click="sendMsg">发送(S)</button>
@@ -118,10 +118,17 @@ watch(
   }
 );
 
-
 // 自动滚动到底部
 const componentRef = ref();
 useAutoScrollBottom(componentRef);
+
+// 监听输入框聚焦失焦，方便ctrl+enter快捷发送信息
+const handletextareaFocus = () => {
+  useChatStore.isFocusSendArea = true;
+}
+const handletextareaBlur = () => {
+  useChatStore.isFocusSendArea = false;
+}
 
 // 发送聊天信息
 // TODO 无法输入？需定位问题

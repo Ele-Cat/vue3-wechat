@@ -10,6 +10,7 @@
 <script setup>
 import { ref } from 'vue'
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
+import { listenGlobalKeyDown } from '@/utils/shortcutKey'
 import ToolBar from './ToolBar/Index.vue'
 import ListWrapper from './ListWrapper/Index.vue'
 import BoxWrapper from './BoxWrapper/Index.vue'
@@ -42,6 +43,8 @@ const stopResize = () => {
 }
 // 监听元素加载完毕，不然下边的wechat.addEventListener会报错
 window.addEventListener('DOMContentLoaded', () => {
+  // 加载全局键盘监听
+  listenGlobalKeyDown()
   const wechat = document.querySelector('.wechat');
   // 监听鼠标在主窗口中移动
   wechat.addEventListener('mousemove', (e) => {
