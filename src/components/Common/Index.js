@@ -2,18 +2,15 @@
 // 批量导入需要使用一个函数 require.context(dir,deep,matching)
 // 参数：1. 目录  2. 是否加载子目录  3. 加载的正则匹配
 const importFn = import.meta.globEager('./*.vue');
-console.log('importFn: ', importFn);
-console.dir(Object.keys(importFn)) // 文件名称数组
+// console.dir(Object.keys(importFn)) // 文件名称数组
 
 export default {
   install(app) {
     // 在app上进行扩展，app提供 component directive 函数
     // 批量注册全局组件
     Object.keys(importFn).forEach((key) => {
-      console.log('key: ', key);
       // 导入组件
       const componentName = key.replace(/^\.\/(.*)\.\w+$/, '$1');
-      console.log('componentName: ', componentName);
       const component = importFn[key].default;
       // 注册组件
       app.component(componentName, component);
