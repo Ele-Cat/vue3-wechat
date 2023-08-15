@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import useStore from "@/store";
 import { DownOutlined, UpOutlined } from "@ant-design/icons-vue";
 import { getUsedLocalStorageSize } from "@/utils/utils";

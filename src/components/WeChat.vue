@@ -1,5 +1,5 @@
 <template>
-  <div class="wechat" ref="wechat" @mousedown="startResize" @mouseup="stopResize">
+  <div class="wechat" ref="wechatRef" @mousedown="startResize" @mouseup="stopResize">
     <ToolBar />
     <ListWrapper />
     <BoxWrapper />
@@ -8,17 +8,33 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 import ToolBar from './ToolBar/Index.vue'
 import ListWrapper from './ListWrapper/Index.vue'
 import BoxWrapper from './BoxWrapper/Index.vue'
 import ContextMenu from './ContextMenu/Index.vue'
 
+const wechatRef = ref();
+useDetectOutsideClick(wechatRef, () => {
+  // 鼠标移动到外边松开，结束缩放
+  isResizing = false;
+});
+
 // 是否缩放主窗口
 let isResizing = false;
+let isLeft = false;
+let isRight = false;
+let isTop = false;
+let isBottom = false;
 // 鼠标在主窗口按下
 const startResize = (e) => {
-  isResizing = true;
-  e.preventDefault();
+  if (isLeft || isRight || isTop || isBottom) {
+    isResizing = true;
+    e.preventDefault();
+  } else {
+    isResizing = false;
+  }
 }
 // 鼠标在主窗口抬起
 const stopResize = () => {
@@ -29,19 +45,19 @@ window.addEventListener('DOMContentLoaded', () => {
   const wechat = document.querySelector('.wechat');
   // 监听鼠标在主窗口中移动
   wechat.addEventListener('mousemove', (e) => {
-    const diff = 5; // 设定偏移量，相距diff距离展示对应鼠标样式
+    const diff = 6; // 设定偏移量，相距diff距离展示对应鼠标样式
     const { clientX, clientY } = e;
     const { offsetWidth, offsetLeft, offsetHeight, offsetTop } = wechat;
     if (isResizing) {
       // 按下了鼠标，待补全
       // wechat.style.width = clientX + 'px';
-      // wechat.style.height = clientY + 'px';
+      // wechat.style.height = clientY + 'px'; 
     } else {
       // 展示对应边框位置的鼠标样式
-      const isLeft = clientX - offsetLeft <= diff && clientX - offsetLeft >= 0;
-      const isRight = -clientX + offsetLeft + offsetWidth <= diff && -clientX + offsetLeft + offsetWidth >= 0;
-      const isTop = clientY - offsetTop <= diff && clientY - offsetTop >= 0;
-      const isBottom = -clientY + offsetTop + offsetHeight < diff && -clientY + offsetTop + offsetHeight >= 0;
+      isLeft = clientX - offsetLeft <= diff && clientX - offsetLeft >= 0;
+      isRight = -clientX + offsetLeft + offsetWidth <= diff && -clientX + offsetLeft + offsetWidth >= 0;
+      isTop = clientY - offsetTop <= diff && clientY - offsetTop >= 0;
+      isBottom = -clientY + offsetTop + offsetHeight < diff && -clientY + offsetTop + offsetHeight >= 0;
 
       if ((isLeft && isTop) || (isRight && isBottom)) { // 左上 || 右下
         wechat.style.cursor = 'nwse-resize';
