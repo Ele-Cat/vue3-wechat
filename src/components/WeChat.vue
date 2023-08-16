@@ -1,6 +1,6 @@
 <template>
-  <div class="wechat" ref="wechatRef" @mousedown="startResize" @mouseup="stopResize">
-    <ToolBar />
+  <div class="wechat" :style="wechatStyle" ref="wechatRef" @mousedown="startResize" @mouseup="stopResize" :handle="handle">
+    <ToolBar ref="handle" />
     <ListWrapper />
     <BoxWrapper />
     <ContextMenu />
@@ -8,15 +8,41 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDraggable } from "@vueuse/core";
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 import { listenGlobalKeyDown } from '@/utils/shortcutKey'
+import useStore from "@/store";
+const { useSystemStore } = useStore();
 import ToolBar from './ToolBar/Index.vue'
 import ListWrapper from './ListWrapper/Index.vue'
 import BoxWrapper from './BoxWrapper/Index.vue'
 import ContextMenu from './ContextMenu/Index.vue'
 
+const handle = ref();
 const wechatRef = ref();
+const { innerWidth, innerHeight } = window;
+const wechatStyle = ref(useSystemStore.wechatStyle);
+const { x, y, style } = useDraggable(wechatRef, {
+  // handle,
+  initialValue: {
+    x: useSystemStore.windows.left || (innerWidth - useSystemStore.windows.width) / 2,
+    y: useSystemStore.windows.top || (innerHeight - useSystemStore.windows.height) / 2,
+  },
+});
+
+watch(() => [x, y, style], () => {
+  wechatStyle.value = Object.assign({}, wechatStyle.value, {
+    left: `${x.value}px`,
+    top: `${y.value}px`,
+  })
+  useSystemStore.windows.left = x.value
+  useSystemStore.windows.top = y.value
+}, {
+  immediate: true,
+  deep: true,
+})
+
 useDetectOutsideClick(wechatRef, () => {
   // 鼠标移动到外边松开，结束缩放
   isResizing = false;
@@ -80,8 +106,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <style scoped>
 .wechat {
+  position: fixed;
   display: flex;
-  width: 854px;
+  width: 850px;
   height: 660px;
   box-shadow: 0 0 100px #333;
 }

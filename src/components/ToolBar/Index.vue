@@ -115,12 +115,12 @@ const handleMenuClick = (type) => {
       height: 36px;
       border-radius: 4px;
       overflow: hidden;
-      margin-bottom: 26px;
+      margin-bottom: 18px;
     }
 
     i {
       font-size: 22px;
-      margin-bottom: 16px;
+      padding: 8px 0;
       width: 100%;
       text-align: center;
       cursor: pointer;
@@ -149,6 +149,7 @@ const handleMenuClick = (type) => {
 
   .tool-bottom {
     i {
+      padding: 0;
       font-size: 18px;
       margin-bottom: 14px;
 
