@@ -110,6 +110,6 @@ window.addEventListener('DOMContentLoaded', () => {
   display: flex;
   width: 850px;
   height: 660px;
-  box-shadow: 0 0 100px #333;
+  box-shadow: 0 0 12px #666;
 }
 </style>
