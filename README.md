@@ -1,11 +1,32 @@
 # Vue3 WeChat
 
 - 使用 Vite + Vue3 + AntDesignVue + Pinia + MockJS 搭建的复刻新版微信项目
+- 目前进度：**基础功能搭建完毕，精细化细节点**
 - [查看演示](https://ele-cat.gitee.io/vue3-wechat/)
 
 ## 功能截图
 
 ![功能截图](./snapshot/interface.jpg)
+
+## 使用
+
+### 安装
+
+```
+npm install
+```
+
+### 运行
+
+```
+yarn serve
+```
+
+### 打包
+
+```
+yarn build
+```
 
 ## 功能点
 
@@ -95,26 +116,6 @@
     - [x] 列表
     - [ ] 详情
 
-## 使用
-
-### 安装
-
-```
-npm install
-```
-
-### 运行
-
-```
-yarn serve
-```
-
-### 打包
-
-```
-yarn build
-```
-
 ## 使用的插件
 
 - [pinia](github.com/vuejs/pinia)
@@ -122,7 +123,10 @@ yarn build
 - [mockjs](github.com/nuysoft/Mock)
 - [axios](github.com/axios/axios)
 - [js-pinyin](github.com/waterchestnut/pinyin)
+- [VueUse英文文档](https://vueuse.org/)
+- [VueUse中文文档](https://www.vueusejs.com)
 - [perfect-scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
+
 
 ## 参考文档、博客
 
