@@ -8,14 +8,14 @@
         v-for="(chat, index) in chatContent"
         :key="index"
       >
-        <div class="chat-time"><span>22:03</span></div>
+        <div class="chat-time"><span>{{friendTime(chat.createTime)}}</span></div>
         <div class="chat-info">
           <img
             v-if="chat.type !== 'send'"
             :src="chat.avatar"
           />
           <img v-else src="../../assets/vite.svg" />
-          <p class="chat-content">{{ chat.content }}</p>
+          <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
         </div>
       </div>
     </div>
@@ -47,7 +47,8 @@ import { onMounted, ref, watch } from "vue";
 import dayjs from "dayjs";
 import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
 import useStore from "@/store";
-const { useChatStore } = useStore();
+const { useChatStore, useContextMenuStore } = useStore();
+import { friendTime } from "@/utils/utils";
 import BoxNoSelected from "./BoxNoSelected.vue";
 
 // const chatContent = reactive([
@@ -60,35 +61,39 @@ import BoxNoSelected from "./BoxNoSelected.vue";
 //   {
 //     id: 2,
 //     type: "receive",
-//     content: "我是Vite？",
+//     content: "我是Vite",
 //     createTime: "2023-08-10 12:15:12",
-//   },
-//   {
-//     id: 3,
-//     type: "send",
-//     content: "跟我长得有点像",
-//     createTime: "2023-08-10 12:16:12",
-//   },
-//   {
-//     id: 4,
-//     type: "receive",
-//     content:
-//       "Vite 是一种具有明确建议的工具，具备合理的默认设置。您可以在 功能指南 中了解 Vite 的各种可能性。通过 插件，Vite 支持与其他框架或工具的集成。如有需要，您可以通过 配置部分 自定义适应你的项目。",
-//     createTime: "2023-08-10 12:17:12",
-//   },
-//   {
-//     id: 2,
-//     type: "send",
-//     content: "说人话",
-//     createTime: "2023-08-10 12:15:12",
-//   },
-//   {
-//     id: 3,
-//     type: "receive",
-//     content: "来我官网看https://cn.vitejs.dev/",
-//     createTime: "2023-08-10 12:16:12",
 //   },
 // ]);
+
+// 右键聊天文本
+const handleContentContextmenu = (e) => {
+  e.preventDefault();
+  const selection = window.getSelection().toString();
+  if (selection) {
+    // 如果已选择文本的情况下右键
+    // 展示小菜单：复制、多选、搜一搜
+    useContextMenuStore.showInModule = "chatSelectSome";
+    useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+  } else {
+    // 直接右键聊天文本
+    // 全选文本并展示大菜单：复制、翻译、转发、收藏、多选、引用、搜一搜、删除
+    const node = e.target.childNodes[0]
+    selectText(node, 0, node.length); // 选择文本
+    useContextMenuStore.showInModule = "chatSelectAll";
+    useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+  }
+  // 选择指定范围的文本
+  function selectText(element, start, end) {
+    var range = document.createRange(); // 创建一个 Range 对象
+    range.setStart(element, start); // 设置起始位置
+    range.setEnd(element, end); // 设置结束位置
+
+    let selection = window.getSelection(); // 获取当前选择对象
+    selection.removeAllRanges(); // 清空已有的选择范围
+    selection.addRange(range); // 添加新的选择范围
+  }
+}
 
 onMounted(() => {
   // setInterval(() => {

@@ -31,6 +31,65 @@ const contextMenus = {
       borderTop: false,
     },
   ],
+  chatSelectSome: [
+    {
+      label: "复制",
+      value: "copyText",
+      borderTop: false,
+    },
+    {
+      label: "多选",
+      value: "multipleSelect",
+      borderTop: false,
+    },
+    {
+      label: "搜一搜",
+      value: "searchForIt",
+      borderTop: false,
+    },
+  ],
+  chatSelectAll: [
+    {
+      label: "复制",
+      value: "copyText",
+      borderTop: false,
+    },
+    {
+      label: "翻译",
+      value: "translate",
+      borderTop: false,
+    },
+    {
+      label: "转发",
+      value: "forward",
+      borderTop: true,
+    },
+    {
+      label: "收藏",
+      value: "collectText",
+      borderTop: false,
+    },
+    {
+      label: "多选",
+      value: "multipleSelect",
+      borderTop: false,
+    },
+    {
+      label: "引用",
+      value: "quote",
+      borderTop: false,
+    },
+    {
+      label: "搜一搜",
+      value: "searchForIt",
+      borderTop: false,
+    },
+    {
+      label: "删除",
+      value: "deleteChatItem",
+      borderTop: true,
+    },
+  ],
   friend: [
     {
       label: "发消息",
