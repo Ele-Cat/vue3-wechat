@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="input-area">
-        <a-textarea v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" />
+        <a-textarea class="scroll-no-bar" v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" />
       </div>
       <div class="input-btn">
         <button @click="sendMsg">发送(S)</button>
