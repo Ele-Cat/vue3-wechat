@@ -139,6 +139,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
       margin-left: 10px;
       background-color: #ebebeb;
       border-radius: 4px;
+      cursor: pointer;
 
       &:hover {
         background-color: #e0e0e0;

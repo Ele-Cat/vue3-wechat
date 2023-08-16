@@ -15,6 +15,7 @@
           <i class="wechatfont" :class="'wechat-' + menu.type"></i>
           <p class="collect-name">{{ menu.title }}</p>
         </div>
+        <div class="collect-divide"></div>
         <div class="tag-title" @click="toggleTags">
           <p><i class="wechatfont wechat-tag"></i>标签</p>
           <up-outlined v-if="tagsVisivle" />
@@ -105,8 +106,8 @@ const totalSize = getUsedLocalStorageSize();
       align-items: center;
       justify-content: center;
       background-color: #ffffff;
-      height: 38px;
-      line-height: 38px;
+      height: 34px;
+      line-height: 34px;
       text-align: center;
       cursor: pointer;
       font-size: 14px;
@@ -130,10 +131,15 @@ const totalSize = getUsedLocalStorageSize();
       padding: 14px 14px 0 14px;
     }
 
+    .collect-divide {
+      height: 1px;
+      background-color: #eaeaea;
+      margin: 8px 0;
+    }
+
     .tag-title {
       padding: 14px;
       font-size: 14px;
-      border-top: 1px solid #eaeaea;
       display: flex;
       align-items: center;
       justify-content: space-between;

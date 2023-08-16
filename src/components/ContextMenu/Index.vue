@@ -36,6 +36,21 @@ const handleMenuClick = (type) => {
       delete useChatStore.chatInfos[carryEntryInfo.friendId]
       useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
     }).catch(() => {})
+  } else if (type === "hideChat") {
+    // 不显示聊天
+    Confirm({
+      text: '不显示该聊天',
+      closable: false,
+      confirmText: '不显示',
+      confirmColor: '#FF3333'
+    }).then(() => {
+      // 执行不显示
+      if (useChatStore.activeChat === carryEntryInfo.friendId) {
+        // 如果当前删除的聊天是打开的聊天，关闭高亮
+        useChatStore.activeChat = "";
+      }
+      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+    }).catch(() => {})
   } else {
     toast({
       type: "info",

@@ -83,7 +83,7 @@ const sendMessage = () => {
     })
     // 同时给这个聊天记录一个空的记录
     useChatStore.chatInfos[useAddressBookStore.activeAddressBook] = {
-      data: []
+      data: useChatStore.chatInfos[useAddressBookStore.activeAddressBook] ? useChatStore.chatInfos[useAddressBookStore.activeAddressBook]['data'] : []
     }
   }
   // 设定标题
