@@ -6,7 +6,7 @@ import Antd from "ant-design-vue";
 import "ant-design-vue/dist/reset.css";
 import "./global.less";
 
-import ui from "@/components/Common";
+import ui from "@/components/libs";
 import "@/utils/mock.js";
 
 const app = createApp(App);

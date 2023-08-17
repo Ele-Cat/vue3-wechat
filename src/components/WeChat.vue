@@ -4,6 +4,7 @@
     <ListWrapper />
     <BoxWrapper />
     <ContextMenu />
+    <ResizeContainer />
   </div>
 </template>
 
@@ -14,34 +15,13 @@ import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 import { listenGlobalKeyDown } from '@/utils/shortcutKey'
 import useStore from "@/store";
 const { useSystemStore } = useStore();
-import ToolBar from './ToolBar/Index.vue'
-import ListWrapper from './ListWrapper/Index.vue'
-import BoxWrapper from './BoxWrapper/Index.vue'
-import ContextMenu from './ContextMenu/Index.vue'
+import ToolBar from './layout/ToolBar/Index.vue'
+import ListWrapper from './layout/ListWrapper/Index.vue'
+import BoxWrapper from './layout/BoxWrapper/Index.vue'
+import ContextMenu from './layout/ContextMenu/Index.vue'
 
 const handle = ref();
-const wechatRef = ref();
-const { innerWidth, innerHeight } = window;
-const wechatStyle = ref(useSystemStore.wechatStyle);
-const { x, y, style } = useDraggable(wechatRef, {
-  // handle,
-  initialValue: {
-    x: useSystemStore.windows.left || (innerWidth - useSystemStore.windows.width) / 2,
-    y: useSystemStore.windows.top || (innerHeight - useSystemStore.windows.height) / 2,
-  },
-});
-
-watch(() => [x, y, style], () => {
-  wechatStyle.value = Object.assign({}, wechatStyle.value, {
-    left: `${x.value}px`,
-    top: `${y.value}px`,
-  })
-  useSystemStore.windows.left = x.value
-  useSystemStore.windows.top = y.value
-}, {
-  immediate: true,
-  deep: true,
-})
+let wechatRef = ref();
 
 useDetectOutsideClick(wechatRef, () => {
   // 鼠标移动到外边松开，结束缩放
@@ -102,14 +82,52 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+const { innerWidth, innerHeight } = window;
+const wechatStyle = ref({});
+const { x, y, style } = useDraggable(wechatRef, {
+  handle,
+  preventDefault: true,
+  initialValue: {
+    x: useSystemStore.windows.left || (innerWidth - useSystemStore.windows.width) / 2,
+    y: useSystemStore.windows.top || (innerHeight - useSystemStore.windows.height) / 2,
+  },
+});
+
+watch(() => [x, y, style, useSystemStore.windows.height], () => {
+  if (isLeft || isRight || isTop || isBottom) {
+    console.log('在边框');
+    wechatStyle.value = {
+      width: `${useSystemStore.windows.width}px`,
+      height: `${useSystemStore.windows.height}px`,
+      left: `${x.value}px`,
+      top: `${y.value}px`,
+    }
+    useSystemStore.windows.left = x.value
+    useSystemStore.windows.top = y.value
+  } else {
+    wechatStyle.value = {
+      width: `${useSystemStore.windows.width}px`,
+      height: `${useSystemStore.windows.height}px`,
+      left: `${x.value}px`,
+      top: `${y.value}px`,
+    }
+    useSystemStore.windows.left = x.value
+    useSystemStore.windows.top = y.value
+    console.log('在拖动');
+  }
+}, {
+  immediate: true,
+  deep: true,
+})
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .wechat {
   position: fixed;
   display: flex;
-  width: 850px;
-  height: 660px;
-  box-shadow: 0 0 12px #666;
+  /* width: 850px;
+  height: 660px; */
+  box-shadow: 0 0 6px #999;
 }
 </style>

@@ -15,7 +15,7 @@ const { useContextMenuStore, useChatStore } = useStore()
 import { toast } from "@/utils/feedback";
 import contextMenus from '@/utils/contextMenu';
 import { ref, watch } from 'vue';
-import Confirm from '../Common/confirm';
+import Confirm from '@/components/libs/confirm';
 
 
 const handleMenuClick = (type) => {
@@ -71,7 +71,7 @@ watch(() => useContextMenuStore.showInModule, (newVal) => {
 
 <style lang="less" scoped>
 .custom-menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   // width: 144px;
