@@ -10,6 +10,8 @@ export const useSystemStore = defineStore("system", {
         left: 0,
         width: 850,
         height: 660,
+        minWidth: 700,
+        minHeight: 500,
       },
       boxTitleText: '', // 聊天、收藏夹的标题，因为俩地儿都用到了，就放这儿吧
       isLocked: false, // 是否为锁屏状态

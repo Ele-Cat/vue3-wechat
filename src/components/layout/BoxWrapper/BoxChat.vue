@@ -14,7 +14,7 @@
             v-if="chat.type !== 'send'"
             :src="chat.avatar"
           />
-          <img v-else src="../../assets/vite.svg" />
+          <img v-else src="@/assets/vite.svg" />
           <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
         </div>
       </div>

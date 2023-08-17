@@ -39,7 +39,7 @@ const handleWrapperContextMenu = (e) => {
 
 #app {
   height: 100vh;
-  background: url(./assets/bg.jpg) no-repeat center / cover;
+  background: url(@/assets/bg.jpg) no-repeat center / cover;
   overflow: hidden;
   user-select: none;
 

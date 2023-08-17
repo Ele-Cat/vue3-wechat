@@ -69,6 +69,8 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
+    position: relative;
+    z-index: 99;
 
     .chat-ctrl-icon {
       i {
