@@ -1,7 +1,9 @@
 <template>
-  <div class="box-no-selected">
-    <i class="wechatfont wechat-weixin"></i>
-  </div>
+  <WeDragBox>
+    <div class="box-no-selected">
+      <i class="wechatfont wechat-weixin"></i>
+    </div>
+  </WeDragBox>
 </template>
 
 <script setup></script>

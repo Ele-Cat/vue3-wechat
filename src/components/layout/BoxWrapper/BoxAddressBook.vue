@@ -1,7 +1,7 @@
 <template>
-  <div class="box-address-book">
-    <BoxNoSelected v-if="noSelect" />
-    <div v-else class="address-info">
+  <BoxNoSelected v-if="noSelect" />
+  <div class="box-address-book" v-else>
+    <div class="address-info">
       <div class="border-bottom flex">
         <div class="flex-left">
           <img class="avatar" :src="addressBookInfo.avatar" alt="" />

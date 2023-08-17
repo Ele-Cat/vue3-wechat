@@ -10,29 +10,38 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import useStore from "@/store";
 const { useSystemStore } = useStore();
 
 const diff = ref("6px")
-const backgroundColor = ref("rgba(0, 0, 0, 0.2)")
+const backgroundColor = ref("rgba(0, 0, 0, 0)")
 let resizing = false;
 let resizeType = "";
 let startX = 0;
 let startY = 0;
-let minWidth = useSystemStore.windows.minWidth;
-let minHeight = useSystemStore.windows.minHeight;
-let width = useSystemStore.windows.width;
-let height = useSystemStore.windows.height;
-let top = useSystemStore.windows.top;
-let left = useSystemStore.windows.left;
+const minWidth = useSystemStore.windows.minWidth;
+const minHeight = useSystemStore.windows.minHeight;
+let width = 0;
+let height = 0;
+let top = 0;
+let left = 0;
+
+watch(() => useSystemStore.windows, (newVal) => {
+  width = newVal.width;
+  height = newVal.height;
+  top = newVal.top;
+  left = newVal.left;
+}, {
+  immediate: true,
+  deep: true,
+})
 
 const startResize = (type, event) => {
   resizing = true;
   resizeType = type;
   startX = event.clientX;
   startY = event.clientY;
-  console.log('event: ', event);
 
   // 监听鼠标移动和释放事件
   document.addEventListener('mousemove', handleResize);
@@ -42,25 +51,48 @@ const startResize = (type, event) => {
 const handleResize = (event) => {
   if (resizing) {
     const offsetX = event.clientX - startX;
-    console.log('offsetX: ', offsetX);
     const offsetY = event.clientY - startY;
 
     // 根据调整类型修改窗口的大小
     switch (resizeType) {
       case "top":
         height -= offsetY;
-        top += offsetY;
+        height = height >= minHeight ? height : minHeight
+        top += height > minHeight ? offsetY : 0;
         break;
       case "bottom":
         height += offsetY;
         break;
       case "left":
         width -= offsetX;
-        left += offsetX;
-        console.log('left: ', left);
-        console.log('offsetX: ', offsetX);
+        width = width >= minWidth ? width : minWidth
+        left += width > minWidth ? offsetX : 0;
         break;
       case "right":
+        width += offsetX;
+        break;
+      case "topLeft":
+        height -= offsetY;
+        height = height >= minHeight ? height : minHeight
+        top += height > minHeight ? offsetY : 0;
+        width -= offsetX;
+        width = width >= minWidth ? width : minWidth
+        left += width > minWidth ? offsetX : 0;
+        break;
+      case "topRight":
+        height -= offsetY;
+        height = height >= minHeight ? height : minHeight
+        top += offsetY;    
+        width += offsetX;
+        break;
+      case "bottomLeft":
+        height += height >= minHeight ? offsetY : 0;
+        width -= offsetX;
+        width = width >= minWidth ? width : minWidth
+        left += width > minWidth ? offsetX : 0;
+        break;
+      case "bottomRight":
+        height += offsetY;
         width += offsetX;
         break;
     }
@@ -68,16 +100,13 @@ const handleResize = (event) => {
     // 限制窗口的最小宽度和最小高度
     width = Math.max(width, minWidth);
     height = Math.max(height, minHeight);
-    useSystemStore.windows.width = width
-    useSystemStore.windows.height = height
     useSystemStore.windows.top = top
     useSystemStore.windows.left = left
-    console.log('useSystemStore.windows: ', useSystemStore.windows);
+    useSystemStore.windows.width = width
+    useSystemStore.windows.height = height
 
     startX = event.clientX;
     startY = event.clientY;
-    // useSystemStore.windows.top = startY
-    // useSystemStore.windows.left = startX
   }
 }
 

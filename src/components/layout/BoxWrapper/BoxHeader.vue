@@ -1,20 +1,22 @@
 <template>
-  <div class="chat-title-box" :style="{borderBottom: titleVisible ? '1px solid #e7e7e7' : 'none'}">
-    <div class="chat-title" v-if="titleVisible">
-      <p>{{ boxTitleText }}</p>
-    </div>
-    <div v-else></div>
-    <div class="chat-ctrl">
-      <div class="chat-ctrl-icon">
-        <i class="wechatfont wechat-regular" title="置顶"></i>
-        <!-- 取消置顶 -->
-        <i class="wechatfont wechat-minimize" title="最小化"></i>
-        <i class="wechatfont wechat-maximize" title="最大化"></i>
-        <!-- wechat-restore_down 向下还原 -->
-        <i class="wechatfont wechat-close" title="关闭"></i>
+  <div>
+    <WeDragBox class="chat-title-box" :style="{borderBottom: titleVisible ? '1px solid #e7e7e7' : 'none'}">
+      <div class="chat-title" v-if="titleVisible">
+        <p>{{ boxTitleText }}</p>
       </div>
-      <ellipsis-outlined class="chat-more" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'message'" />
-    </div>
+      <div v-else></div>
+      <div class="chat-ctrl">
+        <div class="chat-ctrl-icon no-drag">
+          <i class="wechatfont wechat-regular" title="置顶"></i>
+          <!-- 取消置顶 -->
+          <i class="wechatfont wechat-minimize" title="最小化"></i>
+          <i class="wechatfont wechat-maximize" title="最大化"></i>
+          <!-- wechat-restore_down 向下还原 -->
+          <i class="wechatfont wechat-close" title="关闭"></i>
+        </div>
+        <ellipsis-outlined class="chat-more no-drag" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'message'" />
+      </div>
+    </WeDragBox>
   </div>
 </template>
 
@@ -46,7 +48,7 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
 
 <style lang="less" scoped>
 .chat-title-box {
-  height: 60px;
+  height: 60px !important;
   border-bottom: 1px solid #e7e7e7;
   padding: 0 0 0 24px;
   display: flex;

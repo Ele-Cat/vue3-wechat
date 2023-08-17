@@ -1,6 +1,6 @@
 <template>
-  <div class="tool-bar">
-    <div class="tool-box tool-top">
+  <WeDragBox class="tool-bar">
+    <div class="tool-box tool-top no-drag">
       <img src="@/assets/vite.svg" class="avatar" alt="" srcset="" />
       <i
         class="wechatfont"
@@ -17,20 +17,19 @@
     </div>
     <div class="tool-box tool-bottom">
       <i 
-        :class="[`wechatfont wechat-${menu.icon}`]" 
+        :class="[`no-drag wechatfont wechat-${menu.icon}`]" 
         v-for="menu in menuBottom"
         :key="menu.icon"
         :title="menu.title"
         @click="handleMenuClick(menu.icon)"></i>
     </div>
-  </div>
+  </WeDragBox>
 </template>
 
 <script setup>
+import { reactive } from "vue";
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
-import { reactive } from "vue";
-
 const { useSystemStore } = useStore();
 
 // 工具栏顶部菜单
@@ -99,6 +98,7 @@ const handleMenuClick = (type) => {
 .tool-bar {
   background-color: #2e2e2e;
   width: 54px;
+  height: 100%;
   color: #979797;
   display: flex;
   flex-direction: column;
@@ -116,6 +116,7 @@ const handleMenuClick = (type) => {
       border-radius: 4px;
       overflow: hidden;
       margin-bottom: 18px;
+      cursor: pointer;
     }
 
     i {

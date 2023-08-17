@@ -1,20 +1,20 @@
 <template>
   <div class="users">
-    <div class="search-box">
-      <a-input size="small" v-model:value="searchText" placeholder="搜索">
+    <WeDragBox class="search-box">
+      <a-input size="small" v-model:value="searchText" placeholder="搜索" class="no-drag">
         <template #prefix>
           <search-outlined style="color: #ccc" />
         </template>
       </a-input>
       <i
-        class="wechatfont wechat-add"
+        class="wechatfont wechat-add no-drag"
         v-if="useSystemStore.activeMenu === 'message'"
       ></i>
       <i
-        class="wechatfont wechat-adduser"
+        class="wechatfont wechat-adduser no-drag"
         v-if="useSystemStore.activeMenu === 'users'"
       ></i>
-    </div>
+    </WeDragBox>
     <div class="list-box">
       <ListChat v-show="useSystemStore.activeMenu === 'message'" />
       <ListAddressBook v-show="useSystemStore.activeMenu === 'users'" />
