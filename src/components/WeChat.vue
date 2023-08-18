@@ -55,13 +55,12 @@ watch(
 watch(
   () => useSystemStore.windowState.status,
   (newVal, oldVal) => {
-    console.log('newVal: ', newVal);
     if (newVal === "minimize") {
       wechatStyle.value = Object.assign(
         {},
         {
           overflow: "hidden",
-          transition: "all .12s",
+          transition: "all .12s cubic-bezier(0.5, 0, 0.9, 1)",
           width: "0",
           height: "0",
           left: "54px",
@@ -78,6 +77,22 @@ watch(
           height: "calc(100vh - 30px)",
           left: "0px",
           top: "0px",
+        }
+      );
+      // useSystemStore.windows.top = 0
+      // useSystemStore.windows.left = 0
+      // useSystemStore.windows.width = innerWidth
+      // useSystemStore.windows.height = innerHeight - 30
+    } else if (newVal === "closed") {
+      wechatStyle.value = Object.assign(
+        {},
+        {
+          overflow: "hidden",
+          transition: "all .12s cubic-bezier(0.5, 0, 0.9, 1)",
+          width: "0",
+          height: "0",
+          right: "90px",
+          bottom: "15px",
         }
       );
     } else {

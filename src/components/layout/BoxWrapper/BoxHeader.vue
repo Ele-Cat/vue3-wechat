@@ -74,6 +74,18 @@ const handleToggleMaximize = () => {
   useSystemStore.windowState.prevStatus = useSystemStore.windowState.status
   useSystemStore.windowState.status = useSystemStore.windowState.status === "maximize" ? "normal" : "maximize"
 }
+// 关闭
+const handleClose = () => {
+  const { width, height, left, top } = useSystemStore.windows
+  useSystemStore.windowState.prevWindows = {
+    width: `${width}px`,
+    height: `${height}px`,
+    left: `${left}px`,
+    top: `${top}px`,
+  }
+  useSystemStore.windowState.prevStatus = useSystemStore.windowState.status
+  useSystemStore.windowState.status = "closed";
+}
 </script>
 
 <style lang="less" scoped>

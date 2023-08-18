@@ -15,8 +15,7 @@ export const useSystemStore = defineStore("system", {
       boxTitleText: '', // 聊天、收藏夹的标题，因为俩地儿都用到了，就放这儿吧
       windowState: {
         isTop: false, // 是否置顶
-        status: "normal", // 默认 normal、最小化 minimize、最大化 maximize
-        isClosed: false, // 是否关闭
+        status: "normal", // 默认 normal、最小化 minimize、最大化 maximize、关闭 closed
         prevStatus: "", // 默认 normal、最小化 minimize、最大化 maximize
         prevWindows: {}, // 最小化、最大化后，恢复至上一次的窗口状态
       },

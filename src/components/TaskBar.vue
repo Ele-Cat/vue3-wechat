@@ -2,12 +2,16 @@
   <div class="task-bar">
     <div class="task-list">
       <i class="wechatfont wechat-windows icon" title="开始"></i>
-      <div class="icon wechat">
+      <div class="icon wechat" v-if="useSystemStore.windowState.status !== 'closed'">
         <img src="@/assets/wechat.svg" title="微信" @click="handleToggleMinimize" alt="">
       </div>
       <!-- <i class="wechatfont wechat-task-wechat"></i> -->
     </div>
     <div class="task-system">
+      <div class="wechat" @click="handleClickWechat">
+        <img src="@/assets/wechat.svg" alt="">
+        <!-- <img src="@/assets/wechat.svg" class="blink" alt=""> -->
+      </div>
       <div class="time" :title="nowDate">{{ nowTime }}</div>
     </div>
   </div>
@@ -34,6 +38,9 @@ const handleToggleMinimize = () => {
   }
   useSystemStore.windowState.status = useSystemStore.windowState.status === "minimize" ? useSystemStore.windowState.prevStatus : "minimize"
 }
+const handleClickWechat = () => {
+  useSystemStore.windowState.status = useSystemStore.windowState.prevStatus
+}
 </script>
 
 <style lang="less" scoped>
@@ -46,7 +53,7 @@ const handleToggleMinimize = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(231, 231, 231, 0.98);
+  background-color: rgba(9, 31, 47, 0.98);
   backdrop-filter: blur(1px);
 
   .task-list {
@@ -61,9 +68,10 @@ const handleToggleMinimize = () => {
       text-align: center;
       font-size: 22px;
       margin-right: 4px;
+      color: #FFFFFF;
 
       &:hover, &:active, &.active {
-        background-color: #F1F1F1;
+        background-color: #223644;
       }
       
       img {
@@ -101,15 +109,42 @@ const handleToggleMinimize = () => {
     padding-right: 6px;
     font-size: 12px;
 
+    .wechat {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 100%;
+
+      img {
+        width: 20px;
+        object-fit: contain;
+      }
+
+      &:hover, &:active, &.active {
+        background-color: #223644;
+      }
+
+      .blink {
+        animation: blink 1s infinite;
+      }
+    }
+
     .time {
-      color: #333;
+      color: #FFFFFF;
       padding: 0 10px;
       border-right: 1px solid #AEAEAE;
 
       &:hover {
-        background-color: #F1F1F1;
+        background-color: #223644;
       }
     }
   }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  30% { opacity: 0; }
+  100% { opacity: 1; }
 }
 </style>
