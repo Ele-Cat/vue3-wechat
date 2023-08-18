@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-const { innerWidth, innerHeight } = window;
 
 export const useSystemStore = defineStore("system", {
   state: () => {
@@ -14,6 +13,13 @@ export const useSystemStore = defineStore("system", {
         minHeight: 500,
       },
       boxTitleText: '', // 聊天、收藏夹的标题，因为俩地儿都用到了，就放这儿吧
+      windowState: {
+        isTop: false, // 是否置顶
+        isMinimize: false, // 是否最小化
+        isMaximize: false, // 是否最大化
+        isClosed: false, // 是否关闭
+        prevWindows: {}, // 最小化、最大化后，恢复至上一次的窗口状态
+      },
       isLocked: false, // 是否为锁屏状态
     };
   },

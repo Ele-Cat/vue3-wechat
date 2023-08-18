@@ -7,12 +7,12 @@
       <div v-else></div>
       <div class="chat-ctrl">
         <div class="chat-ctrl-icon no-drag">
-          <i class="wechatfont wechat-regular" title="置顶"></i>
+          <i class="wechatfont wechat-regular" :class="{active: useSystemStore.windowState.isTop}" title="置顶" @click.stop="handleToggleTop"></i>
           <!-- 取消置顶 -->
-          <i class="wechatfont wechat-minimize" title="最小化"></i>
-          <i class="wechatfont wechat-maximize" title="最大化"></i>
+          <i class="wechatfont wechat-minimize" title="最小化" @click.stop="handleMinimize"></i>
+          <i class="wechatfont wechat-maximize" title="最大化" @click.stop="handleToggleMaximize"></i>
           <!-- wechat-restore_down 向下还原 -->
-          <i class="wechatfont wechat-close" title="关闭"></i>
+          <i class="wechatfont wechat-close" title="关闭" @click.stop="handleClose"></i>
         </div>
         <ellipsis-outlined class="chat-more no-drag" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'message'" />
       </div>
@@ -44,6 +44,13 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
   immediate: true,
   deep: true,
 })
+
+const handleToggleTop = () => {
+  useSystemStore.windowState.isTop = !useSystemStore.windowState.isTop
+}
+const handleMinimize = () => {
+  useSystemStore.windowState.isMinimize = !useSystemStore.windowState.isMinimize
+}
 </script>
 
 <style lang="less" scoped>
@@ -83,6 +90,15 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
         text-align: center;
         cursor: pointer;
         color: #000;
+
+        &.wechat-regular.active {
+          color: #07c160;
+          background-color: #E2E2E2;
+
+          &:active {
+            background-color: #D1D1D1;
+          }
+        }
 
         &:hover {
           background-color: #E2E2E2;

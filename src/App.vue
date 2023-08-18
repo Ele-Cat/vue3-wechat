@@ -5,7 +5,8 @@
     },
   }">
     <div class="wrapper" @click="handleWechatClick" @contextmenu="handleWrapperContextMenu">
-      <WeChat @click="handleWechatClick" @contextmenu="handleWechatContextMenu" />
+      <WeChat @click="handleWechatClick" @contextmenu="handleWechatContextMenu" :style="{zIndex: wechatIndex}" />
+      <TaskBar />
     </div>
     <!-- 右上角的follow me图片 -->
     <a href='https://gitee.com/ele-cat/vue3-wechat' target="_blank" class="widget"><img src='https://gitee.com/ele-cat/vue3-wechat/widgets/widget_1.svg' alt='Fork me on Gitee' /></a>
@@ -13,9 +14,11 @@
 </template>
 
 <script setup>
-import useStore from '@/store'
-const { useContextMenuStore } = useStore()
-import WeChat from '@/components/WeChat.vue'
+import { ref, watch } from "vue";
+import useStore from '@/store';
+const { useContextMenuStore, useSystemStore } = useStore();
+import WeChat from '@/components/WeChat.vue';
+import TaskBar from '@/components/TaskBar.vue';
 
 const handleWechatClick = () => {
   // 点击wechat任意位置移除系统默认右键菜单
@@ -32,10 +35,18 @@ const handleWechatContextMenu = (e) => {
 const handleWrapperContextMenu = (e) => {
   useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
 }
+
+const wechatIndex = ref('auto')
+watch(() => useSystemStore.windowState.isTop, (newVal) => {
+  wechatIndex.value = newVal ? 99 : 'auto'
+}, {
+  immediate: true,
+  deep: true,
+})
 </script>
 
 <style lang="less">
-@import url(//at.alicdn.com/t/c/font_4200334_juj1fgyxp0a.css);
+@import url(//at.alicdn.com/t/c/font_4200334_1i6qek9gw0p.css);
 
 #app {
   height: 100vh;
