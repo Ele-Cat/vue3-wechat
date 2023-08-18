@@ -7,7 +7,7 @@
           <p class="title">{{ collect.title }}</p>
           <p class="content">{{ collect.content }}</p>
         </div>
-        <img v-if="collect.cover" :src="collect.cover" alt="" />
+        <img v-if="collect.cover" v-lazyload="collect.cover" alt="" />
       </div>
       <div class="collect-extra">
         <div class="extra-info">

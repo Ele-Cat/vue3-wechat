@@ -6,7 +6,7 @@
     <div class="user-box">
       <div class="user-title">群聊</div>
       <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu.stop="rightClicked($event)">
-        <img :src="group.avatar" alt="" class="user-avatar">
+        <img v-lazyload="group.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ group.name }}</p>
       </div>
     </div>
@@ -15,7 +15,7 @@
       <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
         :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
         @contextmenu.stop="rightClicked($event)" @click="friendClick(friend)">
-        <img :src="friend.avatar" alt="" class="user-avatar">
+        <img v-lazyload="friend.avatar" alt="" class="user-avatar">
         <p class="user-name">{{ friend.name }}</p>
       </div>
     </div>

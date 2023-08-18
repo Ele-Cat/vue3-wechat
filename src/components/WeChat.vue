@@ -1,6 +1,6 @@
 <template>
-  <div class="wechat" :style="wechatStyle" ref="wechatRef" :handle="handle">
-    <ToolBar ref="handle" />
+  <div class="wechat" :style="wechatStyle">
+    <ToolBar />
     <ListWrapper />
     <BoxWrapper />
     <ContextMenu />
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { listenGlobalKeyDown } from "@/utils/shortcutKey";
 import useStore from "@/store";
 const { useSystemStore } = useStore();
@@ -19,14 +19,15 @@ import BoxWrapper from "./layout/BoxWrapper/Index.vue";
 import ContextMenu from "./layout/ContextMenu/Index.vue";
 import ResizeContainer from "./layout/ResizeContainer/Index.vue";
 
-const handle = ref();
-let wechatRef = ref();
-
-listenGlobalKeyDown();
+// 监听全局键盘事件
+onMounted(() => {
+  listenGlobalKeyDown();
+})
 
 const { innerWidth, innerHeight } = window;
 useSystemStore.windows.left = useSystemStore.windows.left || (innerWidth - useSystemStore.windows.width) / 2
 useSystemStore.windows.top = useSystemStore.windows.top || (innerHeight - useSystemStore.windows.height) / 2
+// 初始化窗口样式
 const wechatStyle = ref({
   width: `${useSystemStore.windows.width}px`,
   height: `${useSystemStore.windows.height}px`,
@@ -37,6 +38,7 @@ const wechatStyle = ref({
 watch(
   () => useSystemStore.windows,
   (newVal) => {
+    // 监听窗口变化并赋值
     const { width, height, left, top } = newVal
     wechatStyle.value = Object.assign(
       {},

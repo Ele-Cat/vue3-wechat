@@ -25,30 +25,30 @@
 import { onMounted, ref } from "vue";
 import { useDraggable } from "@vueuse/core";
 const props = defineProps({
-  title: {
+  title: { // 标题
     type: String,
     default: "",
   },
-  text: {
+  text: { // 内容
     type: String,
     default: "",
   },
-  closable: {
+  closable: { // 是否显示右上角关闭按钮
     type: Boolean,
     default: true,
   },
-  confirmText: {
+  confirmText: { // 左侧按钮文字
     type: String,
     default: "确定",
   },
-  confirmColor: {
+  confirmColor: { // 左侧按钮文字颜色
     type: String,
     default: "#000000",
   },
-  submitCallback: {
+  submitCallback: { // 点击左侧按钮触发事件
     type: Function,
   },
-  cancelCallback: {
+  cancelCallback: { // 点击右侧按钮触发事件
     type: Function,
   },
 });

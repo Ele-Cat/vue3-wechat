@@ -25,15 +25,17 @@ useDetectOutsideClick(draggable, () => {
   isDragging.value = false;
 });
 
+// 开始拖拽
 const startDragging = (event) => {
   isDragging.value = true;
   startX.value = event.clientX;
   startY.value = event.clientY;
 };
 
+// 拖拽中
 const dragging = (event) => {
   if (!isDragging.value) return;
-
+  // 如果dom或其父级有.no-drag的class，不允许拖拽
   const noDrag = !!event.target.closest('.no-drag');
   if (noDrag) {
     isDragging.value = false;
@@ -45,11 +47,12 @@ const dragging = (event) => {
   useSystemStore.windows.left += offsetX;
   useSystemStore.windows.top += offsetY;
 
-  // 在此处可以执行你想要的操作，比如更新拖动后的位置坐标
+  // 更新拖动后的位置坐标
   startX.value = event.clientX;
   startY.value = event.clientY;
 };
 
+// 结束拖拽
 const stopDragging = () => {
   isDragging.value = false;
 };

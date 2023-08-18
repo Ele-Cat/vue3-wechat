@@ -1,21 +1,15 @@
 <template>
-  <div class="resize-border top" @mousedown="e => startResize('top', e)"></div>
-  <div class="resize-border bottom" @mousedown="e => startResize('bottom', e)"></div>
-  <div class="resize-border left" @mousedown="e => startResize('left', e)"></div>
-  <div class="resize-border right" @mousedown="e => startResize('right', e)"></div>
-  <div class="resize-border top-left" @mousedown="e => startResize('topLeft', e)"></div>
-  <div class="resize-border top-right" @mousedown="e => startResize('topRight', e)"></div>
-  <div class="resize-border bottom-left" @mousedown="e => startResize('bottomLeft', e)"></div>
-  <div class="resize-border bottom-right" @mousedown="e => startResize('bottomRight', e)"></div>
+  <div class="resize-border" :class="[border]" v-for="border in borderLists" :key="border"
+    @mousedown="e => startResize(border, e)"></div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { reactive, watch } from "vue";
 import useStore from "@/store";
 const { useSystemStore } = useStore();
 
-const diff = ref("6px")
-const backgroundColor = ref("rgba(0, 0, 0, 0)")
+const diff = "6px";
+const backgroundColor = "rgba(0, 0, 0, 0)";
 let resizing = false;
 let resizeType = "";
 let startX = 0;
@@ -26,8 +20,19 @@ let width = 0;
 let height = 0;
 let top = 0;
 let left = 0;
+const borderLists = reactive([
+  "top",
+  "bottom",
+  "left",
+  "right",
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
+])
 
 watch(() => useSystemStore.windows, (newVal) => {
+  // 拿到实时的窗口信息
   width = newVal.width;
   height = newVal.height;
   top = newVal.top;
@@ -38,6 +43,7 @@ watch(() => useSystemStore.windows, (newVal) => {
 })
 
 const startResize = (type, event) => {
+  // 开启拖拽
   resizing = true;
   resizeType = type;
   startX = event.clientX;
@@ -59,41 +65,49 @@ const handleResize = (event) => {
         height -= offsetY;
         height = height >= minHeight ? height : minHeight
         top += height > minHeight ? offsetY : 0;
+        // event.target.style.cursor = "ns-resize";
         break;
       case "bottom":
         height += offsetY;
+        // event.target.style.cursor = "ns-resize";
         break;
       case "left":
         width -= offsetX;
         width = width >= minWidth ? width : minWidth
         left += width > minWidth ? offsetX : 0;
+        // event.target.style.cursor = "ew-resize";
         break;
       case "right":
         width += offsetX;
+        // event.target.style.cursor = "ew-resize";
         break;
-      case "topLeft":
+      case "top-left":
         height -= offsetY;
         height = height >= minHeight ? height : minHeight
         top += height > minHeight ? offsetY : 0;
         width -= offsetX;
         width = width >= minWidth ? width : minWidth
         left += width > minWidth ? offsetX : 0;
+        // event.target.style.cursor = "nwse-resize";
         break;
-      case "topRight":
+      case "top-right":
         height -= offsetY;
         height = height >= minHeight ? height : minHeight
-        top += offsetY;    
+        top += offsetY;
         width += offsetX;
+        // event.target.style.cursor = "nesw-resize";
         break;
-      case "bottomLeft":
+      case "bottom-left":
         height += height >= minHeight ? offsetY : 0;
         width -= offsetX;
         width = width >= minWidth ? width : minWidth
         left += width > minWidth ? offsetX : 0;
+        // event.target.style.cursor = "nesw-resize";
         break;
-      case "bottomRight":
+      case "bottom-right":
         height += offsetY;
         width += offsetX;
+        // event.target.style.cursor = "nwse-resize";
         break;
     }
 
@@ -107,12 +121,15 @@ const handleResize = (event) => {
 
     startX = event.clientX;
     startY = event.clientY;
+  } else {
+    // event.target.style.cursor = "auto";
   }
 }
 
-const stopResize = () => {
+const stopResize = (event) => {
   resizing = false;
   resizeType = "";
+  // event.target.style.cursor = "auto";
 
   // 移除鼠标移动和释放事件的监听
   document.removeEventListener('mousemove', handleResize);

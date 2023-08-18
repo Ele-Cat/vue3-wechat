@@ -12,7 +12,7 @@
         <div class="chat-info">
           <img
             v-if="chat.type !== 'send'"
-            :src="chat.avatar"
+            v-lazyload="chat.avatar"
           />
           <img v-else src="@/assets/vite.svg" />
           <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
