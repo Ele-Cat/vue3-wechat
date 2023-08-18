@@ -9,7 +9,7 @@
       <TaskBar />
     </div>
     <!-- 右上角的follow me图片 -->
-    <a href='https://gitee.com/ele-cat/vue3-wechat' target="_blank" class="widget"><img src='https://gitee.com/ele-cat/vue3-wechat/widgets/widget_1.svg' alt='Fork me on Gitee' /></a>
+    <a href='https://gitee.com/ele-cat/vue3-wechat' v-if="showGitee" target="_blank" class="widget"><img src='https://gitee.com/ele-cat/vue3-wechat/widgets/widget_1.svg' alt='Fork me on Gitee' /></a>
   </a-config-provider>
 </template>
 
@@ -31,14 +31,22 @@ const handleWechatContextMenu = (e) => {
   // 如果已展示自定义菜单，则隐藏
   useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
 }
-
 const handleWrapperContextMenu = (e) => {
   useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
 }
 
+// 监听是否置顶Wechat
 const wechatIndex = ref('auto')
 watch(() => useSystemStore.windowState.isTop, (newVal) => {
   wechatIndex.value = newVal ? 99 : 'auto'
+}, {
+  immediate: true,
+  deep: true,
+})
+
+const showGitee = ref(true);
+watch(() => useSystemStore.windowState.status, (newVal) => {
+  showGitee.value = newVal !== "maximize"
 }, {
   immediate: true,
   deep: true,

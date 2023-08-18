@@ -1,8 +1,11 @@
 <template>
   <div class="task-bar">
     <div class="task-list">
-      <i class="wechatfont wechat-windows" title="开始"></i>
-      <i class="wechatfont wechat-task-wechat" title="微信"></i>
+      <i class="wechatfont wechat-windows icon" title="开始"></i>
+      <div class="icon wechat">
+        <img src="@/assets/wechat.svg" title="微信" @click="handleToggleMinimize" alt="">
+      </div>
+      <!-- <i class="wechatfont wechat-task-wechat"></i> -->
     </div>
     <div class="task-system">
       <div class="time" :title="nowDate">{{ nowTime }}</div>
@@ -14,14 +17,23 @@
 import { ref } from "vue";
 import dayjs from "dayjs";
 import 'dayjs/locale/zh-cn'
+import useStore from "@/store";
+const { useSystemStore } = useStore();
 
-const nowTime = ref(dayjs().format("hh:mm:ss"))
+const nowTime = ref(dayjs().format("HH:mm:ss"))
 const nowDate = ref(dayjs().locale('zh-cn').format("YYYY年M月D日\ndddd"))
 
 setInterval(() => {
-  nowTime.value = dayjs().format("hh:mm:ss")
+  nowTime.value = dayjs().format("HH:mm:ss")
   nowDate.value = dayjs().locale('zh-cn').format("YYYY年M月D日\ndddd")
 }, 1000)
+
+const handleToggleMinimize = () => {
+  if (useSystemStore.windowState.status !== "minimize") {
+    useSystemStore.windowState.prevStatus = useSystemStore.windowState.status
+  }
+  useSystemStore.windowState.status = useSystemStore.windowState.status === "minimize" ? useSystemStore.windowState.prevStatus : "minimize"
+}
 </script>
 
 <style lang="less" scoped>
@@ -38,16 +50,46 @@ setInterval(() => {
   backdrop-filter: blur(1px);
 
   .task-list {
-    i {
-      display: inline-block;
+    display: flex;
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 36px;
       height: 30px;
       line-height: 30px;
       text-align: center;
       font-size: 22px;
+      margin-right: 4px;
+
+      &:hover, &:active, &.active {
+        background-color: #F1F1F1;
+      }
+      
+      img {
+        width: 24px;
+        object-fit: contain;
+      }
+    }
+    .wechat {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        bottom: 0;
+        height: 2px;
+        background-color: #07c160;
+        transition: all .2s;
+      }
 
       &:hover {
-        background-color: #F1F1F1;
+        &::before {
+          left: 0;
+          right: 0;
+        }
       }
     }
   }
@@ -62,6 +104,7 @@ setInterval(() => {
     .time {
       color: #333;
       padding: 0 10px;
+      border-right: 1px solid #AEAEAE;
 
       &:hover {
         background-color: #F1F1F1;

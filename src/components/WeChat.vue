@@ -28,17 +28,12 @@ const { innerWidth, innerHeight } = window;
 useSystemStore.windows.left = useSystemStore.windows.left || (innerWidth - useSystemStore.windows.width) / 2
 useSystemStore.windows.top = useSystemStore.windows.top || (innerHeight - useSystemStore.windows.height) / 2
 // 初始化窗口样式
-const wechatStyle = ref({
-  width: `${useSystemStore.windows.width}px`,
-  height: `${useSystemStore.windows.height}px`,
-  left: `${useSystemStore.windows.left}px`,
-  top: `${useSystemStore.windows.top}px`,
-});
+const wechatStyle = ref({});
 
+// 监听窗口变化并赋值
 watch(
   () => useSystemStore.windows,
   (newVal) => {
-    // 监听窗口变化并赋值
     const { width, height, left, top } = newVal
     wechatStyle.value = Object.assign(
       {},
@@ -49,6 +44,50 @@ watch(
         top: `${top}px`,
       }
     );
+  },
+  {
+    immediate: true,
+    deep: true,
+  }
+);
+
+// 监听窗口最小化并赋值
+watch(
+  () => useSystemStore.windowState.status,
+  (newVal, oldVal) => {
+    console.log('newVal: ', newVal);
+    if (newVal === "minimize") {
+      wechatStyle.value = Object.assign(
+        {},
+        {
+          overflow: "hidden",
+          transition: "all .12s",
+          width: "0",
+          height: "0",
+          left: "54px",
+          bottom: "15px",
+        }
+      );
+    } else if (newVal === "maximize") {
+      wechatStyle.value = Object.assign(
+        {},
+        {
+          overflow: "hidden",
+          transition: oldVal === "minimize" ? "all 0s" : "all .12s",
+          width: "100vw",
+          height: "calc(100vh - 30px)",
+          left: "0px",
+          top: "0px",
+        }
+      );
+    } else {
+      wechatStyle.value = Object.assign(
+        {},
+        {...wechatStyle.value},
+        {...useSystemStore.windowState.prevWindows},
+        {transition: "all 0s",}
+      );
+    }
   },
   {
     immediate: true,

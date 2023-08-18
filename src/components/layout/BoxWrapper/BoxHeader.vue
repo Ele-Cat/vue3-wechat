@@ -10,7 +10,7 @@
           <i class="wechatfont wechat-regular" :class="{active: useSystemStore.windowState.isTop}" title="置顶" @click.stop="handleToggleTop"></i>
           <!-- 取消置顶 -->
           <i class="wechatfont wechat-minimize" title="最小化" @click.stop="handleMinimize"></i>
-          <i class="wechatfont wechat-maximize" title="最大化" @click.stop="handleToggleMaximize"></i>
+          <i class="wechatfont" :class="[useSystemStore.windowState.status === 'normal' ? 'wechat-maximize' : 'wechat-restore_down']" :title="useSystemStore.windowState.status === 'normal' ? '最大化' : '向下还原'" @click.stop="handleToggleMaximize"></i>
           <!-- wechat-restore_down 向下还原 -->
           <i class="wechatfont wechat-close" title="关闭" @click.stop="handleClose"></i>
         </div>
@@ -45,11 +45,34 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
   deep: true,
 })
 
+// 切换置顶
 const handleToggleTop = () => {
   useSystemStore.windowState.isTop = !useSystemStore.windowState.isTop
 }
+// 最小化
 const handleMinimize = () => {
-  useSystemStore.windowState.isMinimize = !useSystemStore.windowState.isMinimize
+  // 最小化时，记录窗口位置大小
+  const { width, height, left, top } = useSystemStore.windows
+  useSystemStore.windowState.prevWindows = {
+    width: `${width}px`,
+    height: `${height}px`,
+    left: `${left}px`,
+    top: `${top}px`,
+  }
+  useSystemStore.windowState.prevStatus = useSystemStore.windowState.status
+  useSystemStore.windowState.status = "minimize"
+}
+// 切换是否最大化
+const handleToggleMaximize = () => {
+  const { width, height, left, top } = useSystemStore.windows
+  useSystemStore.windowState.prevWindows = {
+    width: `${width}px`,
+    height: `${height}px`,
+    left: `${left}px`,
+    top: `${top}px`,
+  }
+  useSystemStore.windowState.prevStatus = useSystemStore.windowState.status
+  useSystemStore.windowState.status = useSystemStore.windowState.status === "maximize" ? "normal" : "maximize"
 }
 </script>
 
