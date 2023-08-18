@@ -46,6 +46,7 @@ const dragging = (event) => {
   const offsetY = event.clientY - startY.value;
   useSystemStore.windows.left += offsetX;
   useSystemStore.windows.top += offsetY;
+  useSystemStore.windowState.status = "normal";
 
   // 更新拖动后的位置坐标
   startX.value = event.clientX;
