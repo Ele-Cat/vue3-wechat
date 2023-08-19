@@ -79,10 +79,6 @@ watch(
           top: "0px",
         }
       );
-      // useSystemStore.windows.top = 0
-      // useSystemStore.windows.left = 0
-      // useSystemStore.windows.width = innerWidth
-      // useSystemStore.windows.height = innerHeight - 30
     } else if (newVal === "closed") {
       wechatStyle.value = Object.assign(
         {},
@@ -115,8 +111,6 @@ watch(
 .wechat {
   position: fixed;
   display: flex;
-  /* width: 850px;
-  height: 660px; */
-  box-shadow: 0 0 6px #999;
+  box-shadow: 0 0 4px #333;
 }
 </style>

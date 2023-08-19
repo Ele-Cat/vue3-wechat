@@ -93,7 +93,6 @@ watch(() => useContextMenuStore.showInModule, (newVal) => {
     li {
       height: 28px;
       line-height: 28px;
-      cursor: pointer;
       padding: 0 20px;
 
       &:hover {
