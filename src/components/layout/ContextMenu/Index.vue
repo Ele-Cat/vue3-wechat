@@ -17,7 +17,7 @@ import contextMenus from '@/utils/contextMenu';
 import { ref, watch } from 'vue';
 import Confirm from '@/components/libs/confirm';
 
-
+// 点击菜单条目
 const handleMenuClick = (type) => {
   const carryEntryInfo = useContextMenuStore.carryEntryInfo;
   if (type === "deleteChat") {
@@ -60,6 +60,7 @@ const handleMenuClick = (type) => {
   useContextMenuStore.menuVisible = false;
 }
 
+// 根据点击的对象展示对应的菜单列表
 const contextMenuList = ref([])
 watch(() => useContextMenuStore.showInModule, (newVal) => {
   contextMenuList.value = contextMenus[newVal] || []
