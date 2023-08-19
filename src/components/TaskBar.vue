@@ -8,7 +8,11 @@
       <!-- <i class="wechatfont wechat-task-wechat"></i> -->
     </div>
     <div class="task-system">
-      <div class="wechat" @click="handleClickWechat">
+      <div class="task-icon qq" title="点击加群" @click="handleClickWechat">
+        <img src="@/assets/qq.svg" alt="" @click="addGroup">
+        <!-- <img src="@/assets/wechat.svg" class="blink" alt=""> -->
+      </div>
+      <div class="task-icon wechat" title="微信" @click="handleClickWechat">
         <img src="@/assets/wechat.svg" alt="">
         <!-- <img src="@/assets/wechat.svg" class="blink" alt=""> -->
       </div>
@@ -40,6 +44,9 @@ const handleToggleMinimize = () => {
 }
 const handleClickWechat = () => {
   useSystemStore.windowState.status = useSystemStore.windowState.prevStatus
+}
+const addGroup = () => {
+  window.open("http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=FBr4JIxIckrUqgDK-rbdMkoQYfJT4BCs&authKey=Dl1dUP8%2BXRNefHTYG38DyEi3CAOf20Pc8yyIJwKQ7HlP5WX7nYhURs2vVtmttNHX&noverify=0&group_code=887911914", "_blank")
 }
 </script>
 
@@ -109,7 +116,7 @@ const handleClickWechat = () => {
     padding-right: 6px;
     font-size: 12px;
 
-    .wechat {
+    .task-icon {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,7 +124,7 @@ const handleClickWechat = () => {
       height: 100%;
 
       img {
-        width: 20px;
+        height: 22px;
         object-fit: contain;
       }
 
@@ -127,6 +134,12 @@ const handleClickWechat = () => {
 
       .blink {
         animation: blink 1s infinite;
+      }
+
+      &.qq {
+        img {
+          height: 20px;
+        }
       }
     }
 
