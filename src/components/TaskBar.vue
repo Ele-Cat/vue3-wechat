@@ -138,7 +138,7 @@ const addGroup = () => {
 
       &.qq {
         img {
-          height: 20px;
+          height: 18px;
         }
       }
     }
