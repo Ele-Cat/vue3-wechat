@@ -2,8 +2,8 @@
   <div class="custom-menu" v-show="useContextMenuStore.menuVisible"
     :style="{ top: useContextMenuStore.menuTop + 'px', left: useContextMenuStore.menuLeft + 'px' }">
     <ul>
-      <li v-for="contextMenu in contextMenuList" :key="contextMenu.value" :class="{ 'border-top': contextMenu.borderTop }"
-        @click.stop="handleMenuClick(contextMenu.value)">{{ contextMenu.label }}</li>
+      <li v-for="contextMenu in contextMenuList" :key="contextMenu.type" :class="{ 'border-top': contextMenu.borderTop }"
+        @click.stop="handleMenuClick(contextMenu.type)">{{ contextEnums[contextMenu.type] }}</li>
     </ul>
   </div>
   <!-- <DragModal /> -->
@@ -13,7 +13,7 @@
 import useStore from '@/store'
 const { useContextMenuStore, useChatStore } = useStore()
 import { toast } from "@/utils/feedback";
-import contextMenus from '@/utils/contextMenu';
+import { contextEnums, contextMenus } from '@/utils/contextMenu';
 import { ref, watch } from 'vue';
 import Confirm from '@/components/libs/confirm';
 

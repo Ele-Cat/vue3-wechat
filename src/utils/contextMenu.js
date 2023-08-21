@@ -1,144 +1,120 @@
-const contextMenus = {
+export const contextEnums = {
+  toTop: "置顶",
+  unRead: "标为未读",
+  noDisturb: "消息免打扰",
+  openInAStandaloneWindow: "在独立窗口中打开",
+  hideChat: "不显示聊天",
+  deleteChat: "删除聊天",
+  copyText: "复制",
+  multipleSelect: "多选",
+  searchForIt: "搜一搜",
+  translate: "翻译",
+  transmit: "转发",
+  collectText: "收藏",
+  quote: "引用",
+  deleteChatItem: "删除",
+  sendMessage: "发消息",
+  markAsStarFriend: "标为星标朋友",
+  sendBusinessCard: "发送名片",
+  deleteFriend: "删除朋友",
+  editTag: "编辑标签",
+  copyAddress: "复制地址",
+  deleteCollect: "删除",
+}
+
+export const contextMenus = {
   chat: [
     {
-      label: "置顶",
-      value: "toTop",
-      borderTop: false,
+      type: "toTop",
     },
     {
-      label: "标为未读",
-      value: "unRead",
-      borderTop: false,
+      type: "unRead",
     },
     {
-      label: "消息免打扰",
-      value: "noDisturb",
-      borderTop: false,
+      type: "noDisturb",
     },
     {
-      label: "在独立窗口中打开",
-      value: "openInAStandaloneWindow",
-      borderTop: false,
+      type: "openInAStandaloneWindow",
     },
     {
-      label: "不显示聊天",
-      value: "hideChat",
+      type: "hideChat",
       borderTop: true,
     },
     {
-      label: "删除聊天",
-      value: "deleteChat",
-      borderTop: false,
+      type: "deleteChat",
     },
   ],
   chatSelectSome: [
     {
-      label: "复制",
-      value: "copyText",
-      borderTop: false,
+      type: "copyText",
     },
     {
-      label: "多选",
-      value: "multipleSelect",
-      borderTop: false,
+      type: "multipleSelect",
     },
     {
-      label: "搜一搜",
-      value: "searchForIt",
-      borderTop: false,
+      type: "searchForIt",
     },
   ],
   chatSelectAll: [
     {
-      label: "复制",
-      value: "copyText",
-      borderTop: false,
+      type: "copyText",
     },
     {
-      label: "翻译",
-      value: "translate",
-      borderTop: false,
+      type: "translate",
     },
     {
-      label: "转发",
-      value: "forward",
+      type: "transmit",
       borderTop: true,
     },
     {
-      label: "收藏",
-      value: "collectText",
-      borderTop: false,
+      type: "collectText",
     },
     {
-      label: "多选",
-      value: "multipleSelect",
-      borderTop: false,
+      type: "multipleSelect",
     },
     {
-      label: "引用",
-      value: "quote",
-      borderTop: false,
+      type: "quote",
     },
     {
-      label: "搜一搜",
-      value: "searchForIt",
-      borderTop: false,
+      type: "searchForIt",
     },
     {
-      label: "删除",
-      value: "deleteChatItem",
+      type: "deleteChatItem",
       borderTop: true,
     },
   ],
   friend: [
     {
-      label: "发消息",
-      value: "sendMessage",
-      borderTop: false,
+      type: "sendMessage",
     },
     {
-      label: "标为星标朋友",
-      value: "markAsStarFriend",
-      borderTop: false,
+      type: "markAsStarFriend",
     },
     {
-      label: "发送名片",
-      value: "sendBusinessCard",
-      borderTop: false,
+      type: "sendBusinessCard",
     },
     {
-      label: "删除朋友",
-      value: "deleteFriend",
+      type: "deleteFriend",
       borderTop: true,
     },
   ],
   collect: [
     {
-      label: "转发",
-      value: "transmit",
-      borderTop: false,
+      type: "transmit",
     },
     {
-      label: "编辑标签",
-      value: "editTag",
-      borderTop: false,
+      type: "editTag",
     },
     {
-      label: "多选",
-      value: "multipleChoice",
-      borderTop: false,
+      type: "multipleSelect",
     },
     {
-      label: "复制地址",
-      value: "copyAddress",
+      type: "copyAddress",
       borderTop: true,
     },
     {
-      label: "删除",
-      value: "deleteCollect",
+      type: "deleteCollect",
       borderTop: true,
     },
   ],
 };
-
-export default contextMenus;
