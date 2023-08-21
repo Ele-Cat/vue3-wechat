@@ -98,6 +98,7 @@ const handleClose = () => {
 
   .chat-title {
     line-height: 60px;
+    font-size: 20px;
     flex: 1;
     overflow: hidden;
 
