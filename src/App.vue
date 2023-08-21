@@ -16,23 +16,28 @@
 <script setup>
 import { ref, watch } from "vue";
 import useStore from '@/store';
-const { useContextMenuStore, useSystemStore } = useStore();
+const { useContextMenuStore, useSystemStore, useRelativeBoxStore } = useStore();
 import WeChat from '@/components/WeChat.vue';
 import TaskBar from '@/components/TaskBar.vue';
 
 const handleWechatClick = () => {
   // 点击wechat任意位置移除系统默认右键菜单
-  useContextMenuStore.hideContextMenu()
+  doHide()
 }
 
 const handleWechatContextMenu = (e) => {
   // 点击wechat任意位置屏蔽系统默认右键菜单
   e.preventDefault()
   // 如果已展示自定义菜单，则隐藏
-  useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
+  doHide()
 }
 const handleWrapperContextMenu = (e) => {
+  doHide()
+}
+
+const doHide = () => {
   useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
+  useRelativeBoxStore.boxVisible && useRelativeBoxStore.hideBox()
 }
 
 // 监听是否置顶Wechat

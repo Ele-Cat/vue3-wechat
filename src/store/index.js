@@ -3,6 +3,7 @@ import { useChatStore } from "./modules/chat";
 import { useAddressBookStore } from "./modules/addressBook";
 import { useCollectStore } from "./modules/collect";
 import { useContextMenuStore } from "./modules/contextMenu";
+import { useRelativeBoxStore } from "./modules/relativeBox";
 
 // 将store统一到一起再分发
 const useStore = () => ({
@@ -11,6 +12,7 @@ const useStore = () => ({
   useAddressBookStore: useAddressBookStore(),
   useCollectStore: useCollectStore(),
   useContextMenuStore: useContextMenuStore(),
+  useRelativeBoxStore: useRelativeBoxStore(),
 });
 
 export default useStore

@@ -10,11 +10,11 @@
 </template>
 
 <script setup>
-import useStore from '@/store'
-const { useContextMenuStore, useChatStore } = useStore()
+import { ref, watch } from 'vue';
+import useStore from '@/store';
+const { useContextMenuStore, useChatStore } = useStore();
 import { toast } from "@/utils/feedback";
 import { contextEnums, contextMenus } from '@/utils/contextMenu';
-import { ref, watch } from 'vue';
 import Confirm from '@/components/libs/confirm';
 
 // 点击菜单条目
