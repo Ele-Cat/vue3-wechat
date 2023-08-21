@@ -16,8 +16,8 @@ const { useSystemStore } = useStore();
 import ToolBar from "./layout/ToolBar/Index.vue";
 import ListWrapper from "./layout/ListWrapper/Index.vue";
 import BoxWrapper from "./layout/BoxWrapper/Index.vue";
-import ContextMenu from "./layout/ContextMenu/Index.vue";
-import ResizeContainer from "./layout/ResizeContainer/Index.vue";
+import ContextMenu from "./common/ContextMenu/Index.vue";
+import ResizeContainer from "./common/ResizeContainer/Index.vue";
 
 // 监听全局键盘事件
 onMounted(() => {
