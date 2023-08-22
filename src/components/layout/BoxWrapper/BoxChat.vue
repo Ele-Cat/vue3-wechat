@@ -14,7 +14,7 @@
             v-if="chat.type !== 'send'"
             v-lazyload="chat.avatar"
           />
-          <img v-else src="@/assets/vite.svg" />
+          <img v-else :src="useUserInfoStore.user.avatar || '@/assets/vite.svg'" />
           <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
         </div>
       </div>
@@ -47,7 +47,7 @@ import { onMounted, ref, watch } from "vue";
 import dayjs from "dayjs";
 import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
 import useStore from "@/store";
-const { useChatStore, useContextMenuStore } = useStore();
+const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
 import BoxNoSelected from "./BoxNoSelected.vue";
 
