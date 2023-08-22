@@ -1,7 +1,7 @@
 <template>
   <WeDragBox class="tool-bar">
     <div class="tool-box tool-top">
-      <img src="@/assets/vite.svg" class="avatar no-drag" @click.stop="handleAvatarClick" />
+      <img :src="user.avatar || '@/assets/vite.svg'" class="avatar no-drag" @click.stop="handleAvatarClick" />
       <i
         class="wechatfont no-drag"
         v-for="menu in menuTop"
@@ -25,22 +25,28 @@
     </div>
   </WeDragBox>
   <RelativeBox>
-    <UserInfo />
+    <UserInfo :user="user" type="own" />
   </RelativeBox>
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, watch, ref } from "vue";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue"
 import UserInfo from "@/components/common/UserInfo/Index.vue"
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
 const { useSystemStore, useRelativeBoxStore, useUserInfoStore } = useStore();
 
+const user = ref({})
+watch(() => useUserInfoStore.user, (newVal) => {
+  user.value = newVal
+}, {
+  immediate: true,
+  deep: true,
+})
 // 点击头像，展示信息
 const handleAvatarClick = (e) => {
   useRelativeBoxStore.showBox(e.clientY, e.clientX);
-  console.log('useUserInfoStore.user: ', useUserInfoStore.user);
 }
 
 // 工具栏顶部菜单
