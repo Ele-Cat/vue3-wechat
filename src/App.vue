@@ -18,7 +18,7 @@ import { ref, watch } from "vue";
 import useStore from '@/store';
 const { useContextMenuStore, useSystemStore, useRelativeBoxStore } = useStore();
 import WeChat from '@/components/WeChat.vue';
-import TaskBar from '@/components/TaskBar.vue';
+import TaskBar from '@/components/layout/TaskBar/Index.vue';
 
 const handleWechatClick = () => {
   // 点击wechat任意位置移除系统默认右键菜单
