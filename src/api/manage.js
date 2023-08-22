@@ -1,6 +1,7 @@
 import { axios } from "@/utils/request";
 
 const api = {
+  userInfo: "/mock/api/userInfo",
   friend: "/mock/api/friend",
   group: "/mock/api/group",
   collect: "/mock/api/collect",
@@ -30,6 +31,15 @@ export function httpAction(url, parameter, method) {
 export function getAction(url, parameter) {
   return axios({
     url: url,
+    method: "get",
+    params: parameter,
+  });
+}
+
+// 获取好友列表
+export function getUserInfo(parameter) {
+  return axios({
+    url: api.userInfo,
     method: "get",
     params: parameter,
   });

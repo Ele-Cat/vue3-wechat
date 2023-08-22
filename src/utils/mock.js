@@ -6,6 +6,31 @@ import Mock from "mockjs";
 //   age: 18,
 // });
 
+Mock.mock("/mock/api/userInfo", {
+  code: 200,
+  success: true,
+  "data": {
+    //生成随机id
+    id: "@guid",
+    //随机生成名字
+    name: "@cname",
+    //随机生成1-100之间的任意一个数
+    "age|1-120": 1,
+    "gender|1": ['male', 'famale'],
+    //随机生成一行段落
+    description: "@cparagraph",
+    //随机生成一个带有正则的电话号码
+    phone: /1\d{10}/,
+    //随机生成一个邮箱
+    email: /[a-z]{6,8}@(126|163|qq)\.(com|cn|net)/,
+    //随机生成一个时间
+    birthday: "@date('YYYY-MM-dd')",
+    address: "@county(true)",
+    //随机生成一个图片
+    avatar: "@dataImage('50x50', '@name')",
+  },
+});
+
 Mock.mock("/mock/api/friend", {
   code: 200,
   success: true,

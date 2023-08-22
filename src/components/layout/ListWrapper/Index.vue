@@ -26,17 +26,25 @@
 <script setup>
 import dayjs from "dayjs";
 import Mock from "mockjs";
+import _ from "lodash";
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { ref } from "vue";
 import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
 import ListCollect from "./ListCollect.vue";
 import useStore from "@/store";
-const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
-import { getFriendList } from "@/api/manage";
+const { useAddressBookStore, useSystemStore, useChatStore, useUserInfoStore } = useStore();
+import { getFriendList, getUserInfo } from "@/api/manage";
 import { listSortByPinyin } from "@/utils/utils";
 
 const searchText = ref("");
+
+// 在这里初始化用户信息
+if (_.isEmpty(useUserInfoStore.user)) {
+  getUserInfo().then(res => {
+    useUserInfoStore.user = res.data.data || {}
+  })
+}
 
 // 在这里调取通讯录数据
 if (useAddressBookStore.addressBookList.length === 0) {
