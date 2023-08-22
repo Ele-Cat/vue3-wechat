@@ -27,12 +27,14 @@
   <RelativeBox>
     <UserInfo :user="user" type="own" />
   </RelativeBox>
+  <Timeline :visible="timelineVisible" @closeTimeline="closeTimelineF" />
 </template>
 
 <script setup>
 import { reactive, watch, ref } from "vue";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue"
 import UserInfo from "@/components/common/UserInfo/Index.vue"
+import Timeline from "./Timeline.vue"
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
 const { useSystemStore, useRelativeBoxStore, useUserInfoStore } = useStore();
@@ -89,16 +91,14 @@ const menuBottom = reactive([
   },
 ]);
 
+const timelineVisible = ref(false)
+
 // 点击工具栏icon
 const handleMenuClick = (type) => {
-  if (["files", "timeline"].includes(type)) {
-    // 点击聊天文件、朋友圈弹框
-    toast({
-      type: "info",
-      content: "相关功能开发中...",
-    });
-    return;
-  } else if (["applet", "phone", "menu"].includes(type)) {
+  if (type === 'timeline') {
+    timelineVisible.value = true
+    return
+  } else if (["applet", "menu", "phone", "files"].includes(type)) {
     // 点击小程序面板、手机、设置及其他弹出小菜单
     notify({
       type: "info",
@@ -109,6 +109,10 @@ const handleMenuClick = (type) => {
   // 其他情况，打开对应面板
   useSystemStore.activeMenu = type;
 };
+
+const closeTimelineF = () => {
+  timelineVisible.value = false
+}
 </script>
 
 <style lang="less" scoped>
