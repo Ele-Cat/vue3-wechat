@@ -1,19 +1,80 @@
 <template>
   <div class="timeline" :class="{ fade: visible }">
     <div class="box" :class="{ fade: visible }" :style="style">
-      <div class="header" ref="el" @click="emit('closeTimeline')">
-        顶部
+      <div class="header" ref="el" :class="{'scroll-out': scrollTop >= 300}">
+        <div class="header-left">
+          <BellOutlined />
+          <RedoOutlined />
+        </div>
+        <i class="wechatfont wechat-close" title="关闭" @click.stop="emit('closeTimeline')"></i>
+        <div class="title" v-show="scrollTop >= 300">朋友圈</div>
       </div>
-      <div class="content">
-        123456
+      <div class="scroll-box scroll-no-bar" ref="scrollBox">
+        <a-watermark v-bind="watermarkModel">
+          <div class="cover">
+            <img src="http://img.adoutu.com/article/1606320535770.gif" alt="">
+            <div class="user-info">
+              <p>{{ useUserInfoStore.user.name }}</p>
+              <img :src="useUserInfoStore.user.avatar" alt="" @click.stop="handleAvatarClick">
+            </div>
+          </div>
+          <div class="timeline-box">
+            <div v-for="item in timelines.data" class="timeline-item" :key="item.id">
+              <img class="avatar" :src="item.avatar" alt="">
+              <div class="timeline-info">
+                <span class="author">{{ item.author }}</span>
+                <p class="content">{{ item.content }}</p>
+                <div class="img-video">
+                  <!-- <video v-if="item.type === 'video'" src="http://ml.v.api.aa1.cn/girl-11-02//video/%E6%88%91%E4%BC%9A%E6%B0%B8%E8%BF%9C%E5%9C%A8%E8%BF%99%E9%87%8C-%E7%AD%89%E4%BD%A0%E5%9B%9E%E5%A4%B4---%E6%8A%96%E9%9F%B3.mp4"></video> -->
+                  <video v-if="item.type === 'video'" :src="item.videoUrl" controls autoplay />
+                  <div class="img-box" :class="'img-' + item.imgCount" v-else>
+                    <a-image-preview-group>
+                      <a-image src="http://img.adoutu.com/article/1606320535073.gif" v-for="(img, idx) in item.imgCount" :key="idx" alt="" :previewMask="false" />
+                    </a-image-preview-group>
+                    <!-- <img :src="item.avatar" v-for="(img, idx) in item.imgCount" :key="idx" alt=""> -->
+                  </div>
+                </div>
+                <div class="timeline-extra">
+                  <p>{{ friendTime(item.time) }}</p>
+                  <ellipsis-outlined class="extra-more" />
+                </div>
+                <div class="star-remark">
+                  <div class="star-box">
+                    <HeartOutlined class="star" />
+                    <div v-for="n in 6" :key="n">
+                      <span class="user">132</span><span v-if="n < 6">，</span>
+                    </div>
+                  </div>
+                  <div class="remark-box">
+                    这里是评论+回复
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a-watermark>
       </div>
     </div>
   </div>
+  <RelativeBox>
+    <UserInfo :user="user" type="own" />
+  </RelativeBox>
 </template>
 <script setup>
 // 当前组件不是在APP下进行渲染，无法使用APP下的环境（全局组件，全局指令，原型属性函数）
-import { ref } from "vue";
-import { useDraggable } from "@vueuse/core";
+import { onMounted, reactive, ref, watch } from "vue";
+import { useDraggable, useScroll } from "@vueuse/core";
+import { BellOutlined, RedoOutlined, EllipsisOutlined, HeartOutlined } from '@ant-design/icons-vue';
+import { friendTime } from "@/utils/utils";
+import RelativeBox from "@/components/common/RelativeBox/Index.vue"
+import UserInfo from "@/components/common/UserInfo/Index.vue"
+import useStore from "@/store";
+import Mock from "mockjs";
+import { getVideoApi } from '@/api/timeline'
+const { useUserInfoStore, useRelativeBoxStore } = useStore();
+
+const user = useUserInfoStore.user
+
 const props = defineProps({
   visible: { // 标题
     type: Boolean,
@@ -30,6 +91,46 @@ const { x, y, style } = useDraggable(el, {
     y: 50,
   },
 });
+
+// 点击头像，展示信息
+const handleAvatarClick = (e) => {
+  useRelativeBoxStore.showBox(e.clientY, e.clientX);
+}
+
+const getVideo = async () => {
+  const { data } = await getVideoApi()
+  return data.mp4
+}
+
+const timelines = ref([])
+onMounted(async () => {
+  timelines.value = reactive(Mock.mock({
+    "data|10-20": [
+      {
+        id: "@guid",
+        content: "@ctitle(8, 100)",
+        author: "@cname",
+        time: "@date('yyyy-MM-dd')",
+        "type|1": ['image', 'video'],
+        videoUrl: await getVideo(),
+        "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        avatar: "@dataImage('44x44', '@author')",
+      },
+    ]
+  }))
+})
+
+const scrollBox = ref(null)
+const { y: scrollTop } = useScroll(scrollBox)
+
+const watermarkModel = reactive({
+  content: '演示水印',
+  font: {
+    fontSize: 22,
+  },
+  rotate: -35,
+  gap: [100, 100],
+});
 </script>
 
 <style lang="less" scoped>
@@ -43,11 +144,13 @@ const { x, y, style } = useDraggable(el, {
   background: rgba(0, 0, 0, 0);
   user-select: none;
   display: none;
+
   &.fade {
     display: block;
     transition: background 0.4s;
     background: rgba(0, 0, 0, 0.05);
   }
+
   .box {
     width: 500px;
     height: calc(100vh - 100px);
@@ -56,73 +159,245 @@ const { x, y, style } = useDraggable(el, {
     position: fixed;
     top: 50%;
     left: 50%;
-    padding-bottom: 28px;
     // transform: translate(-50%, -60%);
     opacity: 0;
+
+    .scroll-box {
+      height: 100%;
+      overflow-y: scroll;
+    }
+
     &.fade {
       transition: opacity 0.4s;
       // transform: translate(-50%, -50%);
       opacity: 1;
     }
-    .header,
-    .footer {
-      height: 32px;
-      line-height: 32px;
-      padding: 0 24px;
-    }
-    .body {
-      padding: 0 24px 30px;
-      font-size: 14px;
-      text-align: justify;
-      text-align-last: center;
-      line-height: 1.4;
-    }
-    .footer {
-      text-align: center;
+
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      cursor: move;
+      z-index: 9999;
+      // background-color: rgba(0, 0, 0, 0.1);
+      color: #FFF;
+      transition: background .3s;
 
-      button {
-        height: 32px;
-        line-height: 30px;
-        width: 46%;
-        background-color: #F3F3F3;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
-        border-radius: 4px;
-
-        &:nth-of-type(1) {
-          color: #FF3333;
-        }
-
-        &:hover {
-          background-color: #DBDBDB;
-        }
+      &.scroll-out {
+        background-color: #EDEDED;
+        color: #7B7B7B;
       }
-    }
-    .header {
-      position: relative;
 
-      h3 {
-        font-weight: normal;
-        font-size: 18px;
+      .header-left {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        .anticon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 100%;
+          line-height: 100%;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
       }
 
       i {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
+        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
         text-align: center;
-        color: #999;
         cursor: pointer;
 
         &:hover {
-          color: #666;
+          background-color: #FA5151;
+        }
+      }
+
+      .title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+      }
+    }
+
+    .cover {
+      position: relative;
+      height: 300px;
+      z-index: -1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        object-fit: cover;
+      }
+
+      .user-info {
+        position: absolute;
+        bottom: -12px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+
+        p {
+          color: #FFF;
+          margin-top: -18px;
+        }
+
+        img {
+          width: 60px;
+          height: 60px;
+          margin-left: 12px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .timeline-box {
+      padding: 2px 24px 20px;
+      font-size: 14px;
+
+      .timeline-item {
+        display: flex;
+        padding: 24px 0 0;
+
+        .avatar {
+          width: 36px;
+          height: 36px;
+          margin-right: 14px;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .timeline-info {
+          flex: 1;
+          border-bottom: 1px solid #F3F3F3;
+
+          .author {
+            color: #576B95;
+            line-height: 1.6;
+            cursor: pointer;
+          }
+
+          .content {
+            line-height: 1.4;
+            margin-top: 4px;
+            word-break: break-all;
+            user-select: text;
+          }
+
+          .img-video {
+            margin-top: 10px;
+            
+            .img-box {
+              display: flex;
+              flex-wrap: wrap;
+
+              :deep(.ant-image) {
+                width: 126px;
+                height: 126px;
+                margin: 0 4px 4px 0;
+
+                .ant-image-img {
+                  height: 100%;
+                  object-fit: cover;
+                  cursor: pointer;
+                }
+              }
+              
+              &.img-1 {
+                :deep(.ant-image) {
+                  width: auto;
+                  max-width: 300px;
+                  height: auto;
+                }
+              }
+
+              &.img-4 {
+                :deep(.ant-image):nth-of-type(2n) {
+                  margin-right: 130px;
+                }
+              }
+            }
+
+            video {
+              display: block;
+              max-width: 40%;
+              max-height: 140px;
+              object-fit: contain;
+            }
+          }
+
+          .timeline-extra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #999;
+
+            .extra-more {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 32px;
+              height: 20px;
+              border-radius: 4px;
+              color: #576B95;
+              font-size: 18px;
+              cursor: pointer;
+              background-color: #F7F7F7;
+
+              &:hover {
+                background-color: #DEDEDE;
+              }
+            }
+          }
+
+          .star-remark {
+            margin: 16px 0 14px;
+            padding: 14px;
+            border-radius: 6px;
+            background-color: #F9F9F9;
+
+            .star-box {
+              display: flex;
+              color: #576B95;
+
+              .star {
+                margin-right: 12px;
+                font-size: 16px;
+              }
+
+              .user {
+                cursor: pointer;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+
+            .remark-box {
+              margin-top: 12px;
+            }
+          }
         }
       }
     }

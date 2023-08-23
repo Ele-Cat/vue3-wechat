@@ -28,7 +28,7 @@ const { useRelativeBoxStore } = useStore();
   border: 1px solid #E5E5E5;
   box-sizing: border-box;
   box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.12);
-  z-index: 99;
+  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
