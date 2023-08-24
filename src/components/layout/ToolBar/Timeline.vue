@@ -46,7 +46,8 @@
                       <span class="user">{{ n }}</span><span v-if="i < item.starUser.length - 1">，</span>
                     </div>
                   </div>
-                  <div class="remark-box" v-if="item.remarkLists && item.remarkLists.length" :style="{paddingTop: item.remarkLists.length ? '6px' : '0px'}">
+                  <div class="gutter" v-if="item.starUser && item.starUser.length && item.remarkLists && item.remarkLists.length"></div>
+                  <div class="remark-box" v-if="item.remarkLists && item.remarkLists.length">
                     <div v-for="(n, i) in item.remarkLists" :key="i" class="remark-item">
                       <span class="user">{{ n.user }}</span>：<span>{{ n.content }}</span>
                     </div>
@@ -116,11 +117,11 @@ onMounted(async () => {
         time: "@date('yyyy-MM-dd')",
         "type|1": ['image', 'video'],
         videoUrl: await getVideo(),
-        "starUser|0-10": ["@cname"],
-        "remarkLists|0-4": [
+        "starUser|0-12": ["@cname"],
+        "remarkLists|0-6": [
           {
             user: "@cname",
-            content: "@ctitle(6, 50)"
+            content: "@ctitle(6, 80)"
           }
         ],
         "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -408,9 +409,17 @@ const watermarkModel = reactive({
               }
             }
 
+            .gutter {
+              height: 6px;
+            }
+
             .remark-box {
               .remark-item {
-                margin-top: 2px;
+                margin-bottom: 4px;
+
+                &:nth-last-of-type(1) {
+                  padding-bottom: 0;
+                }
               }
 
               .user {
