@@ -47,7 +47,7 @@
                     </div>
                   </div>
                   <div class="remark-box" v-if="item.remarkLists && item.remarkLists.length" :style="{paddingTop: item.remarkLists.length ? '6px' : '0px'}">
-                    <div v-for="(n, i) in item.remarkLists" :key="i">
+                    <div v-for="(n, i) in item.remarkLists" :key="i" class="remark-item">
                       <span class="user">{{ n.user }}</span>：<span>{{ n.content }}</span>
                     </div>
                   </div>
@@ -108,7 +108,7 @@ const getVideo = async () => {
 const timelines = ref([])
 onMounted(async () => {
   timelines.value = reactive(Mock.mock({
-    "data|10-20": [
+    "data|10-30": [
       {
         id: "@guid",
         content: "@ctitle(8, 100)",
@@ -117,10 +117,10 @@ onMounted(async () => {
         "type|1": ['image', 'video'],
         videoUrl: await getVideo(),
         "starUser|0-10": ["@cname"],
-        "remarkLists|0-6": [
+        "remarkLists|0-4": [
           {
             user: "@cname",
-            content: "@ctitle(6, 20)"
+            content: "@ctitle(6, 50)"
           }
         ],
         "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -386,6 +386,7 @@ const watermarkModel = reactive({
             padding: 14px;
             border-radius: 6px;
             background-color: #F9F9F9;
+            line-height: 18px;
 
             .star-box {
               display: flex;
@@ -408,7 +409,9 @@ const watermarkModel = reactive({
             }
 
             .remark-box {
-              line-height: 24px;
+              .remark-item {
+                margin-top: 2px;
+              }
 
               .user {
                 cursor: pointer;
