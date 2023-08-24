@@ -37,7 +37,6 @@ const handleWrapperContextMenu = (e) => {
 
 const doHide = () => {
   useContextMenuStore.menuVisible && useContextMenuStore.hideContextMenu()
-  useRelativeBoxStore.boxVisible && useRelativeBoxStore.hideBox()
 }
 
 // 监听是否置顶Wechat

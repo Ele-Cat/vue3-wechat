@@ -6,50 +6,118 @@
           <BellOutlined />
           <RedoOutlined />
         </div>
-        <i class="wechatfont wechat-close" title="关闭" @click.stop="emit('closeTimeline')"></i>
+        <i
+          class="wechatfont wechat-close"
+          title="关闭"
+          @click.stop="emit('closeTimeline')"
+        ></i>
         <div class="title" v-show="scrollTop >= 300">朋友圈</div>
       </div>
       <div class="scroll-box scroll-no-bar" ref="scrollBox">
         <a-watermark v-bind="watermarkModel">
           <div class="cover">
-            <img src="http://img.adoutu.com/article/1606320535770.gif" alt="">
+            <img src="http://img.adoutu.com/article/1606320535770.gif" alt="" />
             <div class="user-info">
               <p>{{ useUserInfoStore.user.name }}</p>
-              <img :src="useUserInfoStore.user.avatar" alt="" @click.stop="handleAvatarClick">
+              <img
+                :src="useUserInfoStore.user.avatar"
+                alt=""
+                @click.stop="handleAvatarClick"
+              />
             </div>
           </div>
           <div class="timeline-box">
-            <div v-for="item in timelines.data" class="timeline-item" :key="item.id">
-              <img class="avatar" :src="item.avatar" alt="">
+            <div
+              v-for="item in timelines.data"
+              class="timeline-item"
+              :key="item.id"
+            >
+              <img
+                class="avatar"
+                :src="item.avatar"
+                alt=""
+                @click="handleAvatarClick"
+              />
               <div class="timeline-info">
-                <span class="author">{{ item.author }}</span>
+                <span class="author" @click="handleAvatarClick">{{
+                  item.author
+                }}</span>
                 <p class="content">{{ item.content }}</p>
                 <div class="img-video">
                   <!-- <video v-if="item.type === 'video'" src="http://ml.v.api.aa1.cn/girl-11-02//video/%E6%88%91%E4%BC%9A%E6%B0%B8%E8%BF%9C%E5%9C%A8%E8%BF%99%E9%87%8C-%E7%AD%89%E4%BD%A0%E5%9B%9E%E5%A4%B4---%E6%8A%96%E9%9F%B3.mp4"></video> -->
-                  <video v-if="item.type === 'video'" :src="item.videoUrl" controls autoplay />
+                  <video
+                    v-if="item.type === 'video'"
+                    :src="item.videoUrl"
+                    controls
+                  />
+                  <!-- <div v-if="item.type === 'video'">假装视频</div> -->
                   <div class="img-box" :class="'img-' + item.imgCount" v-else>
                     <a-image-preview-group>
-                      <a-image src="http://img.adoutu.com/article/1606320535073.gif" v-for="(img, idx) in item.imgCount"
-                        :key="idx" alt="" :previewMask="false" />
+                      <a-image
+                        src="http://img.adoutu.com/article/1606320535073.gif"
+                        v-for="(img, idx) in item.imgCount"
+                        :key="idx"
+                        alt=""
+                        :previewMask="false"
+                      />
                     </a-image-preview-group>
                     <!-- <img :src="item.avatar" v-for="(img, idx) in item.imgCount" :key="idx" alt=""> -->
                   </div>
                 </div>
                 <div class="timeline-extra">
                   <p>{{ friendTime(item.time) }}</p>
-                  <ellipsis-outlined class="extra-more" />
+                  <div class="more">
+                    <div class="handler" v-if="item.handlerVisible">
+                      <div @click="handleLike(item)">
+                        <HeartOutlined />
+                        赞
+                      </div>
+                      <div @click="handleRemark(item)">
+                        <MessageOutlined />
+                        评论
+                      </div>
+                    </div>
+                    <ellipsis-outlined ref="moreHandler" class="extra-more" @click="item.handlerVisible = true" />
+                  </div>
                 </div>
-                <div class="star-remark" v-if="item.starUser || item.remarkLists">
-                  <div class="star-box" v-if="item.starUser && item.starUser.length">
+                <div
+                  class="star-remark"
+                  v-if="item.starUser || item.remarkLists"
+                >
+                  <div
+                    class="star-box"
+                    v-if="item.starUser && item.starUser.length"
+                  >
                     <HeartOutlined class="star" />
                     <div v-for="(n, i) in item.starUser" :key="i">
-                      <span class="user">{{ n }}</span><span v-if="i < item.starUser.length - 1">，</span>
+                      <span class="user" @click="handleAvatarClick">{{
+                        n
+                      }}</span
+                      ><span v-if="i < item.starUser.length - 1">，</span>
                     </div>
                   </div>
-                  <div class="gutter" v-if="item.starUser && item.starUser.length && item.remarkLists && item.remarkLists.length"></div>
-                  <div class="remark-box" v-if="item.remarkLists && item.remarkLists.length">
-                    <div v-for="(n, i) in item.remarkLists" :key="i" class="remark-item">
-                      <span class="user">{{ n.user }}</span>：<span>{{ n.content }}</span>
+                  <div
+                    class="gutter"
+                    v-if="
+                      item.starUser &&
+                      item.starUser.length &&
+                      item.remarkLists &&
+                      item.remarkLists.length
+                    "
+                  ></div>
+                  <div
+                    class="remark-box"
+                    v-if="item.remarkLists && item.remarkLists.length"
+                  >
+                    <div
+                      v-for="(n, i) in item.remarkLists"
+                      :key="i"
+                      class="remark-item"
+                    >
+                      <span class="user" @click="handleAvatarClick">{{
+                        n.user
+                      }}</span
+                      >：<span>{{ n.content }}</span>
                     </div>
                   </div>
                 </div>
@@ -60,33 +128,40 @@
       </div>
     </div>
   </div>
-  <RelativeBox>
+  <RelativeBox :visible="infoVisible" @close="infoVisible = false">
     <UserInfo :user="user" type="own" />
   </RelativeBox>
 </template>
 <script setup>
 // 当前组件不是在APP下进行渲染，无法使用APP下的环境（全局组件，全局指令，原型属性函数）
 import { onMounted, reactive, ref, watch } from "vue";
-import { useDraggable, useScroll } from "@vueuse/core";
-import { BellOutlined, RedoOutlined, EllipsisOutlined, HeartOutlined } from '@ant-design/icons-vue';
+import { useDraggable, useScroll, onClickOutside } from "@vueuse/core";
+import {
+  BellOutlined,
+  RedoOutlined,
+  EllipsisOutlined,
+  HeartOutlined,
+  MessageOutlined,
+} from "@ant-design/icons-vue";
 import { friendTime } from "@/utils/utils";
-import RelativeBox from "@/components/common/RelativeBox/Index.vue"
-import UserInfo from "@/components/common/UserInfo/Index.vue"
+import RelativeBox from "@/components/common/RelativeBox/Index.vue";
+import UserInfo from "@/components/common/UserInfo/Index.vue";
 import useStore from "@/store";
 import Mock from "mockjs";
-import { getVideoApi } from '@/api/timeline'
+import { getVideoApi } from "@/api/timeline";
 const { useUserInfoStore, useRelativeBoxStore } = useStore();
 
-const user = useUserInfoStore.user
+const user = useUserInfoStore.user;
 
 const props = defineProps({
-  visible: { // 标题
+  visible: {
+    // 标题
     type: Boolean,
     default: false,
   },
 });
 
-const emit = defineEmits()
+const emit = defineEmits();
 
 const el = ref();
 const { x, y, style } = useDraggable(el, {
@@ -96,52 +171,75 @@ const { x, y, style } = useDraggable(el, {
   },
 });
 
+const infoVisible = ref(false);
 // 点击头像，展示信息
 const handleAvatarClick = (e) => {
+  infoVisible.value = true;
   useRelativeBoxStore.showBox(e.clientY, e.clientX);
-}
+};
 
 const getVideo = async () => {
-  const { data } = await getVideoApi()
-  return data.mp4
-}
+  const { data } = await getVideoApi();
+  return data.mp4;
+};
 
-const timelines = ref([])
+const timelines = ref([]);
 onMounted(async () => {
-  timelines.value = reactive(Mock.mock({
-    "data|10-30": [
-      {
-        id: "@guid",
-        content: "@ctitle(8, 100)",
-        author: "@cname",
-        time: "@date('yyyy-MM-dd')",
-        "type|1": ['image', 'video'],
-        videoUrl: await getVideo(),
-        "starUser|0-12": ["@cname"],
-        "remarkLists|0-6": [
-          {
-            user: "@cname",
-            content: "@ctitle(6, 80)"
-          }
-        ],
-        "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        avatar: "@dataImage('44x44', '@author')",
-      },
-    ]
-  }))
-})
+  timelines.value = reactive(
+    Mock.mock({
+      "data|10-30": [
+        {
+          id: "@guid",
+          content: "@ctitle(8, 100)",
+          author: "@cname",
+          time: "@date('yyyy-MM-dd')",
+          "type|1": ["image", "video"],
+          videoUrl: await getVideo(),
+          "starUser|0-12": ["@cname"],
+          "remarkLists|0-6": [
+            {
+              user: "@cname",
+              content: "@ctitle(6, 80)",
+            },
+          ],
+          "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          avatar: "@dataImage('44x44', '@author')",
+          handlerVisible: false,
+        },
+      ],
+    })
+  );
+});
 
-const scrollBox = ref(null)
-const { y: scrollTop } = useScroll(scrollBox)
+const scrollBox = ref(null);
+const { y: scrollTop } = useScroll(scrollBox);
 
 const watermarkModel = reactive({
-  content: '演示水印',
+  content: "演示水印",
   font: {
     fontSize: 22,
   },
   rotate: -35,
   gap: [100, 100],
 });
+
+const handleLike = (item) => {
+  item.handlerVisible = false
+  console.log('item: ', item);
+}
+
+const handleRemark = (item) => {
+  item.handlerVisible = false
+}
+
+// onMounted(() => {
+  const moreHandler = ref(null)
+  onClickOutside(moreHandler, (event) => {
+    timelines.value.data.map(item => {
+      item.handlerVisible = false
+    })
+  })
+// })
 </script>
 
 <style lang="less" scoped>
@@ -198,12 +296,12 @@ const watermarkModel = reactive({
       cursor: move;
       z-index: 9999;
       // background-color: rgba(0, 0, 0, 0.1);
-      color: #FFF;
-      transition: background .3s;
+      color: #fff;
+      transition: background 0.3s;
 
       &.scroll-out {
-        background-color: #EDEDED;
-        color: #7B7B7B;
+        background-color: #ededed;
+        color: #7b7b7b;
       }
 
       .header-left {
@@ -235,7 +333,7 @@ const watermarkModel = reactive({
         cursor: pointer;
 
         &:hover {
-          background-color: #FA5151;
+          background-color: #fa5151;
         }
       }
 
@@ -250,7 +348,6 @@ const watermarkModel = reactive({
     .cover {
       position: relative;
       height: 300px;
-      z-index: -1;
 
       img {
         width: 100%;
@@ -267,7 +364,7 @@ const watermarkModel = reactive({
         align-items: center;
 
         p {
-          color: #FFF;
+          color: #fff;
           margin-top: -18px;
         }
 
@@ -298,11 +395,11 @@ const watermarkModel = reactive({
 
         .timeline-info {
           flex: 1;
-          border-bottom: 1px solid #F3F3F3;
+          border-bottom: 1px solid #f3f3f3;
           padding-bottom: 14px;
 
           .author {
-            color: #576B95;
+            color: #576b95;
             line-height: 1.6;
             cursor: pointer;
           }
@@ -364,20 +461,64 @@ const watermarkModel = reactive({
             font-size: 12px;
             color: #999;
 
-            .extra-more {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 32px;
-              height: 20px;
-              border-radius: 4px;
-              color: #576B95;
-              font-size: 18px;
-              cursor: pointer;
-              background-color: #F7F7F7;
+            .more {
+              position: relative;
 
-              &:hover {
-                background-color: #DEDEDE;
+              .handler {
+                width: 184px;
+                height: 38px;
+                line-height: 38px;
+                position: absolute;
+                left: -188px;
+                top: -10px;
+                display: flex;
+                border-radius: 6px;
+                color: #eee;
+                font-size: 14px;
+                overflow: hidden;
+
+                div {
+                  position: relative;
+                  flex: 1;
+                  text-align: center;
+                  cursor: pointer;
+                  background-color: #4c4c4c;
+
+                  &:nth-of-type(1)::after {
+                    content: "";
+                    position: absolute;
+                    right: 0;
+                    top: 9px;
+                    width: 1px;
+                    height: 20px;
+                    background-color: #454545;
+                  }
+
+                  span {
+                    margin-right: 4px;
+                  }
+
+                  &:hover {
+                    background-color: #444444;
+                  }
+                }
+              }
+
+              .extra-more {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 32px;
+                height: 20px;
+                border-radius: 4px;
+                color: #576b95;
+                font-size: 18px;
+                cursor: pointer;
+                background-color: #f7f7f7;
+
+                &:hover {
+                  background-color: #dedede;
+                }
               }
             }
           }
@@ -386,13 +527,13 @@ const watermarkModel = reactive({
             margin: 16px 0 0;
             padding: 14px;
             border-radius: 6px;
-            background-color: #F9F9F9;
+            background-color: #f9f9f9;
             line-height: 18px;
 
             .star-box {
               display: flex;
               flex-wrap: wrap;
-              color: #576B95;
+              color: #576b95;
               line-height: 20px;
 
               .star {
@@ -424,7 +565,7 @@ const watermarkModel = reactive({
 
               .user {
                 cursor: pointer;
-                color: #576B95;
+                color: #576b95;
               }
             }
           }

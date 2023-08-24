@@ -1,7 +1,9 @@
 <template>
   <div class="user-info">
     <div class="info-top">
-      <img :src="userInfo.avatar" alt="">
+      <a-image-preview-group>
+        <a-image :src="userInfo.avatar" alt="" :previewMask="false" />
+      </a-image-preview-group>
       <div class="info-detail">
         <p class="name">{{ userInfo.name }}<i class="wechatfont" :class="['wechat-' + userInfo.gender]"></i></p>
         <p>微信号：{{ userInfo.phone }}</p>

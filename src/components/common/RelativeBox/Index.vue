@@ -1,7 +1,8 @@
 <template>
   <div
     class="we-relative-box"
-    v-show="useRelativeBoxStore.boxVisible"
+    v-show="visible"
+    ref="target"
     :style="{
       top: useRelativeBoxStore.boxTop + 'px',
       left: useRelativeBoxStore.boxLeft + 'px',
@@ -13,8 +14,23 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import useStore from "@/store";
 const { useRelativeBoxStore } = useStore();
+const emit = defineEmits()
+
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const target = ref(null)
+onClickOutside(target, (event) => {
+  emit('close')
+})
 </script>
 
 <style lang="less" scoped>

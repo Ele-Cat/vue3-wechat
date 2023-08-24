@@ -24,7 +24,7 @@
         @click="handleMenuClick(menu.icon)"></i>
     </div>
   </WeDragBox>
-  <RelativeBox>
+  <RelativeBox :visible="infoVisible" @close="infoVisible = false">
     <UserInfo :user="user" type="own" />
   </RelativeBox>
   <Timeline :visible="timelineVisible" @closeTimeline="closeTimelineF" />
@@ -46,8 +46,11 @@ watch(() => useUserInfoStore.user, (newVal) => {
   immediate: true,
   deep: true,
 })
+
+const infoVisible = ref(false);
 // 点击头像，展示信息
 const handleAvatarClick = (e) => {
+  infoVisible.value = true;
   useRelativeBoxStore.showBox(e.clientY, e.clientX);
 }
 
