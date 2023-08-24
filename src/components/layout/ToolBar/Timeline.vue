@@ -1,7 +1,7 @@
 <template>
   <div class="timeline" :class="{ fade: visible }">
     <div class="box" :class="{ fade: visible }" :style="style">
-      <div class="header" ref="el" :class="{'scroll-out': scrollTop >= 300}">
+      <div class="header" ref="el" :class="{ 'scroll-out': scrollTop >= 300 }">
         <div class="header-left">
           <BellOutlined />
           <RedoOutlined />
@@ -29,7 +29,8 @@
                   <video v-if="item.type === 'video'" :src="item.videoUrl" controls autoplay />
                   <div class="img-box" :class="'img-' + item.imgCount" v-else>
                     <a-image-preview-group>
-                      <a-image src="http://img.adoutu.com/article/1606320535073.gif" v-for="(img, idx) in item.imgCount" :key="idx" alt="" :previewMask="false" />
+                      <a-image src="http://img.adoutu.com/article/1606320535073.gif" v-for="(img, idx) in item.imgCount"
+                        :key="idx" alt="" :previewMask="false" />
                     </a-image-preview-group>
                     <!-- <img :src="item.avatar" v-for="(img, idx) in item.imgCount" :key="idx" alt=""> -->
                   </div>
@@ -38,15 +39,17 @@
                   <p>{{ friendTime(item.time) }}</p>
                   <ellipsis-outlined class="extra-more" />
                 </div>
-                <div class="star-remark">
-                  <div class="star-box">
+                <div class="star-remark" v-if="item.starUser || item.remarkLists">
+                  <div class="star-box" v-if="item.starUser && item.starUser.length">
                     <HeartOutlined class="star" />
-                    <div v-for="n in 6" :key="n">
-                      <span class="user">132</span><span v-if="n < 6">，</span>
+                    <div v-for="(n, i) in item.starUser" :key="i">
+                      <span class="user">{{ n }}</span><span v-if="i < item.starUser.length - 1">，</span>
                     </div>
                   </div>
-                  <div class="remark-box">
-                    这里是评论+回复
+                  <div class="remark-box" v-if="item.remarkLists && item.remarkLists.length" :style="{paddingTop: item.remarkLists.length ? '6px' : '0px'}">
+                    <div v-for="(n, i) in item.remarkLists" :key="i">
+                      <span class="user">{{ n.user }}</span>：<span>{{ n.content }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -113,6 +116,13 @@ onMounted(async () => {
         time: "@date('yyyy-MM-dd')",
         "type|1": ['image', 'video'],
         videoUrl: await getVideo(),
+        "starUser|0-10": ["@cname"],
+        "remarkLists|0-6": [
+          {
+            user: "@cname",
+            content: "@ctitle(6, 20)"
+          }
+        ],
         "imgCount|1": [1, 2, 3, 4, 5, 6, 7, 8, 9],
         avatar: "@dataImage('44x44', '@author')",
       },
@@ -288,6 +298,7 @@ const watermarkModel = reactive({
         .timeline-info {
           flex: 1;
           border-bottom: 1px solid #F3F3F3;
+          padding-bottom: 14px;
 
           .author {
             color: #576B95;
@@ -304,7 +315,7 @@ const watermarkModel = reactive({
 
           .img-video {
             margin-top: 10px;
-            
+
             .img-box {
               display: flex;
               flex-wrap: wrap;
@@ -320,7 +331,7 @@ const watermarkModel = reactive({
                   cursor: pointer;
                 }
               }
-              
+
               &.img-1 {
                 :deep(.ant-image) {
                   width: auto;
@@ -371,14 +382,16 @@ const watermarkModel = reactive({
           }
 
           .star-remark {
-            margin: 16px 0 14px;
+            margin: 16px 0 0;
             padding: 14px;
             border-radius: 6px;
             background-color: #F9F9F9;
 
             .star-box {
               display: flex;
+              flex-wrap: wrap;
               color: #576B95;
+              line-height: 20px;
 
               .star {
                 margin-right: 12px;
@@ -395,7 +408,12 @@ const watermarkModel = reactive({
             }
 
             .remark-box {
-              margin-top: 12px;
+              line-height: 24px;
+
+              .user {
+                cursor: pointer;
+                color: #576B95;
+              }
             }
           }
         }
