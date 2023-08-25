@@ -40,7 +40,8 @@
   <RelativeBox :visible="infoVisible" @close="infoVisible = false">
     <UserInfo :user="user" type="own" />
   </RelativeBox>
-  <Timeline :visible="timelineVisible" @closeTimeline="closeTimelineF" />
+  <Timeline :visible="timelineVisible" @close="closeTimeline" />
+  <Settings :visible="settingsVisible" @close="closeSettings" />
 </template>
 
 <script setup>
@@ -49,6 +50,7 @@ import { onClickOutside } from "@vueuse/core";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue"
 import UserInfo from "@/components/common/UserInfo/Index.vue"
 import Timeline from "./Timeline.vue"
+import Settings from "./Settings/Index.vue"
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
 const { useSystemStore, useRelativeBoxStore, useUserInfoStore } = useStore();
@@ -157,10 +159,11 @@ const handleMenuClick = (type) => {
     } else if (type === 'feedback') {
       window.open("http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=FBr4JIxIckrUqgDK-rbdMkoQYfJT4BCs&authKey=Dl1dUP8%2BXRNefHTYG38DyEi3CAOf20Pc8yyIJwKQ7HlP5WX7nYhURs2vVtmttNHX&noverify=0&group_code=887911914", "_blank")
     } else {
-      notify({
-        type: "info",
-        content: "打开设置...",
-      });
+      settingsVisible.value = true
+      // notify({
+      //   type: "info",
+      //   content: "打开设置...",
+      // });
     }
   } else {
     notify({
@@ -170,8 +173,13 @@ const handleMenuClick = (type) => {
   }
 };
 
-const closeTimelineF = () => {
+const closeTimeline = () => {
   timelineVisible.value = false
+}
+
+const settingsVisible = ref(false)
+const closeSettings = () => {
+  settingsVisible.value = false
 }
 </script>
 

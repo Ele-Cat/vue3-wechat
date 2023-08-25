@@ -10,7 +10,7 @@
         <i
           class="wechatfont wechat-close"
           title="关闭"
-          @click.stop="emit('closeTimeline')"
+          @click.stop="emit('close')"
         ></i>
         <div class="title" v-show="scrollTop >= 300">朋友圈</div>
       </div>
@@ -341,7 +341,7 @@ const handleRemark = (item) => {
       }
 
       i {
-        font-size: 16px;
+        font-size: 14px;
         width: 32px;
         height: 32px;
         line-height: 32px;
