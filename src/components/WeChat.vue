@@ -1,7 +1,7 @@
 <template>
   <div class="wechat" :style="wechatStyle">
-    <ToolBar />
-    <ListWrapper />
+    <ToolBar v-if="!isLocked" />
+    <ListWrapper v-if="!isLocked" />
     <BoxWrapper />
     <ContextMenu />
     <ResizeContainer />
@@ -105,6 +105,14 @@ watch(
     deep: true,
   }
 );
+
+const isLocked = ref(false)
+watch(() => useSystemStore.isLocked, (newVal) => {
+  isLocked.value = newVal
+}, {
+  immediate: true,
+  deep: true,
+})
 </script>
 
 <style lang="less" scoped>

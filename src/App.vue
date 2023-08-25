@@ -15,10 +15,19 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import { useWindowFocus } from '@vueuse/core';
 import useStore from '@/store';
-const { useContextMenuStore, useSystemStore, useRelativeBoxStore } = useStore();
+const { useContextMenuStore, useSystemStore } = useStore();
 import WeChat from '@/components/WeChat.vue';
 import TaskBar from '@/components/layout/TaskBar/Index.vue';
+
+const windowFocused = useWindowFocus()
+watch(windowFocused, newVal => {
+  if (!newVal) {
+    // 浏览器失焦时，隐藏菜单
+    doHide()
+  }
+})
 
 const handleWechatClick = () => {
   // 点击wechat任意位置移除系统默认右键菜单

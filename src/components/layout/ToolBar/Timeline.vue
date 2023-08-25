@@ -4,7 +4,8 @@
       <div class="header" ref="el" :class="{ 'scroll-out': scrollTop >= 300 }">
         <div class="header-left">
           <BellOutlined />
-          <RedoOutlined />
+          <RedoOutlined v-if="!isLoading" @click="timelineFetch" />
+          <LoadingOutlined v-else />
         </div>
         <i
           class="wechatfont wechat-close"
@@ -142,6 +143,7 @@ import {
   EllipsisOutlined,
   HeartOutlined,
   MessageOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons-vue";
 import { friendTime } from "@/utils/utils";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue";
@@ -216,6 +218,14 @@ onMounted(async () => {
     })
   );
 });
+
+const isLoading = ref(false)
+const timelineFetch = () => {
+  isLoading.value = true
+  setTimeout(() => {
+    isLoading.value = false
+  }, 1500)
+}
 
 const scrollBox = ref(null);
 const { y: scrollTop } = useScroll(scrollBox);

@@ -65,7 +65,6 @@ function send() {
 
 // 执行锁屏
 function lock() {
-  console.log("lock");
   useSystemStore().isLocked = true;
 }
 
