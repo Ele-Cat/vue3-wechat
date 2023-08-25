@@ -117,7 +117,7 @@
                       <span class="user" @click="handleAvatarClick">{{
                         n.user
                       }}</span
-                      >：<span>{{ n.content }}</span>
+                      >：<span class="content">{{ n.content }}</span>
                     </div>
                   </div>
                 </div>
@@ -151,7 +151,13 @@ import Mock from "mockjs";
 import { getVideoApi } from "@/api/timeline";
 const { useUserInfoStore, useRelativeBoxStore } = useStore();
 
-const user = useUserInfoStore.user;
+const user = ref({})
+watch(() => useUserInfoStore.user, (newVal) => {
+  user.value = newVal
+}, {
+  immediate: true,
+  deep: true,
+})
 
 const props = defineProps({
   visible: {
@@ -561,11 +567,15 @@ const handleRemark = (item) => {
                 &:nth-last-of-type(1) {
                   padding-bottom: 0;
                 }
-              }
 
-              .user {
-                cursor: pointer;
-                color: #576b95;
+                .user {
+                  cursor: pointer;
+                  color: #576b95;
+                }
+
+                .content {
+                  user-select: text;
+                }
               }
             }
           }
