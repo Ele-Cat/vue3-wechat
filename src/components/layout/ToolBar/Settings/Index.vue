@@ -13,12 +13,12 @@
       </div>
       <div class="setting-wrapper">
         <a-tabs v-model:activeKey="activeKey" tab-position="left" animated>
-          <a-tab-pane key="1" tab="账号设置">账号设置</a-tab-pane>
-          <a-tab-pane key="2" tab="消息通知">消息通知</a-tab-pane>
-          <a-tab-pane key="3" tab="通用设置">通用设置</a-tab-pane>
-          <a-tab-pane key="4" tab="文件设置">文件设置</a-tab-pane>
-          <a-tab-pane key="5" tab="快捷键">快捷键</a-tab-pane>
-          <a-tab-pane key="6" tab="关于">关于</a-tab-pane>
+          <a-tab-pane key="1" tab="账号设置"><SetAccount /></a-tab-pane>
+          <a-tab-pane key="2" tab="消息通知"><SetMessage /></a-tab-pane>
+          <a-tab-pane key="3" tab="通用设置"><SetCommon /></a-tab-pane>
+          <a-tab-pane key="4" tab="文件设置"><SetFiles /></a-tab-pane>
+          <a-tab-pane key="5" tab="快捷键"><SetShortcutKeys /></a-tab-pane>
+          <a-tab-pane key="6" tab="关于"><About /></a-tab-pane>
         </a-tabs>
       </div>
     </div>
@@ -28,6 +28,12 @@
 <script setup>
 import { ref } from "vue";
 import { useDraggable } from "@vueuse/core";
+import SetAccount from "./setAccount.vue";
+import SetMessage from "./setMessage.vue";
+import SetCommon from "./setCommon.vue";
+import SetFiles from "./setFiles.vue";
+import SetShortcutKeys from "./setShortcutKeys.vue";
+import About from "./About.vue";
 
 const emit = defineEmits();
 const props = defineProps({
