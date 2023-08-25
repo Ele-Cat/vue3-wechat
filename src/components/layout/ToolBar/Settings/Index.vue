@@ -13,12 +13,7 @@
       </div>
       <div class="setting-wrapper">
         <a-tabs v-model:activeKey="activeKey" tab-position="left" animated>
-          <a-tab-pane key="1" tab="账号设置"><SetAccount /></a-tab-pane>
-          <a-tab-pane key="2" tab="消息通知"><SetMessage /></a-tab-pane>
-          <a-tab-pane key="3" tab="通用设置"><SetCommon /></a-tab-pane>
-          <a-tab-pane key="4" tab="文件设置"><SetFiles /></a-tab-pane>
-          <a-tab-pane key="5" tab="快捷键"><SetShortcutKeys /></a-tab-pane>
-          <a-tab-pane key="6" tab="关于"><About /></a-tab-pane>
+          <a-tab-pane :tab="comp.label" v-for="comp in compLists" :key="comp.label"><component :is="comp.value" /></a-tab-pane>
         </a-tabs>
       </div>
     </div>
@@ -26,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { useDraggable } from "@vueuse/core";
 import SetAccount from "./setAccount.vue";
 import SetMessage from "./setMessage.vue";
@@ -52,7 +47,29 @@ const { x, y, style } = useDraggable(el, {
   },
 });
 
-const activeKey = ref('1');
+const compLists = reactive([
+  {
+    value: SetAccount,
+    label: "账号设置"
+  },{
+    value: SetMessage,
+    label: "消息通知"
+  },{
+    value: SetCommon,
+    label: "通用设置"
+  },{
+    value: SetFiles,
+    label: "文件设置"
+  },{
+    value: SetShortcutKeys,
+    label: "快捷键"
+  },{
+    value: About,
+    label: "关于微信"
+  }
+])
+
+const activeKey = ref('账号设置');
 </script>
 
 <style lang="less" scoped>
@@ -119,9 +136,11 @@ const activeKey = ref('1');
     }
     .setting-wrapper {
       font-size: 14px;
-      padding-top: 20px;
+      padding-top: 30px;
       height: 430px;
-
+      :deep(.ant-tabs) {
+        height: 100%;
+      }
       :deep(.ant-tabs-tab) {
         justify-content: center;
       }
