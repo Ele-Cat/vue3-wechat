@@ -14,7 +14,7 @@
         <span v-if="formState.autoLogin">{{
           formState.autoLogin ? "已开启" : "开启"
         }}</span>
-        <span class="switch">{{ formState.autoLogin ? "关闭" : "开启" }}</span>
+        <span class="switch" @click="handleClose">{{ formState.autoLogin ? "关闭" : "开启" }}</span>
         <p>开启后，在本机登录微信将无需手机确认。</p>
         <p>可在手机和电脑上关闭</p>
       </WeLabel>
@@ -33,6 +33,19 @@ import { reactive } from "vue";
 const formState = reactive({
   autoLogin: true,
 });
+
+const handleClose = () => {
+  Confirm({
+    text: '关闭后，下次登录需要手机确认',
+    closable: false,
+    confirmText: '确定',
+    confirmColor: '#FF3333'
+  }).then(() => {
+    toast({
+      content: "执行关闭"
+    })
+  }).catch(() => {})
+}
 
 const handleLogout = () => {
   Confirm({

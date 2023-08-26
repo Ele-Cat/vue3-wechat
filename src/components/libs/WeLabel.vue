@@ -6,7 +6,7 @@
     >
       {{ label }}
     </p>
-    <div>
+    <div class="slot">
       <slot />
     </div>
   </div>
@@ -33,6 +33,10 @@ const props = defineProps({
 .we-label-box {
   display: flex;
   .we-label {
+    line-height: 32px;
+  }
+  .slot {
+    flex: 1;
   }
 }
 </style>
