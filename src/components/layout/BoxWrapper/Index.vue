@@ -1,10 +1,11 @@
 <template>
   <div class="chat">
     <BoxHeader />
-    
-    <BoxChat v-if="systemStore.activeMenu === 'message'" />
-    <BoxAddressBook v-if="systemStore.activeMenu === 'users'" />
-    <BoxCollect v-if="systemStore.activeMenu === 'collect'" />
+
+    <BoxLocked v-if="useSystemStore.isLocked" />
+    <BoxChat v-else-if="useSystemStore.activeMenu === 'message'" />
+    <BoxAddressBook v-else-if="useSystemStore.activeMenu === 'users'" />
+    <BoxCollect v-else-if="useSystemStore.activeMenu === 'collect'" />
   </div>
 </template>
 
@@ -13,10 +14,10 @@ import BoxHeader from './BoxHeader.vue';
 import BoxChat from './BoxChat.vue';
 import BoxAddressBook from './BoxAddressBook.vue';
 import BoxCollect from './BoxCollect.vue';
+import BoxLocked from "./BoxLocked.vue";
 
-import { useSystemStore } from '@/store/modules/system'
-const systemStore = useSystemStore()
-
+import useStore from "@/store";
+const { useSystemStore } = useStore();
 </script>
 
 <style lang="less" scoped>

@@ -1,10 +1,9 @@
 <template>
   <div>
     <WeDragBox class="chat-title-box" :style="{borderBottom: titleVisible ? '1px solid #e7e7e7' : 'none'}">
-      <div class="chat-title" v-if="titleVisible">
-        <p>{{ boxTitleText }}</p>
+      <div class="chat-title">
+        <p v-if="titleVisible">{{ boxTitleText }}</p>
       </div>
-      <div v-else></div>
       <div class="chat-ctrl">
         <div class="chat-ctrl-icon no-drag">
           <i class="wechatfont wechat-regular" :class="{active: useSystemStore.windowState.isTop}" title="置顶" @click.stop="handleToggleTop"></i>
@@ -40,6 +39,13 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
   } else {
     titleVisible.value = false
   }
+}, {
+  immediate: true,
+  deep: true,
+})
+
+watch(() => useSystemStore.isLocked, (newVal) => {
+  titleVisible.value = !newVal
 }, {
   immediate: true,
   deep: true,
