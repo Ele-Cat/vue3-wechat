@@ -66,7 +66,6 @@ watch(() => formState.language, (newVal, oldVal) => {
 })
 
 const handleLanguageChange = (e) => {
-  console.log('e: ', e);
   Confirm({
     text: "更改语言需重新登录才能生效，是否确定更改？",
     closable: false,
