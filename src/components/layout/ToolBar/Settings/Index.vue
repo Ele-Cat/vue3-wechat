@@ -2,9 +2,7 @@
   <div class="settings" :class="{ fade: visible }">
     <div class="box" :class="{ fade: visible }" :style="style">
       <div class="header" ref="el">
-        <div class="header-left">
-          设置
-        </div>
+        <div class="header-left">设置</div>
         <i
           class="wechatfont wechat-close"
           title="关闭"
@@ -13,7 +11,13 @@
       </div>
       <div class="setting-wrapper">
         <a-tabs v-model:activeKey="activeKey" tab-position="left" animated>
-          <a-tab-pane :tab="comp.label" v-for="comp in compLists" :key="comp.label"><component :is="comp.value" /></a-tab-pane>
+          <a-tab-pane
+            :tab="comp.label"
+            v-for="comp in compLists"
+            :key="comp.label"
+          >
+            <component :is="comp.value" />
+          </a-tab-pane>
         </a-tabs>
       </div>
     </div>
@@ -23,11 +27,11 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useDraggable } from "@vueuse/core";
-import SetAccount from "./setAccount.vue";
-import SetMessage from "./setMessage.vue";
-import SetCommon from "./setCommon.vue";
-import SetFiles from "./setFiles.vue";
-import SetShortcutKeys from "./setShortcutKeys.vue";
+import SetAccount from "./SetAccount.vue";
+import SetMessage from "./SetMessage.vue";
+import SetCommon from "./SetCommon.vue";
+import SetFiles from "./SetFiles.vue";
+import SetShortcutKeys from "./SetShortcutKeys.vue";
 import About from "./About.vue";
 
 const emit = defineEmits();
@@ -50,26 +54,31 @@ const { x, y, style } = useDraggable(el, {
 const compLists = reactive([
   {
     value: SetAccount,
-    label: "账号设置"
-  },{
+    label: "账号设置",
+  },
+  {
     value: SetMessage,
-    label: "消息通知"
-  },{
+    label: "消息通知",
+  },
+  {
     value: SetCommon,
-    label: "通用设置"
-  },{
+    label: "通用设置",
+  },
+  {
     value: SetFiles,
-    label: "文件设置"
-  },{
+    label: "文件设置",
+  },
+  {
     value: SetShortcutKeys,
-    label: "快捷键"
-  },{
+    label: "快捷键",
+  },
+  {
     value: About,
-    label: "关于微信"
-  }
-])
+    label: "关于微信",
+  },
+]);
 
-const activeKey = ref('账号设置');
+const activeKey = ref("账号设置");
 </script>
 
 <style lang="less" scoped>
@@ -92,7 +101,7 @@ const activeKey = ref('账号设置');
 
   .box {
     width: 550px;
-    background: #F5F5F5;
+    background: #f5f5f5;
     border-radius: 2px;
     position: fixed;
     opacity: 0;
@@ -113,7 +122,7 @@ const activeKey = ref('账号设置');
       line-height: 32px;
       cursor: move;
       z-index: 9999;
-      color: #666;
+      color: #888;
 
       .header-left {
         padding-left: 12px;
@@ -129,7 +138,7 @@ const activeKey = ref('账号设置');
         cursor: pointer;
 
         &:hover {
-          color: #FFF;
+          color: #fff;
           background-color: #fa5151;
         }
       }
@@ -144,12 +153,15 @@ const activeKey = ref('账号设置');
       :deep(.ant-tabs-tab) {
         justify-content: center;
       }
-      :deep(.ant-tabs-tab+.ant-tabs-tab) {
+      :deep(.ant-tabs-tab + .ant-tabs-tab) {
         margin-top: 0;
       }
       :deep(.ant-tabs-ink-bar) {
         height: 12px !important;
         margin-top: 13px;
+      }
+      :deep(.ant-tabs-tabpane) {
+        padding: 0 48px;
       }
     }
   }
