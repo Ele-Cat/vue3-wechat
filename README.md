@@ -131,7 +131,7 @@ yarn build
 - [js-pinyin](github.com/waterchestnut/pinyin)
 - [VueUse英文文档](https://vueuse.org/)
 - [VueUse中文文档](https://www.vueusejs.com)
-- [perfect-scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
+- [vue3-perfect-scrollbar](https://github.com/mercs600/vue3-perfect-scrollbar)
 
 
 ## 参考文档、博客

@@ -1,25 +1,27 @@
 <template>
-  <div class="user-list scroll-no-bar">
-    <div class="user-manage">
-      <p><i class="wechatfont wechat-usermanage"></i>通讯录管理</p>
-    </div>
-    <div class="user-box">
-      <div class="user-title">群聊</div>
-      <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu.stop="rightClicked($event)">
-        <img v-lazyload="group.avatar" alt="" class="user-avatar">
-        <p class="user-name">{{ group.name }}</p>
+  <perfect-scrollbar>
+    <div class="user-list">
+      <div class="user-manage">
+        <p><i class="wechatfont wechat-usermanage"></i>通讯录管理</p>
+      </div>
+      <div class="user-box">
+        <div class="user-title">群聊</div>
+        <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu.stop="rightClicked($event)">
+          <img v-lazyload="group.avatar" alt="" class="user-avatar">
+          <p class="user-name">{{ group.name }}</p>
+        </div>
+      </div>
+      <div class="user-box" v-for="friends in useAddressBookStore.addressBookList" :key="friends.letter">
+        <div class="user-title">{{friends.letter}}</div>
+        <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
+          :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
+          @contextmenu.stop="rightClicked($event)" @click="friendClick(friend)">
+          <img v-lazyload="friend.avatar" alt="" class="user-avatar">
+          <p class="user-name">{{ friend.name }}</p>
+        </div>
       </div>
     </div>
-    <div class="user-box" v-for="friends in useAddressBookStore.addressBookList" :key="friends.letter">
-      <div class="user-title">{{friends.letter}}</div>
-      <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
-        :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
-        @contextmenu.stop="rightClicked($event)" @click="friendClick(friend)">
-        <img v-lazyload="friend.avatar" alt="" class="user-avatar">
-        <p class="user-name">{{ friend.name }}</p>
-      </div>
-    </div>
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <script setup>
@@ -52,8 +54,6 @@ const rightClicked = (e) => {
 <style lang="less" scoped>
 .user-list {
   background-color: #E7E6E5;
-  height: 100%;
-  overflow-y: scroll;
 
   .user-manage {
     padding: 14px;

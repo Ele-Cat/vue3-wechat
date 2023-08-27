@@ -2,6 +2,9 @@
 // 批量导入需要使用一个函数 require.context(dir,deep,matching)
 // 参数：1. 目录  2. 是否加载子目录  3. 加载的正则匹配
 const importFn = import.meta.globEager('./*.vue');
+//引入
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 // console.dir(Object.keys(importFn)) // 文件名称数组
 
 // import Confirm from './Confirm'
@@ -17,6 +20,8 @@ export default {
       // 注册组件
       app.component(componentName, component);
     });
+
+    app.use(PerfectScrollbar)
 
     // 定义指令
     defineDirective(app);
