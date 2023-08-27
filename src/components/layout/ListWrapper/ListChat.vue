@@ -1,23 +1,25 @@
 <template>
-  <div class="chat-list">
-    <div
-      v-for="chat in useChatStore.chatList"
-      :key="chat.id"
-      class="custom-item chat-item"
-      :class="{ active: useChatStore.activeChat === chat.friendId }"
-      @click="handleChatClick(chat)"
-      @contextmenu.stop="e => rightClicked(e, chat)"
-    >
-      <img :src="chat.avatar" alt="" class="chat-avatar" />
-      <div class="chat-info">
-        <div class="chat-info-top">
-          <p class="chat-name">{{ chat.name }}</p>
-          <p class="chat-time">{{ friendTime(chat.lastChatTime) }}</p>
+  <perfect-scrollbar>
+    <div class="chat-list">
+      <div
+        v-for="chat in useChatStore.chatList"
+        :key="chat.id"
+        class="custom-item chat-item"
+        :class="{ active: useChatStore.activeChat === chat.friendId }"
+        @click="handleChatClick(chat)"
+        @contextmenu.stop="e => rightClicked(e, chat)"
+      >
+        <img :src="chat.avatar" alt="" class="chat-avatar" />
+        <div class="chat-info">
+          <div class="chat-info-top">
+            <p class="chat-name">{{ chat.name }}</p>
+            <p class="chat-time">{{ friendTime(chat.lastChatTime) }}</p>
+          </div>
+          <p class="chat-content">{{ chat.lastChatContent }}</p>
         </div>
-        <p class="chat-content">{{ chat.lastChatContent }}</p>
       </div>
     </div>
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <script setup>
@@ -49,8 +51,6 @@ const rightClicked = (e, chat) => {
 <style lang="less" scoped>
 .chat-list {
   background-color: #e7e6e5;
-  height: 100%;
-  overflow: auto;
 
   .chat-item {
     display: flex;

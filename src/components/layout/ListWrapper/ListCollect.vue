@@ -24,16 +24,18 @@
       </div>
     </div>
 
-    <div class="tag-box scroll-no-bar">
-      <div
-        v-for="(tag, index) in tags"
-        :key="index"
-        class="custom-item collect-item tag-item"
-        @contextmenu="rightClicked($event)"
-      >
-        <p class="collect-name">{{ tag.title }}</p>
+    <perfect-scrollbar>
+      <div class="tag-box">
+        <div
+          v-for="(tag, index) in tags"
+          :key="index"
+          class="custom-item collect-item tag-item"
+          @contextmenu="rightClicked($event)"
+        >
+          <p class="collect-name">{{ tag.title }}</p>
+        </div>
       </div>
-    </div>
+    </perfect-scrollbar>
     <p class="collect-occupy">已使用 {{ totalSize }} MB，剩余 2.0 GB</p>
   </div>
 </template>

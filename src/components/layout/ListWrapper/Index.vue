@@ -58,7 +58,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
     useAddressBookStore.addressBookList = listSortByPinyin(data); // 通过拼音排序的二维数据
 
     // 初始聊天内容，截取平铺数据的前三条
-    const addressBookInit = data.slice(0, 3);
+    const addressBookInit = data.slice(0, 12);
     let initChatInfos = {};
     addressBookInit.forEach((item) => {
       initChatInfos[item.id] = Mock.mock({

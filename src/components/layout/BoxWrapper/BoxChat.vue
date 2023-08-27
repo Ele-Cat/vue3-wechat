@@ -1,24 +1,26 @@
 <template>
   <BoxNoSelected v-if="noSelect" />
   <template v-else>
-    <div class="chat-box scroll-no-bar" ref="componentRef">
-      <div
-        class="chat-item"
-        :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"
-        v-for="(chat, index) in chatContent"
-        :key="index"
-      >
-        <div class="chat-time"><span>{{friendTime(chat.createTime)}}</span></div>
-        <div class="chat-info">
-          <img
-            v-if="chat.type !== 'send'"
-            v-lazyload="chat.avatar"
-          />
-          <img v-else :src="useUserInfoStore.user.avatar || '@/assets/vite.svg'" />
-          <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
+    <perfect-scrollbar>
+      <div class="chat-box" ref="componentRef">
+        <div
+          class="chat-item"
+          :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"
+          v-for="(chat, index) in chatContent"
+          :key="index"
+        >
+          <div class="chat-time"><span>{{friendTime(chat.createTime)}}</span></div>
+          <div class="chat-info">
+            <img
+              v-if="chat.type !== 'send'"
+              v-lazyload="chat.avatar"
+            />
+            <img v-else :src="useUserInfoStore.user.avatar || '@/assets/vite.svg'" />
+            <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </perfect-scrollbar>
     <div class="input-box">
       <div class="input-control">
         <div>
@@ -46,6 +48,7 @@
 import { onMounted, ref, watch } from "vue";
 import dayjs from "dayjs";
 import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
+// todo 需修复useAutoScrollBottom的自动滚动底部
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
@@ -154,7 +157,6 @@ const sendMsg = () => {
 <style lang="less" scoped>
 .chat-box {
   flex: 1;
-  overflow: auto;
   padding: 20px 30px;
   display: flex;
   flex-direction: column;

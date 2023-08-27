@@ -14,119 +14,121 @@
         ></i>
         <div class="title" v-show="scrollTop >= 300">朋友圈</div>
       </div>
-      <div class="scroll-box scroll-no-bar" ref="scrollBox">
-        <a-watermark v-bind="watermarkModel">
-          <div class="cover">
-            <img src="http://img.adoutu.com/article/1606320535770.gif" alt="" />
-            <div class="user-info">
-              <p>{{ useUserInfoStore.user.name }}</p>
-              <img
-                :src="useUserInfoStore.user.avatar"
-                alt=""
-                @click.stop="handleAvatarClick"
-              />
+      <perfect-scrollbar ref="scrollBox">
+        <div class="scroll-box">
+          <a-watermark v-bind="watermarkModel">
+            <div class="cover">
+              <img src="http://img.adoutu.com/article/1606320535770.gif" alt="" />
+              <div class="user-info">
+                <p>{{ useUserInfoStore.user.name }}</p>
+                <img
+                  :src="useUserInfoStore.user.avatar"
+                  alt=""
+                  @click.stop="handleAvatarClick"
+                />
+              </div>
             </div>
-          </div>
-          <div class="timeline-box">
-            <div
-              v-for="item in timelines.data"
-              class="timeline-item"
-              :key="item.id"
-            >
-              <img
-                class="avatar"
-                :src="item.avatar"
-                alt=""
-                @click="handleAvatarClick"
-              />
-              <div class="timeline-info">
-                <span class="author" @click="handleAvatarClick">{{
-                  item.author
-                }}</span>
-                <p class="content">{{ item.content }}</p>
-                <div class="img-video">
-                  <!-- <video v-if="item.type === 'video'" src="http://ml.v.api.aa1.cn/girl-11-02//video/%E6%88%91%E4%BC%9A%E6%B0%B8%E8%BF%9C%E5%9C%A8%E8%BF%99%E9%87%8C-%E7%AD%89%E4%BD%A0%E5%9B%9E%E5%A4%B4---%E6%8A%96%E9%9F%B3.mp4"></video> -->
-                  <video
-                    v-if="item.type === 'video'"
-                    :src="item.videoUrl"
-                    controls
-                  />
-                  <!-- <div v-if="item.type === 'video'">假装视频</div> -->
-                  <div class="img-box" :class="'img-' + item.imgCount" v-else>
-                    <a-image-preview-group>
-                      <a-image
-                        src="http://img.adoutu.com/article/1606320535073.gif"
-                        v-for="(img, idx) in item.imgCount"
-                        :key="idx"
-                        alt=""
-                        :previewMask="false"
-                      />
-                    </a-image-preview-group>
-                    <!-- <img :src="item.avatar" v-for="(img, idx) in item.imgCount" :key="idx" alt=""> -->
-                  </div>
-                </div>
-                <div class="timeline-extra">
-                  <p>{{ friendTime(item.time) }}</p>
-                  <div class="more">
-                    <div class="handler" v-if="item.handlerVisible">
-                      <div @click="handleLike(item)">
-                        <HeartOutlined />
-                        赞
-                      </div>
-                      <div @click="handleRemark(item)">
-                        <MessageOutlined />
-                        评论
-                      </div>
+            <div class="timeline-box">
+              <div
+                v-for="item in timelines.data"
+                class="timeline-item"
+                :key="item.id"
+              >
+                <img
+                  class="avatar"
+                  :src="item.avatar"
+                  alt=""
+                  @click="handleAvatarClick"
+                />
+                <div class="timeline-info">
+                  <span class="author" @click="handleAvatarClick">{{
+                    item.author
+                  }}</span>
+                  <p class="content">{{ item.content }}</p>
+                  <div class="img-video">
+                    <!-- <video v-if="item.type === 'video'" src="http://ml.v.api.aa1.cn/girl-11-02//video/%E6%88%91%E4%BC%9A%E6%B0%B8%E8%BF%9C%E5%9C%A8%E8%BF%99%E9%87%8C-%E7%AD%89%E4%BD%A0%E5%9B%9E%E5%A4%B4---%E6%8A%96%E9%9F%B3.mp4"></video> -->
+                    <video
+                      v-if="item.type === 'video'"
+                      :src="item.videoUrl"
+                      controls
+                    />
+                    <!-- <div v-if="item.type === 'video'">假装视频</div> -->
+                    <div class="img-box" :class="'img-' + item.imgCount" v-else>
+                      <a-image-preview-group>
+                        <a-image
+                          src="http://img.adoutu.com/article/1606320535073.gif"
+                          v-for="(img, idx) in item.imgCount"
+                          :key="idx"
+                          alt=""
+                          :previewMask="false"
+                        />
+                      </a-image-preview-group>
+                      <!-- <img :src="item.avatar" v-for="(img, idx) in item.imgCount" :key="idx" alt=""> -->
                     </div>
-                    <ellipsis-outlined ref="moreHandler" class="extra-more" @click="item.handlerVisible = true" />
                   </div>
-                </div>
-                <div
-                  class="star-remark"
-                  v-if="item.starUser || item.remarkLists"
-                >
-                  <div
-                    class="star-box"
-                    v-if="item.starUser && item.starUser.length"
-                  >
-                    <HeartOutlined class="star" />
-                    <div v-for="(n, i) in item.starUser" :key="i">
-                      <span class="user" @click="handleAvatarClick">{{
-                        n
-                      }}</span
-                      ><span v-if="i < item.starUser.length - 1">，</span>
+                  <div class="timeline-extra">
+                    <p>{{ friendTime(item.time) }}</p>
+                    <div class="more">
+                      <div class="handler" v-if="item.handlerVisible">
+                        <div @click="handleLike(item)">
+                          <HeartOutlined />
+                          赞
+                        </div>
+                        <div @click="handleRemark(item)">
+                          <MessageOutlined />
+                          评论
+                        </div>
+                      </div>
+                      <ellipsis-outlined ref="moreHandler" class="extra-more" @click="item.handlerVisible = true" />
                     </div>
                   </div>
                   <div
-                    class="gutter"
-                    v-if="
-                      item.starUser &&
-                      item.starUser.length &&
-                      item.remarkLists &&
-                      item.remarkLists.length
-                    "
-                  ></div>
-                  <div
-                    class="remark-box"
-                    v-if="item.remarkLists && item.remarkLists.length"
+                    class="star-remark"
+                    v-if="item.starUser || item.remarkLists"
                   >
                     <div
-                      v-for="(n, i) in item.remarkLists"
-                      :key="i"
-                      class="remark-item"
+                      class="star-box"
+                      v-if="item.starUser && item.starUser.length"
                     >
-                      <span class="user" @click="handleAvatarClick">{{
-                        n.user
-                      }}</span
-                      >：<span class="content">{{ n.content }}</span>
+                      <HeartOutlined class="star" />
+                      <div v-for="(n, i) in item.starUser" :key="i">
+                        <span class="user" @click="handleAvatarClick">{{
+                          n
+                        }}</span
+                        ><span v-if="i < item.starUser.length - 1">，</span>
+                      </div>
+                    </div>
+                    <div
+                      class="gutter"
+                      v-if="
+                        item.starUser &&
+                        item.starUser.length &&
+                        item.remarkLists &&
+                        item.remarkLists.length
+                      "
+                    ></div>
+                    <div
+                      class="remark-box"
+                      v-if="item.remarkLists && item.remarkLists.length"
+                    >
+                      <div
+                        v-for="(n, i) in item.remarkLists"
+                        :key="i"
+                        class="remark-item"
+                      >
+                        <span class="user" @click="handleAvatarClick">{{
+                          n.user
+                        }}</span
+                        >：<span class="content">{{ n.content }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a-watermark>
-      </div>
+          </a-watermark>
+        </div>
+      </perfect-scrollbar>
     </div>
   </div>
   <RelativeBox :visible="infoVisible" @close="infoVisible = false">
@@ -248,14 +250,12 @@ const handleRemark = (item) => {
   item.handlerVisible = false
 }
 
-// onMounted(() => {
-  const moreHandler = ref(null)
-  onClickOutside(moreHandler, (event) => {
-    timelines.value.data.map(item => {
-      item.handlerVisible = false
-    })
+const moreHandler = ref(null)
+onClickOutside(moreHandler, (event) => {
+  timelines.value.data.map(item => {
+    item.handlerVisible = false
   })
-// })
+})
 </script>
 
 <style lang="less" scoped>
@@ -286,23 +286,16 @@ const handleRemark = (item) => {
     left: 50%;
     opacity: 0;
     box-shadow: 0 0 4px #666;
-
-    .scroll-box {
-      height: 100%;
-      overflow-y: scroll;
-    }
-
+    overflow: hidden;
     &.fade {
       transition: opacity 0.4s;
       opacity: 1;
     }
 
     .header {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       display: flex;
+      position: absolute;
       justify-content: space-between;
       align-items: center;
       height: 32px;
@@ -310,7 +303,7 @@ const handleRemark = (item) => {
       text-align: center;
       cursor: move;
       z-index: 9999;
-      // background-color: rgba(0, 0, 0, 0.1);
+      background-color: transparent;
       color: #fff;
       transition: background 0.3s;
 

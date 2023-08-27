@@ -1,24 +1,26 @@
 <template>
-  <div class="collect-box scroll-no-bar">
-    <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id"
-      @click="collectClick(collect)" @contextmenu.stop="rightClicked">
-      <div class="collect-info">
-        <div>
-          <p class="title">{{ collect.title }}</p>
-          <p class="content">{{ collect.content }}</p>
+  <perfect-scrollbar>
+    <div class="collect-box">
+      <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id"
+        @click="collectClick(collect)" @contextmenu.stop="rightClicked">
+        <div class="collect-info">
+          <div>
+            <p class="title">{{ collect.title }}</p>
+            <p class="content">{{ collect.content }}</p>
+          </div>
+          <img v-if="collect.cover" v-lazyload="collect.cover" alt="" />
         </div>
-        <img v-if="collect.cover" v-lazyload="collect.cover" alt="" />
-      </div>
-      <div class="collect-extra">
-        <div class="extra-info">
-          <p class="author">{{ collect.author }}</p>
-          <p class="tag">{{ collect.tags }}</p>
+        <div class="collect-extra">
+          <div class="extra-info">
+            <p class="author">{{ collect.author }}</p>
+            <p class="tag">{{ collect.tags }}</p>
+          </div>
+          <p>{{ collect.time }}</p>
         </div>
-        <p>{{ collect.time }}</p>
       </div>
+      <BoxNoMore />
     </div>
-    <BoxNoMore />
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <script setup>
@@ -53,12 +55,7 @@ const rightClicked = (e) => {
 
 <style lang="less" scoped>
 .collect-box {
-  flex: 1;
-  overflow-x: hidden;
-  overflow-y: auto;
   padding: 18px 56px;
-  display: flex;
-  flex-direction: column;
 
   .collect-item {
     background-color: #ffffff;
