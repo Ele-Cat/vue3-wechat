@@ -177,7 +177,7 @@ const closeTimeline = () => {
   timelineVisible.value = false
 }
 
-const settingsVisible = ref(true)
+const settingsVisible = ref(false)
 const closeSettings = () => {
   settingsVisible.value = false
 }
