@@ -78,7 +78,7 @@ const compLists = reactive([
   },
 ]);
 
-const activeKey = ref("账号设置");
+const activeKey = ref("关于微信");
 </script>
 
 <style lang="less" scoped>

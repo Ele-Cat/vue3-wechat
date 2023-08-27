@@ -3,11 +3,10 @@
     <div class="config">
       <WeLabel label="语言">
         <a-select
-          ref="select"
           v-model:value="formState.language"
-          style="width: 120px"
+          style="width: 130px"
           :options="languages"
-          @select="handleLanguageChange"
+          @change="handleLanguageChange"
         ></a-select>
       </WeLabel>
       <WeLabel label="通用" style="margin-top: 20px">

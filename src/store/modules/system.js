@@ -20,6 +20,7 @@ export const useSystemStore = defineStore("system", {
         prevWindows: {}, // 最小化、最大化后，恢复至上一次的窗口状态
       },
       isLocked: false, // 是否为锁屏状态
+      qqGroupLink: "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=FBr4JIxIckrUqgDK-rbdMkoQYfJT4BCs&authKey=Dl1dUP8%2BXRNefHTYG38DyEi3CAOf20Pc8yyIJwKQ7HlP5WX7nYhURs2vVtmttNHX&noverify=0&group_code=887911914", // 跳转加群链接
     };
   },
   persist: {

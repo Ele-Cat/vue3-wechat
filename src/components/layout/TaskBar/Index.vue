@@ -46,7 +46,7 @@ const handleClickWechat = () => {
   useSystemStore.windowState.status = useSystemStore.windowState.prevStatus
 }
 const addGroup = () => {
-  window.open("http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=FBr4JIxIckrUqgDK-rbdMkoQYfJT4BCs&authKey=Dl1dUP8%2BXRNefHTYG38DyEi3CAOf20Pc8yyIJwKQ7HlP5WX7nYhURs2vVtmttNHX&noverify=0&group_code=887911914", "_blank")
+  window.open(useSystemStore.qqGroupLink, "_blank")
 }
 </script>
 
