@@ -142,4 +142,5 @@ yarn build
 - [mockjs——mockjs 定义、mockjs 安装、mockjs 使用、mockjs 方法、mockjs 语法、代码示例](https://blog.csdn.net/TKY666/article/details/126215513)
 - [正确开启 Mockjs 的三种姿势：入门参考（一）](https://www.cnblogs.com/soyxiaobi/p/9846057.html)
 - [Vue 模拟通讯录列表用 js-pinyin 获取汉字首字母，形成字母索引](https://blog.csdn.net/m0_67063430/article/details/128951993)
+- [美化滚动条的一个插件 vue3-perfect-scrollbar](https://blog.csdn.net/weixin_49392771/article/details/122451614)
 - [svg仿mac最小化效果](http://www.qiutianaimeili.com/html/page/2018/03/mlo8if7lag8.html)
