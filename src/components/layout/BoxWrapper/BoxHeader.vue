@@ -45,7 +45,9 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
 })
 
 watch(() => useSystemStore.isLocked, (newVal) => {
-  titleVisible.value = !newVal
+  if ((useSystemStore.activeMenu === 'message' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
+    titleVisible.value = true
+  }
 }, {
   immediate: true,
   deep: true,

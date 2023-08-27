@@ -284,8 +284,8 @@ const handleRemark = (item) => {
     position: fixed;
     top: 50%;
     left: 50%;
-    // transform: translate(-50%, -60%);
     opacity: 0;
+    box-shadow: 0 0 4px #666;
 
     .scroll-box {
       height: 100%;
@@ -294,7 +294,6 @@ const handleRemark = (item) => {
 
     &.fade {
       transition: opacity 0.4s;
-      // transform: translate(-50%, -50%);
       opacity: 1;
     }
 
