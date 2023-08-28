@@ -48,7 +48,7 @@ import { getUsedLocalStorageSize } from "@/utils/utils";
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
-// TODO 完善收藏模块
+// todo 完善收藏模块
 onMounted(() => {
   useCollectStore.activeCollectType = useCollectStore.activeCollectType || "all";
   useSystemStore.boxTitleText = useCollectStore.collectTypeList.find(menu => menu.type === useCollectStore.activeCollectType)['title']
