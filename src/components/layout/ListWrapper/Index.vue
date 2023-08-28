@@ -2,9 +2,12 @@
   <div class="users">
     <WeDragBox class="search-box">
       <a-input size="small" v-model:value="searchText" placeholder="搜索" class="no-drag" allowClear
-        @blur="handleSearchBlur" @change="handleSearchChange">
+        @focus="handleSearchFocus" @blur="handleSearchBlur" @change="handleSearchChange">
         <template #prefix>
-          <search-outlined style="color: #ccc" />
+          <SearchOutlined style="color: #ccc" />
+        </template>
+        <template #suffix>
+          <CloseCircleOutlined v-if="isSearching" style="color: #ccc" />
         </template>
       </a-input>
       <i class="wechatfont wechat-add no-drag" v-if="useSystemStore.activeMenu === 'message'"></i>
@@ -23,7 +26,7 @@
 import dayjs from "dayjs";
 import Mock from "mockjs";
 import _ from "lodash";
-import { SearchOutlined } from "@ant-design/icons-vue";
+import { SearchOutlined, CloseCircleOutlined } from "@ant-design/icons-vue";
 import { ref } from "vue";
 import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
@@ -114,6 +117,11 @@ const handleSearchChange = (e) => {
     // 点击了清空按钮
     isSearching.value = false;
   }
+}
+
+// 搜索框聚焦时
+const handleSearchFocus = () => {
+  isSearching.value = true;
 }
 
 // 搜索框失焦时
