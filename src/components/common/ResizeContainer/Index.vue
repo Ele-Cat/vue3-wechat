@@ -8,7 +8,7 @@ import { reactive, watch } from "vue";
 import useStore from "@/store";
 const { useSystemStore } = useStore();
 
-const diff = "6px";
+const diff = "4px";
 const backgroundColor = "rgba(0, 0, 0, 0)";
 let resizing = false;
 let resizeType = "";

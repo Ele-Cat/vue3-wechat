@@ -1,8 +1,8 @@
 <template>
   <BoxNoSelected v-if="noSelect" />
   <template v-else>
-    <perfect-scrollbar>
-      <div class="chat-box" ref="componentRef">
+    <perfect-scrollbar ref="perfectScrollbarRef">
+      <div class="chat-box">
         <div
           class="chat-item"
           :class="[chat.type === 'send' ? 'chat-send' : 'chat-receive']"
@@ -45,10 +45,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, getCurrentInstance, onUpdated, nextTick } from "vue";
 import dayjs from "dayjs";
-import useAutoScrollBottom from "@/hooks/useAutoScrollBottom";
-// todo 需修复useAutoScrollBottom的自动滚动底部
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
@@ -98,16 +96,27 @@ const handleContentContextmenu = (e) => {
   }
 }
 
+const perfectScrollbarRef = ref(null)
 onMounted(() => {
+  autoScrollBottom();
   // setInterval(() => {
   //   chatContent.value.push({
   //     id: 4,
-  //     type: "receive",
+  //     type: Math.random() > 0.5 ? "receive" : "send",
   //     content: "132456",
   //     createTime: "2023-08-10 12:17:12",
   //   })
+  //   autoScrollBottom();
   // }, 1000)
 });
+
+const autoScrollBottom = () => {
+  if (perfectScrollbarRef && perfectScrollbarRef.value) {
+    nextTick(() => {
+      perfectScrollbarRef.value.$el.scrollTop = perfectScrollbarRef.value.$el.scrollHeight
+    })
+  }
+}
 
 // 监听当聊天对象切换时，展示对应的聊天内容
 const noSelect = ref(true);
@@ -119,16 +128,13 @@ watch(
     if (newVal) {
       chatContent.value = useChatStore.chatInfos[newVal]?.data
     }
+    autoScrollBottom();
   },
   {
     immediate: true,
     deep: true,
   }
 );
-
-// 自动滚动到底部
-const componentRef = ref();
-useAutoScrollBottom(componentRef);
 
 // 监听输入框聚焦失焦，方便ctrl+enter快捷发送信息
 const handletextareaFocus = () => {
@@ -150,6 +156,7 @@ const sendMsg = () => {
     content: inputText.value,
     createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   });
+  autoScrollBottom();
   inputText.value = "";
 };
 </script>
@@ -160,6 +167,7 @@ const sendMsg = () => {
   padding: 20px 30px;
   display: flex;
   flex-direction: column;
+  // overflow-y: scroll;
 
   .chat-item {
     font-size: 14px;

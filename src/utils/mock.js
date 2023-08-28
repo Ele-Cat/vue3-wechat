@@ -34,7 +34,7 @@ Mock.mock("/mock/api/userInfo", {
 Mock.mock("/mock/api/friend", {
   code: 200,
   success: true,
-  "data|50": [
+  "data|500": [
     {
       //生成随机id
       id: "@guid",

@@ -21,7 +21,13 @@ export default {
       app.component(componentName, component);
     });
 
-    app.use(PerfectScrollbar)
+    app.use(PerfectScrollbar, {
+      watchOptions: true,
+      options: {
+        minScrollbarLength: 38, // 设定最小滚动条高度
+        // maxScrollbarLength: 200, // 设定最大滚动条高度
+      }
+    })
 
     // 定义指令
     defineDirective(app);
