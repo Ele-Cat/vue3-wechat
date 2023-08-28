@@ -20,7 +20,7 @@
 import { ref, watch } from "vue"
 import useStore from '@/store';
 const { useRelativeBoxStore } = useStore();
-
+const emit = defineEmits()
 const props = defineProps({
   user: {
     type: Object,
@@ -41,7 +41,7 @@ watch(() => props.user, (newVal) => {
 })
 
 const sendMessage = () => {
-  useRelativeBoxStore.hideBox()
+  emit('send')
 }
 </script>
 

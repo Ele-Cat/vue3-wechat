@@ -38,7 +38,7 @@
     </div>
   </WeDragBox>
   <RelativeBox :visible="infoVisible" @close="infoVisible = false">
-    <UserInfo :user="user" type="own" />
+    <UserInfo :user="user" type="own" @send="infoVisible = false" />
   </RelativeBox>
   <Timeline :visible="timelineVisible" @close="closeTimeline" />
   <Settings :visible="settingsVisible" @close="closeSettings" />
