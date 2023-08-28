@@ -1,43 +1,40 @@
 <template>
-  <div class="users">
+  <div class="users" ref="users">
     <WeDragBox class="search-box">
-      <a-input size="small" v-model:value="searchText" placeholder="搜索" class="no-drag" allowClear
-        @focus="handleSearchFocus" @blur="handleSearchBlur" @change="handleSearchChange">
+      <a-input size="small" v-model:value="useSystemStore.listSearchText" placeholder="搜索" class="no-drag" @focus="handleSearchFocus" @blur="handleSearchBlur" @change="handleSearchChange">
         <template #prefix>
           <SearchOutlined style="color: #ccc" />
         </template>
         <template #suffix>
-          <CloseCircleOutlined v-if="isSearching" style="color: #ccc" />
+          <CloseCircleOutlined v-if="isSearching" style="color: #ccc" @click="handleSearchClear" />
         </template>
       </a-input>
-      <i class="wechatfont wechat-add no-drag" v-if="useSystemStore.activeMenu === 'message'"></i>
-      <i class="wechatfont wechat-adduser no-drag" v-if="useSystemStore.activeMenu === 'users'"></i>
+      <i class="wechatfont wechat-add no-drag" @click="handleInitGroup" v-if="useSystemStore.activeMenu === 'message'"></i>
+      <i class="wechatfont wechat-adduser no-drag" @click="handleAddFriend" v-if="useSystemStore.activeMenu === 'users'"></i>
     </WeDragBox>
     <div class="list-box">
-      <ListSearch v-if="isSearching && useSystemStore.activeMenu !== 'collect'" />
-      <ListChat v-else-if="useSystemStore.activeMenu === 'message'" />
-      <ListAddressBook v-else-if="useSystemStore.activeMenu === 'users'" />
-      <ListCollect v-else-if="useSystemStore.activeMenu === 'collect'" />
+      <ListChat v-show="useSystemStore.activeMenu === 'message'" />
+      <ListAddressBook v-show="useSystemStore.activeMenu === 'users'" />
+      <ListCollect v-show="useSystemStore.activeMenu === 'collect'" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import dayjs from "dayjs";
 import Mock from "mockjs";
 import _ from "lodash";
 import { SearchOutlined, CloseCircleOutlined } from "@ant-design/icons-vue";
-import { ref } from "vue";
 import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
 import ListCollect from "./ListCollect.vue";
-import ListSearch from "./ListSearch.vue";
 import useStore from "@/store";
 const { useAddressBookStore, useSystemStore, useChatStore, useUserInfoStore } = useStore();
 import { getFriendList, getUserInfo } from "@/api/manage";
 import { listSortByPinyin } from "@/utils/utils";
-
-const searchText = ref("");
+import { toast } from "@/utils/feedback"
+import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
 
 // 在这里初始化用户信息
 if (_.isEmpty(useUserInfoStore.user)) {
@@ -112,23 +109,40 @@ const handleSearchChange = (e) => {
   if (type === 'input') {
     // 立即检索
     isSearching.value = true;
-    console.log(searchText.value);
   } else {
     // 点击了清空按钮
     isSearching.value = false;
   }
 }
 
+const users = ref();
+useDetectOutsideClick(users, () => {
+  isSearching.value = false;
+  useSystemStore.listSearchText = "";
+});
+
 // 搜索框聚焦时
 const handleSearchFocus = () => {
   isSearching.value = true;
 }
 
-// 搜索框失焦时
-const handleSearchBlur = () => {
-  console.log("搜索框文本失焦");
+const handleSearchClear = () => {
   isSearching.value = false;
-  searchText.value = "";
+  useSystemStore.listSearchText = "";
+}
+
+// 发起群聊
+const handleInitGroup = () => {
+  toast({
+    content: "发起群聊"
+  })
+}
+
+// 添加好友
+const handleAddFriend = () => {
+  toast({
+    content: "添加好友"
+  })
 }
 </script>
 

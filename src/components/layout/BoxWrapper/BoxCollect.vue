@@ -1,5 +1,5 @@
 <template>
-  <perfect-scrollbar>
+  <perfect-scrollbar v-if="useCollectStore.collectList.length">
     <div class="collect-box">
       <div class="collect-item" v-for="collect in useCollectStore.collectList" :key="collect.id"
         @click="collectClick(collect)" @contextmenu.stop="rightClicked">
@@ -21,6 +21,7 @@
       <BoxNoMore />
     </div>
   </perfect-scrollbar>
+  <WeNoData v-else text="无结果" />
 </template>
 
 <script setup>

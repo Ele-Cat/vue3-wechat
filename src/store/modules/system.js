@@ -13,6 +13,7 @@ export const useSystemStore = defineStore("system", {
         minHeight: 500,
       },
       boxTitleText: '', // 聊天、收藏夹的标题，因为俩地儿都用到了，就放这儿吧
+      listSearchText: '', // 搜索栏内容
       windowState: {
         isTop: false, // 是否置顶
         status: "normal", // 默认 normal、最小化 minimize、最大化 maximize、关闭 closed

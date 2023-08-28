@@ -1,5 +1,5 @@
 <template>
-  <BoxNoSelected v-if="noSelect" />
+  <WeNoData v-if="noSelect" />
   <template v-else>
     <perfect-scrollbar ref="perfectScrollbarRef">
       <div class="chat-box">
@@ -50,7 +50,6 @@ import dayjs from "dayjs";
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
-import BoxNoSelected from "./BoxNoSelected.vue";
 
 // const chatContent = reactive([
 //   {

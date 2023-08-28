@@ -1,5 +1,5 @@
 <template>
-  <BoxNoSelected v-if="noSelect" />
+  <WeNoData v-if="noSelect" />
   <div class="box-address-book" v-else>
     <div class="address-info">
       <div class="border-bottom flex">
@@ -46,7 +46,6 @@ import Mock from "mockjs";
 import { EllipsisOutlined } from "@ant-design/icons-vue";
 import useStore from "@/store";
 const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
-import BoxNoSelected from "./BoxNoSelected.vue";
 
 const noSelect = ref(!useAddressBookStore.activeAddressBook);
 const addressBookInfo = ref({});

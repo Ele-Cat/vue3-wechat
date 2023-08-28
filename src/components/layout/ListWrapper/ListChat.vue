@@ -2,7 +2,7 @@
   <perfect-scrollbar>
     <div class="chat-list">
       <div
-        v-for="chat in useChatStore.chatList"
+        v-for="chat in chatLists"
         :key="chat.id"
         class="custom-item chat-item"
         :class="{ active: useChatStore.activeChat === chat.friendId }"
@@ -19,12 +19,14 @@
         </div>
       </div>
     </div>
+    <WeNoData v-if="!chatLists.length" text="无结果" :imageStyle="{color:'#ccc'}" />
   </perfect-scrollbar>
 </template>
 
 <script setup>
 import { friendTime } from "@/utils/utils";
 import useStore from "@/store";
+import { computed } from "vue";
 const {
   useChatStore,
   useSystemStore,
@@ -37,6 +39,7 @@ const handleChatClick = (chat) => {
   useChatStore.activeChat = chat.friendId;
   // 展示聊天标题
   useSystemStore.boxTitleText = chat.name;
+  useSystemStore.listSearchText = "";
 };
 
 // 点击右键展示自定义菜单
@@ -46,6 +49,10 @@ const rightClicked = (e, chat) => {
   useContextMenuStore.carryEntryInfo = chat;
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 };
+
+const chatLists = computed(() => {
+  return useChatStore.chatList.filter(chat => chat.name.indexOf(useSystemStore.listSearchText) >= 0)
+})
 </script>
 
 <style lang="less" scoped>
