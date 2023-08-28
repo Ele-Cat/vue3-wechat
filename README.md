@@ -129,8 +129,7 @@ yarn build
 - [mockjs](github.com/nuysoft/Mock)
 - [axios](github.com/axios/axios)
 - [js-pinyin](github.com/waterchestnut/pinyin)
-- [VueUse英文文档](https://vueuse.org/)
-- [VueUse中文文档](https://www.vueusejs.com)
+- [VueUse英文文档](https://vueuse.org/)、[VueUse中文文档](https://www.vueusejs.com)
 - [vue3-perfect-scrollbar](https://github.com/mercs600/vue3-perfect-scrollbar)
 
 
