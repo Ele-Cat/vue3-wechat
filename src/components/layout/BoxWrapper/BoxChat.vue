@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, getCurrentInstance, onUpdated, nextTick } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import dayjs from "dayjs";
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
