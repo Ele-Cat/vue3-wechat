@@ -1,24 +1,20 @@
 <template>
   <div class="users">
     <WeDragBox class="search-box">
-      <a-input size="small" v-model:value="searchText" placeholder="搜索" class="no-drag">
+      <a-input size="small" v-model:value="searchText" placeholder="搜索" class="no-drag" allowClear
+        @blur="handleSearchBlur" @change="handleSearchChange">
         <template #prefix>
           <search-outlined style="color: #ccc" />
         </template>
       </a-input>
-      <i
-        class="wechatfont wechat-add no-drag"
-        v-if="useSystemStore.activeMenu === 'message'"
-      ></i>
-      <i
-        class="wechatfont wechat-adduser no-drag"
-        v-if="useSystemStore.activeMenu === 'users'"
-      ></i>
+      <i class="wechatfont wechat-add no-drag" v-if="useSystemStore.activeMenu === 'message'"></i>
+      <i class="wechatfont wechat-adduser no-drag" v-if="useSystemStore.activeMenu === 'users'"></i>
     </WeDragBox>
     <div class="list-box">
-      <ListChat v-show="useSystemStore.activeMenu === 'message'" />
-      <ListAddressBook v-show="useSystemStore.activeMenu === 'users'" />
-      <ListCollect v-show="useSystemStore.activeMenu === 'collect'" />
+      <ListSearch v-if="isSearching && useSystemStore.activeMenu !== 'collect'" />
+      <ListChat v-else-if="useSystemStore.activeMenu === 'message'" />
+      <ListAddressBook v-else-if="useSystemStore.activeMenu === 'users'" />
+      <ListCollect v-else-if="useSystemStore.activeMenu === 'collect'" />
     </div>
   </div>
 </template>
@@ -32,6 +28,7 @@ import { ref } from "vue";
 import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
 import ListCollect from "./ListCollect.vue";
+import ListSearch from "./ListSearch.vue";
 import useStore from "@/store";
 const { useAddressBookStore, useSystemStore, useChatStore, useUserInfoStore } = useStore();
 import { getFriendList, getUserInfo } from "@/api/manage";
@@ -102,6 +99,28 @@ if (useAddressBookStore.addressBookList.length === 0) {
     });
     useChatStore.chatList = initChatList;
   });
+}
+
+const isSearching = ref(false)
+// 搜索框文本修改时
+const handleSearchChange = (e) => {
+  const { type } = e
+  console.log('type: ', type);
+  if (type === 'input') {
+    // 立即检索
+    isSearching.value = true;
+    console.log(searchText.value);
+  } else {
+    // 点击了清空按钮
+    isSearching.value = false;
+  }
+}
+
+// 搜索框失焦时
+const handleSearchBlur = () => {
+  console.log("搜索框文本失焦");
+  isSearching.value = false;
+  searchText.value = "";
 }
 </script>
 
