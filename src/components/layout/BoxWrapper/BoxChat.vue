@@ -156,6 +156,14 @@ const sendMsg = () => {
     createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   });
   autoScrollBottom();
+
+  // 置顶聊天
+  const targetIndex = useChatStore.chatList.findIndex(item => item.friendId === useChatStore.activeChat);
+  const targetItem = useChatStore.chatList.splice(targetIndex, 1)[0];
+  targetItem.lastChatContent = inputText.value;
+  targetItem.lastChatTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  useChatStore.chatList.unshift(targetItem);
+
   inputText.value = "";
 };
 </script>
