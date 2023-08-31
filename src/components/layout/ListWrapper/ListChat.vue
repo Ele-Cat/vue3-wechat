@@ -5,7 +5,7 @@
         v-for="chat in chatLists"
         :key="chat.id"
         class="custom-item chat-item"
-        :class="{ active: useChatStore.activeChat === chat.friendId }"
+        :class="{ active: useChatStore.activeChat === chat.friendId, top: chat.isTop }"
         @click="handleChatClick(chat)"
         @contextmenu.stop="e => rightClicked(e, chat)"
       >
@@ -64,7 +64,7 @@ const chatLists = computed(() => {
     padding: 12px;
 
     &.top {
-      background-color: #e1dedd;
+      background-color: #DADBDC;
     }
 
     .chat-avatar {

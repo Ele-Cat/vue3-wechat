@@ -54,12 +54,12 @@ if (useAddressBookStore.addressBookList.length === 0) {
     useAddressBookStore.flatAddressBookList = data; // 平铺数据
     useAddressBookStore.addressBookList = listSortByPinyin(data); // 通过拼音排序的二维数据
 
-    // 初始聊天内容，截取平铺数据的前三条
+    // 初始聊天内容，截取平铺数据的前几条
     const addressBookInit = data.slice(0, 12);
     let initChatInfos = {};
     addressBookInit.forEach((item) => {
       initChatInfos[item.id] = Mock.mock({
-        "data|4-10": [
+        "data|2-10": [
           {
             id: Mock.mock("@guid"),
             "type|1": ["send", "receive"],
