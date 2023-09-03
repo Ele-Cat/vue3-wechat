@@ -22,84 +22,14 @@
 
 <script setup>
 import { ref } from "vue";
-import dayjs from "dayjs";
-import Mock from "mockjs";
-import _ from "lodash";
 import { SearchOutlined, CloseCircleOutlined } from "@ant-design/icons-vue";
 import ListChat from "./ListChat.vue";
 import ListAddressBook from "./ListAddressBook.vue";
 import ListCollect from "./ListCollect.vue";
 import useStore from "@/store";
-const { useAddressBookStore, useSystemStore, useChatStore, useUserInfoStore } = useStore();
-import { getFriendList, getUserInfo } from "@/api/manage";
-import { listSortByPinyin } from "@/utils/utils";
+const { useSystemStore } = useStore();
 import { toast } from "@/utils/feedback"
 import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
-
-// 在这里初始化用户信息
-if (_.isEmpty(useUserInfoStore.user)) {
-  getUserInfo().then(res => {
-    useUserInfoStore.user = res.data.data || {}
-  })
-}
-
-// 在这里调取通讯录数据
-if (useAddressBookStore.addressBookList.length === 0) {
-  // 如果已经初始化过，就不重新渲染了
-  getFriendList().then((res) => {
-    const { data } = res.data;
-    if (data.length == 0) return;
-
-    // 初始化通讯录
-    useAddressBookStore.flatAddressBookList = data; // 平铺数据
-    useAddressBookStore.addressBookList = listSortByPinyin(data); // 通过拼音排序的二维数据
-
-    // 初始聊天内容，截取平铺数据的前几条
-    const addressBookInit = data.slice(0, 12);
-    let initChatInfos = {};
-    addressBookInit.forEach((item) => {
-      initChatInfos[item.id] = Mock.mock({
-        "data|2-10": [
-          {
-            id: Mock.mock("@guid"),
-            "type|1": ["send", "receive"],
-            content: "@cparagraph",
-            name: item.name,
-            avatar: item.avatar,
-            createTime: "2023-08-10 12:12:12",
-          },
-        ],
-      });
-    });
-    useChatStore.chatInfos = initChatInfos;
-
-    // 初始聊天列表
-    let initChatList = [];
-    // 取聊天内容去渲染聊天列表
-    for (const key in initChatInfos) {
-      const chatData = initChatInfos[key]['data']
-      // 拿到聊天内容的最后一条
-      const item = chatData[chatData.length - 1]
-      initChatList.push({
-        id: Mock.mock("@guid"),
-        friendId: key,
-        name: item.name,
-        type: "friend",
-        lastChatTime: item.createTime,
-        lastChatContent: item.content,
-        lastChatContentType: "text",
-        avatar: item.avatar,
-      });
-    }
-    // 时间倒序
-    initChatList = initChatList.sort((a, b) => {
-      return (
-        dayjs(b.lastChatTime).format("x") - dayjs(a.lastChatTime).format("x")
-      );
-    });
-    useChatStore.chatList = initChatList;
-  });
-}
 
 const isSearching = ref(false)
 // 搜索框文本修改时
@@ -115,6 +45,7 @@ const handleSearchChange = (e) => {
   }
 }
 
+// 当点击非用户列表时
 const users = ref();
 useDetectOutsideClick(users, () => {
   isSearching.value = false;
@@ -126,6 +57,7 @@ const handleSearchFocus = () => {
   isSearching.value = true;
 }
 
+// 清空搜索列表时
 const handleSearchClear = () => {
   isSearching.value = false;
   useSystemStore.listSearchText = "";

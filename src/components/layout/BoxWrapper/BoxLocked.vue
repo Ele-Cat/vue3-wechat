@@ -9,20 +9,13 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { LockOutlined } from '@ant-design/icons-vue';
 import useStore from "@/store";
 const { useSystemStore } = useStore();
 import { toast } from "@/utils/feedback";
 
 const password = ref("")
-const isLocked = ref(false)
-watch(() => useSystemStore.isLocked, (newVal) => {
-  isLocked.value = newVal
-}, {
-  immediate: true,
-  deep: true,
-})
 
 const handleUnlock = () => {
   if (!password.value) {
