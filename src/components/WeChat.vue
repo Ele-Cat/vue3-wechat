@@ -138,6 +138,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
   getFriendList().then((res) => {
     const { data } = res.data;
     if (data.length == 0) return;
+    data[0]['isStar'] = data[1]['isStar'] = data[2]['isStar'] = true
 
     // 初始化通讯录
     useAddressBookStore.flatAddressBookList = data; // 平铺数据
