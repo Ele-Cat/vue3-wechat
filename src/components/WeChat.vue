@@ -124,7 +124,7 @@ watch(() => [useSystemStore.isLocked, useSystemStore.isLoading], (newVal) => {
 
 // 初始化系统数据
 
-// 初始化用户信息
+// 初始化个人信息
 if (_.isEmpty(useUserInfoStore.user)) {
   getUserInfo().then(res => {
     useUserInfoStore.user = res.data.data || {}
@@ -147,7 +147,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
     const addressBookInit = data.slice(0, 12);
     let initChatInfos = {};
     addressBookInit.forEach((item) => {
-      initChatInfos[item.id] = Mock.mock({
+      let chatInfoLists = Mock.mock({
         "data|2-10": [
           {
             id: Mock.mock("@guid"),
@@ -155,10 +155,17 @@ if (useAddressBookStore.addressBookList.length === 0) {
             content: "@cparagraph",
             name: item.name,
             avatar: item.avatar,
-            createTime: "2023-08-10 12:12:12",
+            // createTime: "2023-08-10 12:12:12",
+            createTime: "@date('2022-MM-dd HH:mm:ss')",
           },
         ],
       });
+      chatInfoLists = chatInfoLists.data.sort((a, b) => {
+        return (
+          dayjs(a.createTime).format("x") - dayjs(b.createTime).format("x")
+        );
+      });
+      initChatInfos[item.id] = chatInfoLists
     });
     useChatStore.chatInfos = initChatInfos;
 
@@ -166,7 +173,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
     let initChatList = [];
     // 取聊天内容去渲染聊天列表
     for (const key in initChatInfos) {
-      const chatData = initChatInfos[key]['data']
+      const chatData = initChatInfos[key]
       // 拿到聊天内容的最后一条
       const item = chatData[chatData.length - 1]
       initChatList.push({

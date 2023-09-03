@@ -9,7 +9,7 @@
           v-for="(chat, index) in chatContent"
           :key="index"
         >
-          <div class="chat-time"><span>{{friendTime(chat.createTime)}}</span></div>
+          <div class="chat-time"><span>{{friendTime(chat.createTime, 'time')}}</span></div>
           <div class="chat-info">
             <img
               v-if="chat.type !== 'send'"
@@ -110,11 +110,11 @@ onMounted(() => {
 });
 
 const autoScrollBottom = () => {
-  if (perfectScrollbarRef && perfectScrollbarRef.value) {
-    nextTick(() => {
+  nextTick(() => {
+    if (perfectScrollbarRef?.value?.$el?.scrollHeight) {
       perfectScrollbarRef.value.$el.scrollTop = perfectScrollbarRef.value.$el.scrollHeight
-    })
-  }
+    }
+  })
 }
 
 // 监听当聊天对象切换时，展示对应的聊天内容
@@ -125,7 +125,7 @@ watch(
   (newVal) => {
     noSelect.value = !newVal;
     if (newVal) {
-      chatContent.value = useChatStore.chatInfos[newVal]?.data
+      chatContent.value = useChatStore.chatInfos[newVal]
     }
     autoScrollBottom();
   },
@@ -149,7 +149,7 @@ const sendMsg = () => {
   if (!inputText.value) {
     return;
   }
-  useChatStore.chatInfos[useChatStore.activeChat]?.data.push({
+  useChatStore.chatInfos[useChatStore.activeChat].push({
     id: 4,
     type: "send",
     content: inputText.value,
