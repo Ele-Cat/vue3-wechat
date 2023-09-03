@@ -45,13 +45,14 @@ const handleChatClick = (chat) => {
 // 点击右键展示自定义菜单
 const rightClicked = (e, chat) => {
   e.preventDefault();
-  useContextMenuStore.showInModule = "chat";
   useContextMenuStore.carryEntryInfo = chat;
+  useContextMenuStore.showInModule = "chat";
   useContextMenuStore.showContextMenu(e.clientY, e.clientX);
 };
 
 const chatLists = computed(() => {
-  return useChatStore.chatList.filter(chat => chat.name.indexOf(useSystemStore.listSearchText) >= 0)
+  let chatList = [...useChatStore.chatList.filter(chat => chat.isTop), ...useChatStore.chatList.filter(chat => !chat.isTop)]
+  return chatList.filter(chat => chat.name.indexOf(useSystemStore.listSearchText) >= 0)
 })
 </script>
 
@@ -64,7 +65,13 @@ const chatLists = computed(() => {
     padding: 12px;
 
     &.top {
-      background-color: #DADBDC;
+      background-color: #DCDCDC;
+      &:hover {
+        background-color: #D6D6D6;
+      }
+      &.active {
+        background-color: #C9C9C9;
+      }
     }
 
     .chat-avatar {

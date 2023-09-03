@@ -1,5 +1,6 @@
 export const contextEnums = {
   toTop: "置顶",
+  unTop: "取消置顶",
   unRead: "标为未读",
   noDisturb: "消息免打扰",
   openInAStandaloneWindow: "在独立窗口中打开",

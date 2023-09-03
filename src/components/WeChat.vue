@@ -188,6 +188,7 @@ if (useAddressBookStore.addressBookList.length === 0) {
         avatar: item.avatar,
       });
     }
+    initChatList[0]['isTop'] = initChatList[1]['isTop'] = initChatList[2]['isTop'] = true
     // 时间倒序
     initChatList = initChatList.sort((a, b) => {
       return (

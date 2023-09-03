@@ -62,10 +62,18 @@ const handleMenuClick = (type) => {
 
 // 根据点击的对象展示对应的菜单列表
 const contextMenuList = ref([])
-watch(() => useContextMenuStore.showInModule, (newVal) => {
-  contextMenuList.value = contextMenus[newVal] || []
+watch(() => useContextMenuStore, () => {
+  const showInModule = useContextMenuStore.showInModule
+  const carryEntryInfo = useContextMenuStore.carryEntryInfo
+  if (showInModule === 'chat') {
+    if (carryEntryInfo.isTop) {
+      contextMenus[showInModule][0]['type'] = "unTop"
+    } else {
+      contextMenus[showInModule][0]['type'] = "toTop"
+    }
+  }
+  contextMenuList.value = contextMenus[showInModule] || []
 }, {
-  immediate: true,
   deep: true,
 })
 </script>
