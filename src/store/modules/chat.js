@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import dayjs from "dayjs";
+import { guid } from "@/utils/utils";
 
 export const useChatStore = defineStore("chat", {
   state: () => {
@@ -9,23 +11,48 @@ export const useChatStore = defineStore("chat", {
       isFocusSendArea: false,
     };
   },
-  // actions: {
-  //   addChat() {
-  //     this.chatList.shift({
-  //       id: '2',
-  //       name: '',
-  //       type: '',
-  //       lastChatTime: '',
-  //       lastChatContnt: '',
-  //       lastChatContntType: '',
-  //       avatar: '',
-  //     })
-  //   },
-  //   editChat() {
+  actions: {
+    addChat() {
+      this.chatList.shift({
+        id: '2',
+        name: '',
+        type: '',
+        lastChatTime: '',
+        lastChatContnt: '',
+        lastChatContntType: '',
+        avatar: '',
+      })
+    },
+    editChat() {
 
-  //   },
-  //   deleteChat() {},
-  // },
+    },
+    deleteChat() {},
+    /**
+     * 将文本添加至聊天记录
+     * @param {string} activeChat 当前聊天
+     * @param {string} content 发送的信息
+     */
+    sendChatMsg(activeChat, content) {
+      this.chatInfos[activeChat].push({
+        id: guid(),
+        type: "send",
+        content: content,
+        createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+      });
+    },
+    /**
+     * 将聊天前移
+     * @param {string} activeChat 当前聊天
+     * @param {string} content 发送的信息
+     */
+    forwardChat(activeChat, content) {
+      const targetIndex = this.chatList.findIndex(item => item.friendId === activeChat);
+      const targetItem = this.chatList.splice(targetIndex, 1)[0];
+      targetItem.lastChatContent = content;
+      targetItem.lastChatTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      this.chatList.unshift(targetItem);
+    },
+  },
   persist: {
     enabled: true,
     strategies: [

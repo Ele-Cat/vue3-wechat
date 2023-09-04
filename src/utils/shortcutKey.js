@@ -46,6 +46,7 @@ export function listenGlobalKeyDown() {
   // 监听鼠标滑轮滚动
   window.addEventListener('wheel', e => {
     if (e.ctrlKey) {
+      // 禁止鼠标滚轮缩放浏览器事件
       e.preventDefault();
     }
   }, { passive: false })

@@ -15,7 +15,7 @@
               v-if="chat.type !== 'send'"
               v-lazyload="chat.avatar"
             />
-            <img v-else :src="useUserInfoStore.user.avatar || '@/assets/vite.svg'" />
+            <img v-else v-lazyload="useUserInfoStore?.user?.avatar" />
             <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
           </div>
         </div>
@@ -35,10 +35,13 @@
         </div>
       </div>
       <div class="input-area">
-        <a-textarea class="scroll-no-bar" v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" />
+        <a-textarea class="scroll-no-bar" v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" @pressEnter="handlePressEnter" />
       </div>
       <div class="input-btn">
-        <button @click="sendMsg">发送(S)</button>
+        <a-tooltip placement="topRight" trigger="click">
+          <template #title v-if="!inputText">不能发送空白信息</template>
+          <button @click="sendMsg">发送(S)</button>
+        </a-tooltip>
       </div>
     </div>
   </template>
@@ -46,7 +49,6 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
-import dayjs from "dayjs";
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
@@ -109,6 +111,7 @@ onMounted(() => {
   // }, 1000)
 });
 
+// 自动滚动至底部
 const autoScrollBottom = () => {
   nextTick(() => {
     if (perfectScrollbarRef?.value?.$el?.scrollHeight) {
@@ -149,23 +152,19 @@ const sendMsg = () => {
   if (!inputText.value) {
     return;
   }
-  useChatStore.chatInfos[useChatStore.activeChat].push({
-    id: 4,
-    type: "send",
-    content: inputText.value,
-    createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-  });
-  autoScrollBottom();
-
-  // 置顶聊天
-  const targetIndex = useChatStore.chatList.findIndex(item => item.friendId === useChatStore.activeChat);
-  const targetItem = useChatStore.chatList.splice(targetIndex, 1)[0];
-  targetItem.lastChatContent = inputText.value;
-  targetItem.lastChatTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
-  useChatStore.chatList.unshift(targetItem);
-
+  // 将文本添加至聊天记录
+  useChatStore.sendChatMsg(useChatStore.activeChat, inputText.value)
+  // 将聊天前移
+  useChatStore.forwardChat(useChatStore.activeChat, inputText.value);
+  // 清空输入框
   inputText.value = "";
+  // 聊天记录自动滚动到底部
+  autoScrollBottom();
 };
+
+const handlePressEnter = () => {
+  // sendMsg();
+}
 </script>
 
 <style lang="less" scoped>

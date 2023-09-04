@@ -1,7 +1,7 @@
 <template>
   <WeDragBox class="tool-bar">
     <div class="tool-box tool-top">
-      <img :src="user.avatar || '@/assets/vite.svg'" class="avatar no-drag" @click.stop="handleAvatarClick" />
+      <img :src="useUserInfoStore?.user?.avatar" class="avatar no-drag" @click.stop="handleAvatarClick" />
       <i
         class="wechatfont no-drag"
         v-for="menu in menuTop"
@@ -38,7 +38,7 @@
     </div>
   </WeDragBox>
   <RelativeBox :visible="infoVisible" @close="infoVisible = false">
-    <UserInfo :user="user" type="own" @send="infoVisible = false" />
+    <UserInfo :user="useUserInfoStore?.user" type="own" @send="infoVisible = false" />
   </RelativeBox>
   <Timeline :visible="timelineVisible" @close="closeTimeline" />
   <Settings :visible="settingsVisible" @close="closeSettings" />
@@ -54,14 +54,6 @@ import Settings from "./Settings/Index.vue"
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
 const { useSystemStore, useRelativeBoxStore, useUserInfoStore } = useStore();
-
-const user = ref({})
-watch(() => useUserInfoStore.user, (newVal) => {
-  user.value = newVal
-}, {
-  immediate: true,
-  deep: true,
-})
 
 const infoVisible = ref(false);
 // 点击头像，展示信息

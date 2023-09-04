@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
 dayjs.extend(isBetween)
 import pinyin from 'js-pinyin';
+import Mock from "mockjs";
 
 /**
  * 返回友好的时间信息
@@ -25,7 +26,7 @@ export function friendTime(time, type) {
 /**
  * 返回通过拼音A-Z排序后的数组
  * @param {array} list 原数组
- * @param {string} key 标志属性
+ * @param {string} sign 标志属性
  * @returns [{
  *   initial: 'A',
  *   children: [{name: '阿真'}, {name: '阿强'}]
@@ -95,4 +96,12 @@ export function getUsedLocalStorageSize() {
   }
 
   return (usedSize / (1024 * 1024)).toFixed(2);
+}
+
+/**
+ * 返回一个随机id
+ * @returns 返回一个随机id
+ */
+export function guid() {
+  return Mock.mock("@guid")
 }
