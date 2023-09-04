@@ -67,7 +67,7 @@ watch(() => useSystemStore.windowState.status, (newVal) => {
 </script>
 
 <style lang="less">
-@import url(//at.alicdn.com/t/c/font_4200334_1i6qek9gw0p.css);
+@import url(//at.alicdn.com/t/c/font_4200334_7n3az5gz1m6.css);
 
 #app {
   height: 100vh;

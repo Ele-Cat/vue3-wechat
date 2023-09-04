@@ -65,7 +65,7 @@ const handleAvatarClick = (e) => {
 // 工具栏顶部菜单
 const menuTop = reactive([
   {
-    icon: "message",
+    icon: "chat",
     title: "聊天",
   },
   {
@@ -130,7 +130,7 @@ const menus = reactive([
 const timelineVisible = ref(false)
 // 点击工具栏icon
 const handleMenuClick = (type) => {
-  if (["message", "users", "collect"].includes(type)) {
+  if (["chat", "users", "collect"].includes(type)) {
     // 打开对应面板
     useSystemStore.activeMenu = type;
   } else if (type === 'timeline') {

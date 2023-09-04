@@ -4,7 +4,7 @@
 
     <BoxLocked v-if="useSystemStore.isLocked" />
     <BoxLoading v-else-if="useSystemStore.isLoading" />
-    <BoxChat v-else-if="useSystemStore.activeMenu === 'message'" />
+    <BoxChat v-else-if="useSystemStore.activeMenu === 'chat'" />
     <BoxAddressBook v-else-if="useSystemStore.activeMenu === 'users'" />
     <BoxCollect v-else-if="useSystemStore.activeMenu === 'collect'" />
   </div>

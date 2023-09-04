@@ -13,7 +13,7 @@
           <!-- wechat-restore_down 向下还原 -->
           <i class="wechatfont wechat-close" title="关闭" @click.stop="handleClose"></i>
         </div>
-        <ellipsis-outlined class="chat-more no-drag" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'message'" />
+        <ellipsis-outlined class="chat-more no-drag" title="聊天信息" v-if="titleVisible && useSystemStore.activeMenu === 'chat'" />
       </div>
     </WeDragBox>
   </div>
@@ -29,9 +29,9 @@ const { useSystemStore, useChatStore, useCollectStore } = useStore();
 const titleVisible = ref(false)
 const boxTitleText = ref('')
 watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore.activeCollectType], () => {
-  if ((useSystemStore.activeMenu === 'message' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
+  if ((useSystemStore.activeMenu === 'chat' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
     titleVisible.value = true
-    if (useSystemStore.activeMenu === 'message' && useChatStore.activeChat) {
+    if (useSystemStore.activeMenu === 'chat' && useChatStore.activeChat) {
       boxTitleText.value = useChatStore.chatList.find(item => item.friendId === useChatStore.activeChat)?.name
     } else if (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType) {
       boxTitleText.value = useCollectStore.typeList.find(item => item.searchType === useCollectStore.activeCollectType)['title']
@@ -45,7 +45,7 @@ watch(() => [useSystemStore.activeMenu, useChatStore.activeChat, useCollectStore
 })
 
 watch(() => useSystemStore.isLocked, (newVal) => {
-  if ((useSystemStore.activeMenu === 'message' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
+  if ((useSystemStore.activeMenu === 'chat' && useChatStore.activeChat) || (useSystemStore.activeMenu === 'collect' && useCollectStore.activeCollectType)) {
     titleVisible.value = true
   }
 }, {

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useSystemStore = defineStore("system", {
   state: () => {
     return {
-      activeMenu: "message", // 当前聚焦的工具栏目
+      activeMenu: "chat", // 当前聚焦的工具栏目
       windows: { // 窗口信息
         top: 0,
         left: 0,

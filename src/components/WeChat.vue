@@ -178,7 +178,6 @@ if (useAddressBookStore.addressBookList.length === 0) {
       // 拿到聊天内容的最后一条
       const item = chatData[chatData.length - 1]
       initChatList.push({
-        id: Mock.mock("@guid"),
         friendId: key,
         name: item.name,
         type: "friend",

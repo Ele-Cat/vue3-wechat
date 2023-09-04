@@ -9,11 +9,11 @@
           <CloseCircleOutlined v-if="isSearching" style="color: #ccc" @click="handleSearchClear" />
         </template>
       </a-input>
-      <i class="wechatfont wechat-add no-drag" @click="handleInitGroup" v-if="useSystemStore.activeMenu === 'message'"></i>
+      <i class="wechatfont wechat-add no-drag" @click="handleInitGroup" v-if="useSystemStore.activeMenu === 'chat'"></i>
       <i class="wechatfont wechat-adduser no-drag" @click="handleAddFriend" v-if="useSystemStore.activeMenu === 'users'"></i>
     </WeDragBox>
     <div class="list-box">
-      <ListChat v-show="useSystemStore.activeMenu === 'message'" />
+      <ListChat v-show="useSystemStore.activeMenu === 'chat'" />
       <ListAddressBook v-show="useSystemStore.activeMenu === 'users'" />
       <ListCollect v-show="useSystemStore.activeMenu === 'collect'" />
     </div>

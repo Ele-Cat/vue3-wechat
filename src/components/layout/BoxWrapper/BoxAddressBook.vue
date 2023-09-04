@@ -68,22 +68,19 @@ watch(
 // 点击“发信息”按钮
 const sendMessage = () => {
   // 将tab切换至聊天
-  useSystemStore.activeMenu = 'message'
+  useSystemStore.activeMenu = 'chat'
   // 提取对应的用户信息
   const userInfo = useAddressBookStore.flatAddressBookList.find(item => item.id === useAddressBookStore.activeAddressBook)
   if (!useChatStore.chatList.find(item => item.friendId === useAddressBookStore.activeAddressBook)) {
     // 如果聊天记录里没这个人，则打开新的聊天窗口【置顶插入】
     useChatStore.chatList.unshift({
-      id: Mock.mock("@guid"),
       friendId: useAddressBookStore.activeAddressBook,
       name: userInfo.name,
       type: "friend",
       avatar: userInfo.avatar,
     })
     // 同时给这个聊天记录一个空的记录
-    useChatStore.chatInfos[useAddressBookStore.activeAddressBook] = {
-      data: useChatStore.chatInfos[useAddressBookStore.activeAddressBook] ? useChatStore.chatInfos[useAddressBookStore.activeAddressBook]['data'] : []
-    }
+    useChatStore.chatInfos[useAddressBookStore.activeAddressBook] = useChatStore.chatInfos[useAddressBookStore.activeAddressBook] || []
   }
   // 设定标题
   useSystemStore.boxTitleText = userInfo.name;

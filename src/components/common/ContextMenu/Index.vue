@@ -34,7 +34,7 @@ const handleMenuClick = (type) => {
         useChatStore.activeChat = "";
       }
       delete useChatStore.chatInfos[carryEntryInfo.friendId]
-      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.friendId === carryEntryInfo.friendId), 1)
     }).catch(() => {})
   } else if (type === "hideChat") {
     // 不显示聊天
@@ -49,7 +49,7 @@ const handleMenuClick = (type) => {
         // 如果当前删除的聊天是打开的聊天，关闭高亮
         useChatStore.activeChat = "";
       }
-      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.id === carryEntryInfo.id), 1)
+      useChatStore.chatList.splice(useChatStore.chatList.findIndex(item => item.friendId === carryEntryInfo.friendId), 1)
     }).catch(() => {})
   } else {
     toast({
