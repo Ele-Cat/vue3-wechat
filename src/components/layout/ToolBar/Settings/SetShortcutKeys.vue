@@ -10,13 +10,13 @@
         ></a-select>
       </WeLabel>
       <WeLabel label="截取屏幕" label-width="114" label-align="left" style="margin-top: 28px">
-        <div class="shortcut-key">Alt + A</div>
+        <div class="shortcut-key" @click="changeShortcutKey">Alt + A</div>
       </WeLabel>
       <WeLabel label="打开微信" label-width="114" label-align="left" style="margin-top: 28px">
-        <div class="shortcut-key">Ctrl + Alt + W</div>
+        <div class="shortcut-key" @click="changeShortcutKey">Ctrl + Alt + W</div>
       </WeLabel>
       <WeLabel label="锁定微信" label-width="114" label-align="left" style="margin-top: 28px">
-        <div class="shortcut-key">Ctrl + L</div>
+        <div class="shortcut-key" @click="changeShortcutKey">Ctrl + L</div>
       </WeLabel>
       <WeLabel label="检测快捷键" label-width="114" label-align="left" style="margin-top: 28px">
         <a-checkbox v-model:checked="formState.conflictReminder">快捷键与其他软件冲突时提醒</a-checkbox>
@@ -50,6 +50,13 @@ const formState = reactive({
 
 const handleLanguageChange = (e) => {
   useChatStore.sendMethods = e;
+}
+
+const changeShortcutKey = () => {
+  toast({
+    type: "warning",
+    content: "不支持哦~",
+  });
 }
 
 const handleReset = () => {
