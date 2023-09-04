@@ -19,7 +19,7 @@
         <div class="shortcut-key">Ctrl + L</div>
       </WeLabel>
       <WeLabel label="检测快捷键" label-width="114" label-align="left" style="margin-top: 28px">
-        <a-checkbox v-model:checked="formState.checked">快捷键与其他软件冲突时提醒</a-checkbox>
+        <a-checkbox v-model:checked="formState.conflictReminder">快捷键与其他软件冲突时提醒</a-checkbox>
         <span class="button" @click="handleReset">恢复默认设置</span>
       </WeLabel>
     </div>
@@ -45,7 +45,7 @@ const sendMethods = reactive([
 
 const formState = reactive({
   sendMethod: useChatStore.sendMethods,
-  checked: true,
+  conflictReminder: true,
 });
 
 const handleLanguageChange = (e) => {
@@ -53,6 +53,8 @@ const handleLanguageChange = (e) => {
 }
 
 const handleReset = () => {
+  formState.sendMethod = useChatStore.sendMethods = "enter";
+  formState.conflictReminder = true;
   toast({
     content: "恢复默认设置",
   });
