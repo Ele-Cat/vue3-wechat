@@ -9,7 +9,9 @@
         @click="handleChatClick(chat)"
         @contextmenu.stop="e => rightClicked(e, chat)"
       >
-        <img :src="chat.avatar" alt="" class="chat-avatar" />
+        <a-badge :count="chat.unreadCount || 0" title="">
+          <img :src="chat.avatar" alt="" class="chat-avatar" />
+        </a-badge>
         <div class="chat-info">
           <div class="chat-info-top">
             <p class="chat-name">{{ chat.name }}</p>
@@ -114,6 +116,26 @@ const chatLists = computed(() => {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.chat-list {
+  .ant-badge {
+    .ant-badge-count {
+      min-width: 16px !important;
+      height: 16px !important;
+      line-height: 16px !important;
+      box-shadow: none !important;
+      font-size: 12px !important;
+      .ant-scroll-number-only, .ant-scroll-number-only-unit {
+        height: 16px !important;
+      }
+    }
+    .ant-badge-multiple-words {
+      padding: 0 4px;
     }
   }
 }

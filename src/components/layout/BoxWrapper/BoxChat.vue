@@ -9,7 +9,7 @@
           v-for="(chat, index) in chatContent"
           :key="index"
         >
-          <div class="chat-time"><span>{{friendTime(chat.createTime, 'time')}}</span></div>
+          <div class="chat-time"><span>{{friendTime(chat.createTime, 'datetime')}}</span></div>
           <div class="chat-info">
             <img
               v-if="chat.type !== 'send'"

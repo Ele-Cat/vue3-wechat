@@ -5,19 +5,20 @@ import pinyin from 'js-pinyin';
 
 /**
  * 返回友好的时间信息
- * @param {dateTime} datetime 
+ * @param {dateTime} datetime dayjs时间
+ * @param {string} type 类型：默认date 可选：datetime
  * @returns 
  */
-export function friendTime(datetime, type) {
-  if (!datetime) {
+export function friendTime(time, type) {
+  if (!time) {
     return dayjs().format('YYYY/M/D')
   }
-  if (dayjs(datetime).isBetween(dayjs().startOf('day'), dayjs().endOf('day'))) {
-    return dayjs(datetime).format('HH:mm')
-  } else if (dayjs(datetime).isBetween(dayjs().subtract(1, 'day').startOf('day'), dayjs().subtract(1, 'day').endOf('day'))) {
-    return type === 'time' ? dayjs(datetime).format('昨天 HH:mm') : '昨天'
+  if (dayjs(time).isBetween(dayjs().startOf('day'), dayjs().endOf('day'))) {
+    return dayjs(time).format('HH:mm')
+  } else if (dayjs(time).isBetween(dayjs().subtract(1, 'day').startOf('day'), dayjs().subtract(1, 'day').endOf('day'))) {
+    return type === 'datetime' ? dayjs(time).format('昨天 HH:mm') : '昨天'
   } else {
-    return dayjs(datetime).format(type === 'time' ? 'YYYY年M月D日 HH:mm' : 'YY/M/D')
+    return dayjs(time).format(type === 'datetime' ? 'YYYY年M月D日 HH:mm' : 'YY/M/D')
   }
 }
 
