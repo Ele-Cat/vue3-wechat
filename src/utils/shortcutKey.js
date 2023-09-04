@@ -44,16 +44,11 @@ export function listenGlobalKeyDown() {
   };
 
   // 监听鼠标滑轮滚动
-  window.addEventListener(
-    "mousewheel",
-    (e) => {
-      if (isCtrlOrCommandDown) {
-        // 移除默认缩放页面
-        e.preventDefault();
-      }
-    },
-    { passive: false }
-  );
+  window.addEventListener('wheel', e => {
+    if (e.ctrlKey) {
+      e.preventDefault();
+    }
+  }, { passive: false })
 }
 
 // 发送消息
