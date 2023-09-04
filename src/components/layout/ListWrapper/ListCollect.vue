@@ -6,13 +6,13 @@
       </div>
       <div class="collect-box">
         <div
-          v-for="(menu, index) in useCollectStore.collectTypeList"
+          v-for="(menu, index) in collectTypeList"
           :key="index"
           class="custom-item collect-item"
-          :class="{active: useCollectStore.activeCollectType === menu.type}"
+          :class="{active: useCollectStore.activeCollectType === menu.searchType}"
           @click="handleCollectTypeClick(menu)"
         >
-          <i class="wechatfont" :class="'wechat-' + menu.type"></i>
+          <i class="wechatfont" :class="'wechat-' + menu.searchType"></i>
           <p class="collect-name">{{ menu.title }}</p>
         </div>
         <div class="collect-divide"></div>
@@ -25,12 +25,13 @@
     </div>
 
     <perfect-scrollbar>
-      <div class="tag-box">
+      <div class="tag-box" v-show="tagsVisivle">
         <div
-          v-for="(tag, index) in tags"
+          v-for="(tag, index) in collectTagList"
           :key="index"
           class="custom-item collect-item tag-item"
-          @contextmenu="rightClicked($event)"
+          :class="{active: useCollectStore.activeCollectType === tag.searchType}"
+          @click="handleCollectTypeClick(tag)"
         >
           <p class="collect-name">{{ tag.title }}</p>
         </div>
@@ -41,52 +42,36 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import useStore from "@/store";
+import { computed, onMounted, ref, watch } from "vue";
+import _ from "lodash";
 import { DownOutlined, UpOutlined } from "@ant-design/icons-vue";
+import useStore from "@/store";
+const { useCollectStore, useSystemStore } = useStore();
 import { getUsedLocalStorageSize } from "@/utils/utils";
-import useDetectOutsideClick from "@/hooks/useDetectOutsideClick";
-const { useCollectStore, useSystemStore, useContextMenuStore } = useStore();
 
 // todo 完善收藏模块
 onMounted(() => {
   useCollectStore.activeCollectType = useCollectStore.activeCollectType || "all";
-  useSystemStore.boxTitleText = useCollectStore.collectTypeList.find(menu => menu.type === useCollectStore.activeCollectType)['title']
+  useSystemStore.boxTitleText = useCollectStore.typeList.find(menu => menu.searchType === useCollectStore.activeCollectType)['title']
 });
 
-const tagList = useCollectStore.tags;
-
 const tagsVisivle = ref(false);
-const tags = ref([]);
-
-watch(
-  () => tagsVisivle.value,
-  (newVal) => {
-    tags.value = newVal ? tagList : [];
-  },
-  {
-    immediate: true,
-  }
-);
-
 const toggleTags = () => {
   tagsVisivle.value = !tagsVisivle.value;
 };
 
-const rightClicked = (e) => {
-  e.preventDefault();
-  useContextMenuStore.showContextMenu(e.clientY, e.clientX);
-};
 
-const componentRef = ref();
-useDetectOutsideClick(componentRef, () => {
-  useSystemStore.activeMenu === "collect" &&
-    useContextMenuStore.hideContextMenu();
-});
+const collectTypeList = computed(() => {
+  return useCollectStore.typeList.filter(item => item.collectType === "type");
+})
+
+const collectTagList = computed(() => {
+  return useCollectStore.typeList.filter(item => item.collectType === "tag");
+})
 
 const handleCollectTypeClick = (menu) => {
-  useCollectStore.activeCollectType = menu.type
-  useSystemStore.boxTitleText = menu.title
+  useCollectStore.activeCollectType = menu.searchType || menu.title;
+  useSystemStore.boxTitleText = menu.title;
 }
 
 const totalSize = getUsedLocalStorageSize();
@@ -201,6 +186,10 @@ const totalSize = getUsedLocalStorageSize();
 
     .tag-item {
       padding-left: 32px;
+      &.active,
+      &:active {
+        background-color: #dfdfdf;
+      }
     }
   }
 

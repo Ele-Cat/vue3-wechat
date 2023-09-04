@@ -13,13 +13,17 @@ export const useContextMenuStore = defineStore("contextMenu", {
   },
   actions: {
     // 显示右键菜单
-    showContextMenu(top, left) {
+    showContextMenu(clientX, clientY, showInModule, carryEntryInfo) {
+      this.menuLeft = clientX;
+      this.menuTop = clientY;
+      this.showInModule = showInModule;
+      this.carryEntryInfo = carryEntryInfo;
       this.menuVisible = true;
-      this.menuLeft = left;
-      this.menuTop = top;
     },
     // 隐藏右键菜单
     hideContextMenu() {
+      this.showInModule = "";
+      this.carryEntryInfo = null;
       this.menuVisible = false;
     },
   },

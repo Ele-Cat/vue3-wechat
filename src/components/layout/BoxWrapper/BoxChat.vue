@@ -76,15 +76,13 @@ const handleContentContextmenu = (e) => {
   if (selection) {
     // 如果已选择文本的情况下右键
     // 展示小菜单：复制、多选、搜一搜
-    useContextMenuStore.showInModule = "chatSelectSome";
-    useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+    useContextMenuStore.showContextMenu(e.clientX, e.clientY, "chatSelectSome");
   } else {
     // 直接右键聊天文本
     // 全选文本并展示大菜单：复制、翻译、转发、收藏、多选、引用、搜一搜、删除
     const node = e.target.childNodes[0]
     selectText(node, 0, node.length); // 选择文本
-    useContextMenuStore.showInModule = "chatSelectAll";
-    useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+    useContextMenuStore.showContextMenu(e.clientX, e.clientY, "chatSelectAll");
   }
   // 选择指定范围的文本
   function selectText(element, start, end) {

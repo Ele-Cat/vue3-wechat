@@ -49,8 +49,7 @@ const collectClick = (collect) => {
 // 点击右键，展示自定义菜单
 const rightClicked = (e) => {
   e.preventDefault();
-  useContextMenuStore.showInModule = "collect";
-  useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+  useContextMenuStore.showContextMenu(e.clientX, e.clientY, "collect");
 }
 </script>
 

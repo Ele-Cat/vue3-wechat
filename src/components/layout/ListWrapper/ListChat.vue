@@ -47,9 +47,7 @@ const handleChatClick = (chat) => {
 // 点击右键展示自定义菜单
 const rightClicked = (e, chat) => {
   e.preventDefault();
-  useContextMenuStore.carryEntryInfo = chat;
-  useContextMenuStore.showInModule = "chat";
-  useContextMenuStore.showContextMenu(e.clientY, e.clientX);
+  useContextMenuStore.showContextMenu(e.clientX, e.clientY, "chat", chat);
 };
 
 const chatLists = computed(() => {
