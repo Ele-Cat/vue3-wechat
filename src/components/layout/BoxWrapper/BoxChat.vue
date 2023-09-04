@@ -52,6 +52,7 @@ import { onMounted, ref, watch, nextTick } from "vue";
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
+import eventBus from '@/utils/eventBus';
 
 // const chatContent = reactive([
 //   {
@@ -162,9 +163,16 @@ const sendMsg = () => {
   autoScrollBottom();
 };
 
-const handlePressEnter = () => {
-  // sendMsg();
+const handlePressEnter = (e) => {
+  if (!e.ctrlKey && useChatStore.sendMethods === "enter") {
+    e.preventDefault();
+    sendMsg();
+  }
 }
+
+eventBus.on("sendMsgEvent", () => {
+  sendMsg();
+});
 </script>
 
 <style lang="less" scoped>

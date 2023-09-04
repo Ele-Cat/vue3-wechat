@@ -29,6 +29,8 @@
 <script setup>
 import { reactive } from "vue";
 import { toast } from "@/utils/feedback";
+import useStore from "@/store";
+const { useChatStore } = useStore();
 
 const sendMethods = reactive([
   {
@@ -36,15 +38,19 @@ const sendMethods = reactive([
     label: "Enter",
   },
   {
-    value: "ctrl+enter",
+    value: "ctrlEnter",
     label: "Ctrl + Enter",
   },
 ]);
 
 const formState = reactive({
-  sendMethod: "enter",
+  sendMethod: useChatStore.sendMethods,
   checked: true,
 });
+
+const handleLanguageChange = (e) => {
+  useChatStore.sendMethods = e;
+}
 
 const handleReset = () => {
   toast({

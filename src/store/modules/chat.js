@@ -9,6 +9,7 @@ export const useChatStore = defineStore("chat", {
       chatInfos: {}, // 聊天记录
       activeChat: "", // 当前聚焦的聊天对象id
       isFocusSendArea: false,
+      sendMethods: 'enter', // 发送消息方式
     };
   },
   actions: {

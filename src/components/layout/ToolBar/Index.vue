@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { reactive, watch, ref } from "vue";
+import { reactive, ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue"
 import UserInfo from "@/components/common/UserInfo/Index.vue"

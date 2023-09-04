@@ -1,5 +1,6 @@
 import { useChatStore } from "@/store/modules/chat";
 import { useSystemStore } from "@/store/modules/system";
+import eventBus from './eventBus';
 
 const ctrlKey = 17,
   commandKey = 91, // mac command
@@ -54,8 +55,9 @@ export function listenGlobalKeyDown() {
 
 // 发送消息
 function send() {
-  if (useChatStore().isFocusSendArea) {
-    console.log("send");
+  if (useChatStore().isFocusSendArea && useChatStore().sendMethods === 'ctrlEnter') {
+    // 发送事件
+    eventBus.emit("sendMsgEvent");
   }
 }
 
