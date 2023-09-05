@@ -11,12 +11,14 @@
     </div>
     <div class="config">
       <WeLabel label="自动登录">
-        <span v-if="formState.autoLogin">{{
-          formState.autoLogin ? "已开启" : "开启"
-        }}</span>
-        <span class="switch" @click="handleClose">{{ formState.autoLogin ? "关闭" : "开启" }}</span>
-        <p>开启后，在本机登录微信将无需手机确认。</p>
-        <p>可在手机和电脑上关闭</p>
+        <div style="margin-top:5px;">
+          <span v-if="formState.autoLogin">{{
+            formState.autoLogin ? "已开启" : "开启"
+          }}</span>
+          <span class="switch" @click="handleClose">{{ formState.autoLogin ? "关闭" : "开启" }}</span>
+          <p>开启后，在本机登录微信将无需手机确认。</p>
+          <p>可在手机和电脑上关闭</p>
+        </div>
       </WeLabel>
     </div>
     <span class="logout" @click="handleLogout">退出登录</span>
@@ -47,6 +49,7 @@ const handleClose = () => {
   }).catch(() => {})
 }
 
+// 执行退出登录
 const handleLogout = () => {
   Confirm({
     text: '退出登录后将无法接收到新消息，确定退出登录？',
@@ -54,9 +57,9 @@ const handleLogout = () => {
     confirmText: '确定',
     confirmColor: '#FF3333'
   }).then(() => {
-    toast({
-      content: "执行退出登录"
-    })
+    // 清空缓存并刷新页面重新拉取信息
+    localStorage.clear();
+    location.reload()
   }).catch(() => {})
 }
 </script>
