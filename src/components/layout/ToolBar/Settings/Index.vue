@@ -37,7 +37,6 @@ import About from "./About.vue";
 const emit = defineEmits();
 const props = defineProps({
   visible: {
-    // 标题
     type: Boolean,
     default: true,
   },

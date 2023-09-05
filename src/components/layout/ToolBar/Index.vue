@@ -2,7 +2,21 @@
   <WeDragBox class="tool-bar">
     <div class="tool-box tool-top">
       <img :src="useUserInfoStore?.user?.avatar" class="avatar no-drag" @click.stop="handleAvatarClick" />
-      <i
+      <template v-for="menu in menuTop" :key="menu.icon">
+        <a-badge :count="menu.unReadCount || 0" title="" :offset="[-16, 10]">
+          <i
+            class="wechatfont no-drag"
+            :title="menu.title"
+            :class="[
+              useSystemStore.activeMenu === menu.icon
+                ? `active wechat-${menu.icon}`
+                : `wechat-${menu.icon}`,
+            ]"
+            @click="handleMenuClick(menu.icon)"
+          ></i>
+        </a-badge>
+      </template>
+      <!-- <i
         class="wechatfont no-drag"
         v-for="menu in menuTop"
         :key="menu.icon"
@@ -13,7 +27,7 @@
             : `wechat-${menu.icon}`,
         ]"
         @click="handleMenuClick(menu.icon)"
-      ></i>
+      ></i> -->
     </div>
     <div class="tool-box tool-bottom">
       <div class="tool-bottom-item" :class="[`tool-${menu.icon}`]" v-for="menu in menuBottom" :key="menu.icon" @click="handleMenuClick(menu.icon)">
@@ -45,7 +59,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import RelativeBox from "@/components/common/RelativeBox/Index.vue"
 import UserInfo from "@/components/common/UserInfo/Index.vue"
@@ -53,7 +67,7 @@ import Timeline from "./Timeline.vue"
 import Settings from "./Settings/Index.vue"
 import { toast, notify } from "@/utils/feedback";
 import useStore from "@/store";
-const { useSystemStore, useRelativeBoxStore, useUserInfoStore } = useStore();
+const { useSystemStore, useRelativeBoxStore, useUserInfoStore, useChatStore } = useStore();
 
 const infoVisible = ref(false);
 // 点击头像，展示信息
@@ -85,6 +99,18 @@ const menuTop = reactive([
     title: "朋友圈",
   },
 ]);
+
+// 获取聊天未读数
+watch(() => useChatStore.chatList, (newVal) => {
+  const chatUnReadCount = newVal.reduce((p, n) => {
+    n.unReadCount = n.unReadCount || 0
+    return p + n.unReadCount;
+  }, 0)
+  menuTop[0]['unReadCount'] = chatUnReadCount;
+}, {
+  immediate: true,
+  deep: true,
+})
 
 // 工具栏底部菜单
 const menuBottom = reactive([
@@ -337,6 +363,34 @@ const closeSettings = () => {
           font-size: 20px;
         }
       }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.tool-bar {
+  .ant-badge {
+    width: 100%;
+    text-align: center;
+
+    .ant-badge-count {
+      min-width: 16px !important;
+      height: 16px !important;
+      line-height: 16px !important;
+      box-shadow: none !important;
+      font-size: 12px !important;
+      .ant-scroll-number-only, .ant-scroll-number-only-unit {
+        height: 16px !important;
+      }
+    }
+    .ant-badge-multiple-words {
+      padding: 0 4px;
+    }
+    i {
+      display: block;
+      color: #979797;
+      width: 100%;
     }
   }
 }

@@ -21,7 +21,7 @@
           <a-checkbox v-model:checked="formState.checked6">使用系统默认浏览器打开网页</a-checkbox>
           <a-checkbox v-model:checked="formState.checked7">聊天中的语音消息自动转成文字</a-checkbox>
         </div>
-        <span class="button" @click="handleClear">清空聊天记录（4.0G）</span><br />
+        <span class="button" @click="handleClear">清空聊天记录</span><br />
         <span class="button" @click="handleManage">储存空间管理</span>
       </WeLabel>
     </div>
@@ -32,6 +32,8 @@
 import { reactive, watch } from "vue";
 import Confirm from "@/components/libs/confirm";
 import { toast } from "@/utils/feedback";
+import useStore from "@/store";
+const { useChatStore } = useStore();
 
 const languages = reactive([
   {
@@ -92,6 +94,9 @@ const handleClear = () => {
     confirmColor: "#FF3333",
   })
     .then(() => {
+      useChatStore.chatList = [];
+      useChatStore.chatInfos = {};
+      useChatStore.activeChat = "";
       toast({
         content: "执行清空聊天记录",
       });

@@ -9,7 +9,7 @@
         @click="handleChatClick(chat)"
         @contextmenu.stop="e => rightClicked(e, chat)"
       >
-        <a-badge :count="chat.unreadCount || 0" title="">
+        <a-badge :count="chat.unReadCount || 0" title="">
           <img :src="chat.avatar" alt="" class="chat-avatar" />
         </a-badge>
         <div class="chat-info">
