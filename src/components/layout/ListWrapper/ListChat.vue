@@ -39,6 +39,11 @@ const {
 const handleChatClick = (chat) => {
   // 展示聊天内容
   useChatStore.activeChat = chat.friendId;
+  useChatStore.chatList.map(item => {
+    if (item.friendId === chat.friendId) {
+      item['unReadCount'] = 0;
+    }
+  })
   // 展示聊天标题
   useSystemStore.boxTitleText = chat.name;
   useSystemStore.listSearchText = "";

@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="input-area">
-        <a-textarea class="scroll-no-bar" v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" @pressEnter="handlePressEnter" />
+        <a-textarea class="scroll-no-bar" ref="input" v-model:value="inputText" placeholder="请输入" @focus="handletextareaFocus" @blur="handletextareaBlur" @pressEnter="handlePressEnter" />
       </div>
       <div class="input-btn">
         <a-tooltip placement="topRight" trigger="click">
@@ -49,6 +49,7 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
+import { useFocus } from '@vueuse/core';
 import useStore from "@/store";
 const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
 import { friendTime } from "@/utils/utils";
@@ -121,11 +122,14 @@ const autoScrollBottom = () => {
 
 // 监听当聊天对象切换时，展示对应的聊天内容
 const noSelect = ref(true);
-const chatContent = ref([])
+const chatContent = ref([]);
+const input = ref();
+const { focused: inputFocus } = useFocus(input, { initialValue: true });
 watch(
   () => useChatStore.activeChat,
   (newVal) => {
     noSelect.value = !newVal;
+    inputFocus.value = true;
     if (newVal) {
       chatContent.value = useChatStore.chatInfos[newVal]
     }

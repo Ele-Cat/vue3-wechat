@@ -97,9 +97,6 @@ const handleClear = () => {
       useChatStore.chatList = [];
       useChatStore.chatInfos = {};
       useChatStore.activeChat = "";
-      toast({
-        content: "执行清空聊天记录",
-      });
     })
     .catch(() => {});
 };
