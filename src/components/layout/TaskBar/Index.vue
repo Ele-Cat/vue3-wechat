@@ -8,9 +8,11 @@
       <!-- <i class="wechatfont wechat-task-wechat"></i> -->
     </div>
     <div class="task-system">
-      <div class="task-icon qq" title="点击加群" @click="handleClickWechat">
+      <div class="task-icon bilibili" title="关注B站">
+        <img src="@/assets/bilibili.png" alt="" @click="addBilibili">
+      </div>
+      <div class="task-icon qq" title="点击加群">
         <img src="@/assets/qq.svg" alt="" @click="addGroup">
-        <!-- <img src="@/assets/wechat.svg" class="blink" alt=""> -->
       </div>
       <div class="task-icon wechat" title="微信" @click="handleClickWechat">
         <img src="@/assets/wechat.svg" alt="">
@@ -47,6 +49,9 @@ const handleClickWechat = () => {
 }
 const addGroup = () => {
   window.open(useSystemStore.qqGroupLink, "_blank")
+}
+const addBilibili = () => {
+  window.open("https://space.bilibili.com/376288070", "_blank")
 }
 </script>
 
