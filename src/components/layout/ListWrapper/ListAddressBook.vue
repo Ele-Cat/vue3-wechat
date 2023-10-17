@@ -5,6 +5,13 @@
         <p><i class="wechatfont wechat-usermanage"></i>通讯录管理</p>
       </div>
       <div class="user-box">
+        <div class="user-title">新的朋友</div>
+        <div class="custom-item user-item">
+          <img alt="" class="user-avatar">
+          <p class="user-name">新的朋友</p>
+        </div>
+      </div>
+      <div class="user-box">
         <div class="user-title">群聊</div>
         <div v-for="group in groupList" :key="group.id" class="custom-item user-item" @contextmenu.stop="rightClicked($event)">
           <img v-lazyload="group.avatar" alt="" class="user-avatar">
@@ -88,6 +95,7 @@ const addressBookLists = computed(() => {
       font-size: 12px;
       color: #999;
       padding: 14px 14px 0 14px;
+      margin-bottom: 1px;
     }
 
     .user-item {
