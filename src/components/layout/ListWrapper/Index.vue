@@ -35,7 +35,6 @@ const isSearching = ref(false)
 // 搜索框文本修改时
 const handleSearchChange = (e) => {
   const { type } = e
-  console.log('type: ', type);
   if (type === 'input') {
     // 立即检索
     isSearching.value = true;

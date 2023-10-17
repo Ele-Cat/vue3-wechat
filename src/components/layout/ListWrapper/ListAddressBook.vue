@@ -11,7 +11,7 @@
           <p class="user-name">{{ group.name }}</p>
         </div>
       </div>
-      <div class="user-box" v-for="friends in useAddressBookStore.addressBookList" :key="friends.letter">
+      <div class="user-box" v-for="friends in addressBookLists" :key="friends.letter">
         <div class="user-title">{{friends.letter}}</div>
         <div v-for="friend in friends.list" :key="friend.id" class="custom-item user-item"
           :class="[useAddressBookStore.activeAddressBook === friend.id ? 'active' : '']"
@@ -25,9 +25,10 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import useStore from '@/store'
-const { useAddressBookStore, useContextMenuStore } = useStore()
+const { useAddressBookStore, useContextMenuStore, useSystemStore } = useStore()
+import { listSortByPinyin } from "@/utils/utils";
 
 const groupList = reactive([
   {
@@ -48,6 +49,11 @@ const rightClicked = (e) => {
   e.preventDefault();
   useContextMenuStore.showContextMenu(e.clientX, e.clientY, "friend");
 }
+
+const addressBookLists = computed(() => {
+  let addressBookList = useAddressBookStore.flatAddressBookList.filter(chat => chat.name.indexOf(useSystemStore.listSearchText) >= 0)
+  return listSortByPinyin(addressBookList)
+})
 </script>
 
 <style lang="less" scoped>
