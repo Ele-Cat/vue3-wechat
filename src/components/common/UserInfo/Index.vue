@@ -52,7 +52,7 @@ const sendMessage = () => {
     padding-bottom: 18px;
     border-bottom: 1px solid #eaeaea;
 
-    img {
+    :deep(.ant-image-img) {
       width: 60px;
       height: 60px;
       border-radius: 6px;

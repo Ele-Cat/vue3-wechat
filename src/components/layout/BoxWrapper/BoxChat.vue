@@ -14,8 +14,9 @@
             <img
               v-if="chat.type !== 'send'"
               v-lazyload="chat.avatar"
+              @click="showUserInfo"
             />
-            <img v-else v-lazyload="useUserInfoStore?.user?.avatar" />
+            <img v-else v-lazyload="useUserInfoStore?.user?.avatar" @click="showUserInfo" />
             <p class="chat-content" @contextmenu.stop="handleContentContextmenu">{{ chat.content }}</p>
           </div>
         </div>
@@ -45,13 +46,18 @@
       </div>
     </div>
   </template>
+  <RelativeBox :visible="infoVisible" @close="infoVisible = false">
+    <UserInfo :user="userInfo" type="own" />
+  </RelativeBox>
 </template>
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
 import { useFocus } from '@vueuse/core';
+import RelativeBox from "@/components/common/RelativeBox/Index.vue";
+import UserInfo from "@/components/common/UserInfo/Index.vue";
 import useStore from "@/store";
-const { useChatStore, useContextMenuStore, useUserInfoStore } = useStore();
+const { useChatStore, useContextMenuStore, useUserInfoStore, useRelativeBoxStore } = useStore();
 import { friendTime } from "@/utils/utils";
 import eventBus from '@/utils/eventBus';
 
@@ -69,6 +75,15 @@ import eventBus from '@/utils/eventBus';
 //     createTime: "2023-08-10 12:15:12",
 //   },
 // ]);
+
+// 点击头像展示信息
+const infoVisible = ref(false);
+const userInfo = ref({})
+const showUserInfo = (e) => {
+  infoVisible.value = true;
+  userInfo.value = useUserInfoStore.user;
+  useRelativeBoxStore.showBox(e.clientY, e.clientX);
+}
 
 // 右键聊天文本
 const handleContentContextmenu = (e) => {

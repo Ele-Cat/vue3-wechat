@@ -152,7 +152,7 @@ import RelativeBox from "@/components/common/RelativeBox/Index.vue";
 import UserInfo from "@/components/common/UserInfo/Index.vue";
 import useStore from "@/store";
 import Mock from "mockjs";
-import { getVideoApi } from "@/api/timeline";
+// import { getVideoApi } from "@/api/timeline";
 const { useUserInfoStore, useRelativeBoxStore } = useStore();
 
 const user = ref({})
@@ -188,10 +188,10 @@ const handleAvatarClick = (e) => {
   useRelativeBoxStore.showBox(e.clientY, e.clientX);
 };
 
-const getVideo = async () => {
-  const { data } = await getVideoApi();
-  return data.mp4;
-};
+// const getVideo = async () => {
+//   const { data } = await getVideoApi();
+//   return data.mp4;
+// };
 
 const timelines = ref([]);
 onMounted(async () => {
@@ -204,7 +204,8 @@ onMounted(async () => {
           author: "@cname",
           time: "@date('yyyy-MM-dd')",
           "type|1": ["image", "video"],
-          videoUrl: await getVideo(),
+          // videoUrl: await getVideo(),
+          videoUrl: 'https://minivideo.xiu123.cn/original/4230b3e0ffcd71ed801c6733a78e0102/3c313574-18872908e1e.mp4',
           "starUser|0-12": ["@cname"],
           "remarkLists|0-6": [
             {

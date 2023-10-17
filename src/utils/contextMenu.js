@@ -16,8 +16,12 @@ export const contextEnums = {
   quote: "引用",
   deleteChatItem: "删除",
   sendMessage: "发消息",
+  setNotesAndLabels: "设置备注和标签",
+  setPermissions: "设置朋友权限",
+  recommendToFriends: "推荐给朋友",
   markAsStarFriend: "标为星标朋友",
   sendBusinessCard: "发送名片",
+  joinInBlacklist: "加入黑名单",
   deleteFriend: "删除朋友",
   editTag: "编辑标签",
   copyAddress: "复制地址",
@@ -97,6 +101,30 @@ export const contextMenus = {
     },
     {
       type: "deleteFriend",
+      borderTop: true,
+    },
+  ],
+  friendInfo: [
+    {
+      type: "setNotesAndLabels",
+    },
+    {
+      type: "setPermissions",
+    },
+    {
+      type: "recommendToFriends",
+      borderTop: true,
+    },
+    {
+      type: "markAsStarFriend",
+      borderTop: true,
+    },
+    {
+      type: "joinInBlacklist",
+      borderTop: true,
+    },
+    {
+      type: "deleteChatItem",
       borderTop: true,
     },
   ],

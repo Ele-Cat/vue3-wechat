@@ -4,7 +4,9 @@
     <div class="address-info">
       <div class="border-bottom flex">
         <div class="flex-left">
-          <img class="avatar" :src="addressBookInfo.avatar" alt="" />
+          <a-image-preview-group>
+            <a-image class="avatar" :src="addressBookInfo.avatar" alt="" :previewMask="false" />
+          </a-image-preview-group>
         </div>
         <div class="flex-1 user-info">
           <p class="name">
@@ -13,12 +15,12 @@
           <p>微信号：{{ addressBookInfo.phone }}</p>
           <p>地区：{{ addressBookInfo.address }}</p>
         </div>
-        <ellipsis-outlined class="user-more" />
+        <ellipsis-outlined class="user-more" @click.stop="showMenu" />
       </div>
       <div class="border-bottom user-from">
         <div class="flex">
-          <div class="flex-left">备注名</div>
-          <p class="flex-1">点击添加备注</p>
+          <div class="flex-left">备注</div>
+          <p class="flex-1 gray">点击添加备注</p>
         </div>
         <div class="flex">
           <div class="flex-left">标签</div>
@@ -27,6 +29,16 @@
         <div class="flex">
           <div class="flex-left">朋友权限</div>
           <p class="flex-1">不看他（她）的朋友圈和状态</p>
+        </div>
+      </div>
+      <div class="border-bottom user-from">
+        <div class="flex">
+          <div class="flex-left">共同群聊</div>
+          <div class="flex-1">2个</div>
+        </div>
+        <div class="flex">
+          <div class="flex-left">个性签名</div>
+          <div class="flex-1">be better</div>
         </div>
         <div class="flex">
           <div class="flex-left">来源</div>
@@ -45,7 +57,7 @@ import { ref, watch } from "vue";
 import Mock from "mockjs";
 import { EllipsisOutlined } from "@ant-design/icons-vue";
 import useStore from "@/store";
-const { useAddressBookStore, useSystemStore, useChatStore } = useStore();
+const { useAddressBookStore, useSystemStore, useChatStore, useContextMenuStore } = useStore();
 
 const noSelect = ref(!useAddressBookStore.activeAddressBook);
 const addressBookInfo = ref({});
@@ -64,6 +76,10 @@ watch(
     deep: true,
   }
 );
+
+const showMenu = (e) => {
+  useContextMenuStore.showContextMenu(e.clientX, e.clientY, "friendInfo");
+}
 
 // 点击“发信息”按钮
 const sendMessage = () => {
@@ -122,10 +138,11 @@ const sendMessage = () => {
       padding: 12px 0;
     }
 
-    .avatar {
+    :deep(.avatar) {
       width: 60px;
       height: 60px;
       border-radius: 8px;
+      cursor: pointer;
     }
 
     .user-info {
@@ -178,9 +195,11 @@ const sendMessage = () => {
 
       .flex:not(:nth-of-type(1)) {
         margin-top: 12px;
-
-        .flex-1 {
-          color: #000;
+      }
+      .flex-1 {
+        color: #000;
+        &.gray {
+          color: #999;
         }
       }
     }
